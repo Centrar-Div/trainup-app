@@ -12,6 +12,8 @@ class Rutina{
     var ejercicios: MutableList<Ejercicio>  = mutableListOf()
 
     constructor(nombre: String)
+    constructor()
+    constructor(id: Comparable<*>, nombre: String?, ejercicios: List<Ejercicio>?)
 
 
     fun agregarEjercicio(ejercicio: Ejercicio) {

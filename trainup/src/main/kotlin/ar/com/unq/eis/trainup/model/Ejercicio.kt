@@ -31,6 +31,9 @@ class Ejercicio {
         this.musculo = musculo
     }
 
+    constructor()
+    constructor(id: Comparable<*>, nombre: String?, descripcion: String?, repeticiones: Int?, peso: Double?, musculo: String?)
+
     override fun toString(): String {
         return "Ejercicio(id='$id', nombre='$nombre', descripcion='$descripcion', repeticiones=$repeticiones, peso=$peso, musculo='$musculo')"
     }
