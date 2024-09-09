@@ -10,6 +10,7 @@ class AppConfiguration {
 
     @Bean
     fun mongoTemplate(): MongoTemplate {
-        return MongoTemplate(SimpleMongoClientDatabaseFactory("mongodb+srv://elian21:LlSM8VhaFcR4i9ZA@cluster0.oljii16.mongodb.net/?retryWrites=true&w=majority"))
+        val mongoUri = "mongodb+srv://elian21:LlSM8VhaFcR4i9ZA@cluster0.oljii16.mongodb.net/trainup?retryWrites=true&w=majority"
+        return MongoTemplate(SimpleMongoClientDatabaseFactory(mongoUri))
     }
 }
