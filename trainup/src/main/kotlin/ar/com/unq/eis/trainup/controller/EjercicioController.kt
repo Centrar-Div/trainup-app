@@ -1,5 +1,4 @@
 package ar.com.unq.eis.trainup.controller
-
 import EjercicioService
 import ar.com.unq.eis.trainup.controller.dto.EjercicioDTO
 import ar.com.unq.eis.trainup.model.Ejercicio
@@ -31,12 +30,19 @@ class EjercicioController(
         }
     }
 
-    @GetMapping("/ejercicios")
+    @GetMapping
     fun obtenerEjercicios(): ResponseEntity<List<EjercicioDTO>> {
         return try {
             val ejercicios = ejercicioService.obtenerEjercicios()
-            ResponseEntity.ok(ejercicios.map { ejercicio ->
-                EjercicioDTO(ejercicio.id, ejercicio.nombre, ejercicio.descripcion, ejercicio.repeticiones, ejercicio.peso, ejercicio.musculo)
+            ResponseEntity.ok(ejercicios.map { e ->
+                EjercicioDTO(
+                    id = e.id,
+                    nombre = e.nombre,
+                    descripcion = e.descripcion,
+                    repeticiones = e.repeticiones,
+                    peso = e.peso,
+                    musculo = e.musculo
+                )
             })
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(emptyList())

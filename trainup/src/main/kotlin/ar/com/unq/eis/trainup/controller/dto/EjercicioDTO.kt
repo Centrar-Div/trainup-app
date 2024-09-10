@@ -2,15 +2,14 @@ package ar.com.unq.eis.trainup.controller.dto
 
 import ar.com.unq.eis.trainup.model.Ejercicio
 
-class EjercicioDTO {
-    constructor(id: String?, nombre: String, descripcion: String, repeticiones: Int, peso: Double, musculo: String)
-
-    var id: String? = null
-    lateinit var nombre: String
-    lateinit var descripcion: String
-    var repeticiones: Int = 0
-    var peso: Double = 0.0
-    lateinit var musculo: String
+data class EjercicioDTO(
+    var id: String? = null,
+    var nombre: String = "",
+    var descripcion: String = "",
+    var repeticiones: Int = 0,
+    var peso: Double = 0.0,
+    var musculo: String = ""
+) {
 
     companion object {
         fun desdeModelo(ejercicio: Ejercicio): EjercicioDTO {
@@ -24,7 +23,6 @@ class EjercicioDTO {
             )
         }
     }
-
 
     fun aModelo(): Ejercicio {
         return Ejercicio(
