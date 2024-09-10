@@ -3,7 +3,6 @@ package ar.com.unq.eis.trainup.model
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
 @Document(collection = "rutinas")
 class Rutina {
@@ -16,7 +15,6 @@ class Rutina {
     var fechaCreacion: String
     var ejercicios: MutableList<Ejercicio> = mutableListOf()
 
-    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
     // Constructor principal
     constructor(nombre: String, descripcion: String, categoria: String, ejercicios: List<Ejercicio>?) {
@@ -33,7 +31,7 @@ class Rutina {
         this.nombre = nombre
         this.descripcion = descripcion
         this.categoria = categoria
-        this.fechaCreacion = LocalDateTime.now().format(formatter)
+        this.fechaCreacion = LocalDateTime.now().toString()
     }
 
     constructor(id: String?, nombre: String?, descripcion: String?, categoria: String?, ejercicios: List<Ejercicio>?) {
@@ -51,7 +49,7 @@ class Rutina {
         this.nombre = nombre
         this.descripcion = descripcion
         this.categoria = categoria
-        this.fechaCreacion = LocalDateTime.now().format(formatter)
+        this.fechaCreacion = LocalDateTime.now().toString()
         this.ejercicios = ejercicios?.toMutableList() ?: mutableListOf()
     }
 
