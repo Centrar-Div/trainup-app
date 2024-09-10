@@ -31,7 +31,7 @@ class EjercicioController(
         }
     }
 
-    @GetMapping
+    @GetMapping("/ejercicios")
     fun obtenerEjercicios(): ResponseEntity<List<EjercicioDTO>> {
         return try {
             val ejercicios = ejercicioService.obtenerEjercicios()
@@ -53,7 +53,7 @@ class EjercicioController(
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/actualizar/{id}")
     fun actualizarEjercicio(@PathVariable id: String, @RequestBody ejercicioDTO: EjercicioDTO): ResponseEntity<EjercicioDTO> {
         return try {
             val ejercicioActualizado = Ejercicio(
