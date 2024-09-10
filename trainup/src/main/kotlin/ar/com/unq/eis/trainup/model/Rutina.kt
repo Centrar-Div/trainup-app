@@ -2,19 +2,58 @@ package ar.com.unq.eis.trainup.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Document(collection = "rutinas")
+class Rutina {
 
-class Rutina{
     @Id
     var id: String? = null
-    var nombre: String? = null
-    var ejercicios: MutableList<Ejercicio>  = mutableListOf()
+    var nombre: String
+    var descripcion: String
+    var categoria: String
+    var fechaCreacion: String
+    var ejercicios: MutableList<Ejercicio> = mutableListOf()
 
-    constructor(nombre: String)
-    constructor()
-    constructor(id: Comparable<*>, nombre: String?, ejercicios: List<Ejercicio>?)
+    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
 
+    // Constructor principal
+    constructor(nombre: String, descripcion: String, categoria: String, ejercicios: List<Ejercicio>?) {
+        if (nombre.isBlank()) {
+            throw IllegalArgumentException("El nombre no puede estar vacío")
+        }
+        if (descripcion.isBlank()) {
+            throw IllegalArgumentException("La descripción no puede estar vacía")
+        }
+        if (categoria.isBlank()) {
+            throw IllegalArgumentException("La categoría no puede estar vacía")
+        }
+
+        this.nombre = nombre
+        this.descripcion = descripcion
+        this.categoria = categoria
+        this.fechaCreacion = LocalDateTime.now().format(formatter)
+    }
+
+    constructor(id: String?, nombre: String?, descripcion: String?, categoria: String?, ejercicios: List<Ejercicio>?) {
+        if (nombre.isNullOrBlank()) {
+            throw IllegalArgumentException("El nombre no puede ser nulo o vacío")
+        }
+        if (descripcion.isNullOrBlank()) {
+            throw IllegalArgumentException("La descripción no puede ser nula o vacía")
+        }
+        if (categoria.isNullOrBlank()) {
+            throw IllegalArgumentException("La categoría no puede ser nula o vacía")
+        }
+
+        this.id = id
+        this.nombre = nombre
+        this.descripcion = descripcion
+        this.categoria = categoria
+        this.fechaCreacion = LocalDateTime.now().format(formatter)
+        this.ejercicios = ejercicios?.toMutableList() ?: mutableListOf()
+    }
 
     fun agregarEjercicio(ejercicio: Ejercicio) {
         ejercicios.add(ejercicio)
@@ -29,6 +68,6 @@ class Rutina{
     }
 
     override fun toString(): String {
-        return "Rutina(nombre='$nombre', ejercicios=$ejercicios)"
+        return "Rutina(id='$id', nombre='$nombre', descripcion='$descripcion', categoria='$categoria', fechaCreacion='$fechaCreacion', ejercicios=$ejercicios)"
     }
 }
