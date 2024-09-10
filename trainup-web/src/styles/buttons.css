@@ -3,19 +3,30 @@
 .default-btn {
   border: none;
   background-color: transparent;
-  padding: 10px 20px;
+  padding: 12px 24px;
   border-radius: 2rem;
   cursor: pointer;
   font-family: 'Poppins', sans-serif; 
   font-weight: bold; 
-}	
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
 
 .primary-btn {
-    background-color: #2f2d6a;
-    color: #f1f1f1;
+  background-color: #2f2d6a;
+  color: #ffffff;
+  box-shadow: 0 6px 10px rgba(47, 45, 106, 0.3);
 }
 
 .primary-btn:hover {
-    background-color: #272555;
-    color: #f1f1f1;
+  background-color: #272555;
+  color: #ffffff;
+  box-shadow: 0 8px 14px rgba(39, 37, 85, 0.4);
+  transform: translateY(-2px);
+}
+
+.primary-btn:active {
+  background-color: #1d1b49;
+  box-shadow: 0 4px 6px rgba(29, 27, 73, 0.4);
+  transform: translateY(0);
 }
