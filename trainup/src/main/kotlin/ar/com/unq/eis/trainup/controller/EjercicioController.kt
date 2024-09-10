@@ -18,7 +18,6 @@ class EjercicioController(
     fun crearEjercicio(@RequestBody ejercicioDTO: EjercicioDTO): ResponseEntity<EjercicioDTO> {
         return try {
             val ejercicio = Ejercicio(
-                id = ejercicioDTO.id ?: 0,
                 nombre = ejercicioDTO.nombre,
                 descripcion = ejercicioDTO.descripcion,
                 repeticiones = ejercicioDTO.repeticiones,
@@ -58,7 +57,6 @@ class EjercicioController(
     fun actualizarEjercicio(@PathVariable id: String, @RequestBody ejercicioDTO: EjercicioDTO): ResponseEntity<EjercicioDTO> {
         return try {
             val ejercicioActualizado = Ejercicio(
-                id = id,
                 nombre = ejercicioDTO.nombre,
                 descripcion = ejercicioDTO.descripcion,
                 repeticiones = ejercicioDTO.repeticiones,
