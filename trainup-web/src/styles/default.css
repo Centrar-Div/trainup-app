@@ -1,0 +1,49 @@
+.gap-s {
+    gap: 1rem;
+}
+
+.gap-m {
+    gap: 2rem;
+}
+
+.gap-l {
+    gap: 3rem;
+}
+
+.gap-xl {
+    gap: 4rem;
+}
+
+.none-padding {
+    padding: 0 !important;
+}
+
+.none-margin {
+    margin: 0 !important;
+}
+
+.none-mp {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+.jc-center {
+    justify-content: center;
+}
+
+.ai-center {
+    align-items: center;
+}
+
+.ta-center {
+    text-align: center;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.center {
+    justify-content: center;
+    align-items: center;
+}

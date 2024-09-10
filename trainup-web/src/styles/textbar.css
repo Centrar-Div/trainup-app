@@ -1,0 +1,29 @@
+.primary-textbar {
+    border: 1px solid #2f2d6a;
+    color: #2f2d6a;
+    background-color: #e0e0e0;
+    padding: 0.5rem;
+    border-radius: 2rem;
+    margin: 1rem 0;
+    outline: none;
+}
+
+.textbar-s {
+    width: 4rem;
+}
+
+.textbar-m {
+    width: 8rem;
+}
+
+.textbar-l {
+    width: 12rem;
+}
+
+.textbar-xl {
+    width: 16rem;
+}
+
+.textbar-xxl {
+    width: 20rem;
+}
