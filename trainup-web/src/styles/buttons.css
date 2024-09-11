@@ -91,8 +91,17 @@
   
 .secondary-btn {
   background-color: #e2e2e2;
+  font-size: 16px;
+  padding: 5px; 
   color: #2f2d6a;
   box-shadow: 0 6px 10px rgba(47, 45, 106, 0.3);
+  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.secondary-btn:hover {
+  background-color: #d1d1d1; 
+  transform: scale(1.1); 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5); 
 }
 
 .rounded-login-btn {
