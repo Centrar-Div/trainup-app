@@ -88,3 +88,15 @@
 .button-reg:active {
   cursor: not-allowed;
 }
+  
+.secondary-btn {
+  background-color: #e2e2e2;
+  color: #2f2d6a;
+  box-shadow: 0 6px 10px rgba(47, 45, 106, 0.3);
+}
+
+.rounded-login-btn {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50%;
+}

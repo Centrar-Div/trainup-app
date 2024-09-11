@@ -20,10 +20,10 @@ class RutinaController(
     fun crearRutina(@RequestBody rutinaDTO: RutinaDTO): ResponseEntity<RutinaDTO> {
         return try {
             val rutina = Rutina(
-                nombre = rutinaDTO.nombre!!,
-                descripcion = rutinaDTO.descripcion!!,
-                categoria = rutinaDTO.categoria!!,
-                ejercicios = rutinaDTO.ejercicios?.map {
+                nombre = rutinaDTO.nombre,
+                descripcion = rutinaDTO.descripcion,
+                categoria = rutinaDTO.categoria,
+                ejercicios = rutinaDTO.ejercicios.map {
                     Ejercicio(
                         id = it.id,
                         nombre = it.nombre,
@@ -32,7 +32,7 @@ class RutinaController(
                         peso = it.peso,
                         musculo = it.musculo
                     )
-                }?.toMutableList() ?: mutableListOf()
+                }.toMutableList()
             )
             val nuevaRutina = rutinaService.crearRutina(rutina)
             ResponseEntity.ok(
@@ -51,7 +51,6 @@ class RutinaController(
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null)
         }
     }
-
 
     @GetMapping
     fun obtenerRutinas(): ResponseEntity<List<RutinaDTO>> {
@@ -78,18 +77,22 @@ class RutinaController(
     fun obtenerRutinaPorId(@PathVariable id: String): ResponseEntity<RutinaDTO> {
         return try {
             val rutina = rutinaService.obtenerRutinaPorId(id)
-            ResponseEntity.ok(
-                RutinaDTO(
-                    rutina?.id!!,
-                    rutina.nombre,
-                    rutina.descripcion,
-                    rutina.categoria,
-                    rutina.fechaCreacion ?: "",
-                    rutina.ejercicios.map {
-                        EjercicioDTO(it.id, it.nombre, it.descripcion, it.repeticiones, it.peso, it.musculo)
-                    }.toMutableList() ?: mutableListOf()
+            if (rutina != null) {
+                ResponseEntity.ok(
+                    RutinaDTO(
+                        rutina.id,
+                        rutina.nombre,
+                        rutina.descripcion,
+                        rutina.categoria,
+                        rutina.fechaCreacion ?: "",
+                        rutina.ejercicios.map {
+                            EjercicioDTO(it.id, it.nombre, it.descripcion, it.repeticiones, it.peso, it.musculo)
+                        }.toMutableList()
+                    )
                 )
-            )
+            } else {
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+            }
         } catch (e: NoSuchElementException) {
             ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
         }
@@ -114,7 +117,7 @@ class RutinaController(
                     rutina.nombre,
                     rutina.descripcion,
                     rutina.categoria,
-                    rutina.fechaCreacion,
+                    rutina.fechaCreacion ?: "",
                     rutina.ejercicios.map {
                         EjercicioDTO(it.id, it.nombre, it.descripcion, it.repeticiones, it.peso, it.musculo)
                     }.toMutableList()

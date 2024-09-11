@@ -9,12 +9,14 @@ class Rutina {
 
     @Id
     var id: String? = null
-    var nombre: String
-    var descripcion: String
-    var categoria: String
-    var fechaCreacion: String
+    var nombre: String = ""
+    var descripcion: String = ""
+    var categoria: String = ""
+    var fechaCreacion: String = LocalDateTime.now().toString()
     var ejercicios: MutableList<Ejercicio> = mutableListOf()
 
+    // Constructor vacío para MongoDB
+    constructor()
 
     // Constructor principal
     constructor(nombre: String, descripcion: String, categoria: String, ejercicios: List<Ejercicio>?) {
@@ -31,26 +33,27 @@ class Rutina {
         this.nombre = nombre
         this.descripcion = descripcion
         this.categoria = categoria
+        this.ejercicios = ejercicios?.toMutableList() ?: mutableListOf()
         this.fechaCreacion = LocalDateTime.now().toString()
     }
 
-    constructor(id: String?, nombre: String?, descripcion: String?, categoria: String?, ejercicios: List<Ejercicio>?) {
-        if (nombre.isNullOrBlank()) {
-            throw IllegalArgumentException("El nombre no puede ser nulo o vacío")
+    constructor(id: String?, nombre: String, descripcion: String, categoria: String, ejercicios: List<Ejercicio>?) {
+        if (nombre.isBlank()) {
+            throw IllegalArgumentException("El nombre no puede estar vacío")
         }
-        if (descripcion.isNullOrBlank()) {
-            throw IllegalArgumentException("La descripción no puede ser nula o vacía")
+        if (descripcion.isBlank()) {
+            throw IllegalArgumentException("La descripción no puede estar vacía")
         }
-        if (categoria.isNullOrBlank()) {
-            throw IllegalArgumentException("La categoría no puede ser nula o vacía")
+        if (categoria.isBlank()) {
+            throw IllegalArgumentException("La categoría no puede estar vacía")
         }
 
         this.id = id
         this.nombre = nombre
         this.descripcion = descripcion
         this.categoria = categoria
-        this.fechaCreacion = LocalDateTime.now().toString()
         this.ejercicios = ejercicios?.toMutableList() ?: mutableListOf()
+        this.fechaCreacion = LocalDateTime.now().toString()
     }
 
     fun agregarEjercicio(ejercicio: Ejercicio) {
