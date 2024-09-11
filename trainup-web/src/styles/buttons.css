@@ -6,14 +6,55 @@
   padding: 12px 24px;
   border-radius: 2rem;
   cursor: pointer;
-  font-family: 'Poppins', sans-serif; 
-  font-weight: bold; 
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
 }
 
+.modern-btn {
+  padding: 8px 35px;
+  border: 2px solid #2c2c2c;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-size: 1rem;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.4s ease;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  font-weight: bold;
+}
+
+.modern-btn::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.25) 0%,
+    rgba(255, 255, 255, 0) 70%
+  );
+  transform: scale(0);
+  transition: transform 0.5s ease;
+}
+
+.modern-btn:hover::after {
+  transform: scale(4);
+}
+
+.modern-btn:hover {
+  border-color: #666666;
+  background: #292929;
+}
+
+
 .primary-btn {
-  background-color: #2f2d6a;
+  background-color: #27256a;
   color: #ffffff;
   box-shadow: 0 6px 10px rgba(47, 45, 106, 0.3);
 }
@@ -29,4 +70,21 @@
   background-color: #1d1b49;
   box-shadow: 0 4px 6px rgba(29, 27, 73, 0.4);
   transform: translateY(0);
+}
+
+/* Diseño del boton register*/
+.modern-btn.button-reg::after {
+  background: radial-gradient(
+    circle,
+    rgba(255, 0, 0, 0.25) 0%, 
+    rgba(255, 255, 255, 0) 70%
+  );
+}
+
+.button-reg:hover{
+  cursor: not-allowed;
+}
+
+.button-reg:active {
+  cursor: not-allowed;
 }
