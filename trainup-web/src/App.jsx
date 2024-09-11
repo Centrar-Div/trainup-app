@@ -14,10 +14,6 @@ import HomePage from './home/HomePage'
 import Rutina from './home/Rutina'
 
 function App() {
-  const [login , setLogin] = useState ('')
-  useEffect(() => {
-    setLogin(localStorage.getItem('id'))
-  }, [login])
 
   return (
     <BrowserRouter>

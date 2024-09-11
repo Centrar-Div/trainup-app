@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react'
 import '../styles/navbar.css'
 import { useLogin } from '../context/LoginContext'
@@ -34,4 +35,5 @@ const Navbar = () => {
   )
 }
 
-export default Navbar
+
+export default Navbar;
