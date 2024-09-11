@@ -1,17 +1,33 @@
-import React from 'react'
-import '../styles/navbar.css'
+import React, { useState } from 'react';
+import '../styles/navbar.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
-  return (
-    <nav>
-        <button className='default-btn rounded-login-btn secondary-btn'></button>
-        <ul>
-            <li>Home</li>
-            <li>About</li>
-            <li>Contact</li>
-        </ul>
-    </nav>
-  )
-}
+  const [isOpen, setIsOpen] = useState(false);
 
-export default Navbar
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <nav className="navbar">
+      <button 
+        className='default-btn rounded-login-btn secondary-btn'
+        onClick={toggleMenu} 
+      >
+        <FontAwesomeIcon icon={faBars} />
+      </button>
+      <div className={`nav-container ${isOpen ? 'open' : ''}`}>
+        <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
+          <li><a href="/init">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;

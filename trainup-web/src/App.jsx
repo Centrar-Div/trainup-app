@@ -9,17 +9,6 @@ import { LoginProvider } from './context/LoginContext'
 import Navbar from './navbar/Navbar'
 
 function App() {
-
-  // return (
-  //   <div className='trainUp-center'>
-  //     <h1>TRAIN UP</h1>
-  //     <h3>TU MEJOR APLICACION DE ENTRENAMIENTO</h3>
-  //     <div className='flx '>
-  //       <button className='default-btn primary-btn'>Iniciar sesion</button>
-  //       <button className='default-btn primary-btn'>Registrarse</button>
-  //     </div>
-  //   </div>
-  // )
   return (
     <BrowserRouter>
     <LoginProvider>
