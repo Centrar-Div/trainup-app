@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./landingPage.css"
 
 const LandingPage = () => {
   const navigate = useNavigate();
 
+  useEffect(() => {
+    localStorage.removeItem('id');
+  }, []);
+  
   return (
     <div className='trainUp-center'>
       <header className='landing-header'>

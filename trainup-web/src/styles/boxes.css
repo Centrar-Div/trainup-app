@@ -2,8 +2,8 @@
     display: flex;
     border-radius: 0.5rem;
     padding: 1rem;
-    margin: 1rem 0;
     outline: none;
+    width: fit-content;
 }
 
 .column-box {

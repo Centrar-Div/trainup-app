@@ -5,20 +5,32 @@ const LoginContext = createContext()
 
 export const LoginProvider = ({children}) => {
     
-    const [login, setLogin] = useState(false)
+    const [isLogin, setIsLogin] = useState(false)
+    const [login, setLogin] = useState(isLogin || localStorage.getItem('id'))
     const navigate = useNavigate()
     const emailTest = 'usuario@gmail.com'
     const passwordTest = '123456'
     
 
     const validateLogin = (email, password) => {
-        const correctLogin = email === emailTest && password === passwordTest
-        setLogin(correctLogin)
-        correctLogin && navigate('/home')
+        const validateCredentials = email === emailTest && password === passwordTest
+        if(validateCredentials){
+            setIsLogin(true)
+            setLogin(isLogin)
+            localStorage.setItem('id', '1')
+            navigate('/es/home')
+        }
+    }
+
+    const restartLogin = () => {
+        setIsLogin(false)
+        localStorage.removeItem('id')
+        setLogin(isLogin)
+        navigate('/init')
     }
   
     return (
-    <LoginContext.Provider value={{validateLogin, login}}>
+    <LoginContext.Provider value={{restartLogin, validateLogin, login}}>
         {children}
     </LoginContext.Provider>    
   )

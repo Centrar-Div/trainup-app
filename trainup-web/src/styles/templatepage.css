@@ -1,0 +1,29 @@
+.temp-init {
+    display: flex;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.temp-navbar {
+    width: 100%;
+    height: 80px;
+}
+
+.temp-body {
+    display: flex;
+    width: 100%;
+    height: 100%;
+}
+
+.temp-sidebar {
+    width: 20%;
+    height: 100%;
+}
+
+.temp-content {
+    width: 80%;
+    height: 100%;
+    padding: 20px;
+    overflow-y: scroll;
+}
