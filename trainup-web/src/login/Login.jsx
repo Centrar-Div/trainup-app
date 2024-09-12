@@ -7,22 +7,22 @@ import { useLogin } from '../context/LoginContext'
 const Login = () => {
 
   const {validateLogin} = useLogin()
-  const [email, setEmail] = useState('')
+  const [usuario, setUsuario] = useState('')
   const [password, setPassword] = useState('')
 
   const handlerSubmit = (e) => {
-    validateLogin(email, password)
+    validateLogin(usuario, password)
   }
 
   return (
     <div className='max-size-vh flx center '>
       <Form name='Iniciar sesion' btnName='Iniciar sesion' handlerSubmit={handlerSubmit}>
         <ElementForm 
-          title='Correo electronico' 
-          type='email' 
-          id='email' 
-          name='email' 
-          setText={setEmail}/>
+          title='Usuario' 
+          type='text' 
+          id='usuario' 
+          name='Usuario' 
+          setText={setUsuario}/>
         <ElementForm 
           title='Contraseña' 
           type='password' 

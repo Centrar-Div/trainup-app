@@ -115,6 +115,56 @@ const eliminarEjercicio = async (id) => {
   }
 };
 
+/*
+ * Funciones relacionadas con "Usuarios"
+ */
+
+const crearUsuario = async (usuarioDTO) => {
+  try {
+    const response = await axios.post(`${BASE_URL}/usuario`, usuarioDTO);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+const obtenerUsuarioPorUsername = async (username) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/usuario/${username}`);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+const obtenerUsuarios = async () => {
+  try {
+    const response = await axios.get(`${BASE_URL}/usuario`);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+const actualizarUsuario = async (usuarioDTO) => {
+  try {
+    const response = await axios.put(`${BASE_URL}/usuario/${usuarioDTO.id}`, usuarioDTO);
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+const eliminarUsuario = async (id) => {
+  try {
+    await axios.delete(`${BASE_URL}/${id}`);
+    return; 
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+
 export {
   crearRutina,
   obtenerRutinas,
@@ -125,5 +175,10 @@ export {
   obtenerEjercicios,
   obtenerEjercicioPorId,
   actualizarEjercicio,
-  eliminarEjercicio
+  eliminarEjercicio,
+  crearUsuario,
+  obtenerUsuarioPorUsername,
+  obtenerUsuarios,
+  actualizarUsuario,
+  eliminarUsuario
 };

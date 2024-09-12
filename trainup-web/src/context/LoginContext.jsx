@@ -1,39 +1,53 @@
 import React, { createContext, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { obtenerUsuarioPorUsername } from '../api/Api'; 
+import { notification } from 'antd';
+import 'antd/dist/reset.css';
 
 const LoginContext = createContext()
 
 export const LoginProvider = ({children}) => {
     
     const [isLogin, setIsLogin] = useState(false)
-    const [login, setLogin] = useState(isLogin || localStorage.getItem('id'))
+    const [user, setUser] = useState(null);
     const navigate = useNavigate()
-    const emailTest = 'usuario@gmail.com'
-    const passwordTest = '123456'
-    
 
-    const validateLogin = (email, password) => {
-        const validateCredentials = email === emailTest && password === passwordTest
-        if(validateCredentials){
-            setIsLogin(true)
-            setLogin(isLogin)
-            localStorage.setItem('id', '1')
-            navigate('/es/home')
+    const validateLogin = async (username, password) => {
+        try {
+            const userData = await obtenerUsuarioPorUsername(username);
+            if (userData && userData.password === password) { 
+                setIsLogin(true);
+                setUser(userData);
+                localStorage.setItem('user', JSON.stringify(userData)); 
+                navigate('/es/home');
+            } else {
+                notification.error({
+                    message: 'Error de Autenticación',
+                    description: 'El nombre de usuario o la contraseña son incorrectos.',
+                    placement: 'topRight',
+                });
+            }
+        } catch (error) {
+            notification.error({
+                message: 'Error de Conexión',
+                description: 'No se pudo conectar al servidor. Inténtelo de nuevo más tarde.',
+                placement: 'topRight',
+            });
         }
-    }
+    };
 
     const restartLogin = () => {
-        setIsLogin(false)
-        localStorage.removeItem('id')
-        setLogin(isLogin)
-        navigate('/init')
-    }
+        setIsLogin(false);
+        setUser(null);
+        localStorage.removeItem('user'); 
+        navigate('/init');
+    };
   
     return (
-    <LoginContext.Provider value={{restartLogin, validateLogin, login}}>
-        {children}
-    </LoginContext.Provider>    
-  )
+        <LoginContext.Provider value={{ isLogin, user, restartLogin, validateLogin }}>
+            {children}
+        </LoginContext.Provider>
+    );
 }
 
 export const useLogin = () => useContext(LoginContext)
