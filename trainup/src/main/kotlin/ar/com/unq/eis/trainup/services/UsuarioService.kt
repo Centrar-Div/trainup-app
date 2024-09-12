@@ -13,4 +13,6 @@ interface UsuarioService {
     fun actualizarUsuario(usuarioActualizado: Usuario): Usuario
 
     fun eliminarUsuario(id: String)
+
+    fun logIn(username: String, password: String): Usuario
 }

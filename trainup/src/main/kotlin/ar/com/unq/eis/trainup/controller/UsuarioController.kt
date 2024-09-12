@@ -1,7 +1,9 @@
 package ar.com.unq.eis.trainup.controller
 
+import ar.com.unq.eis.trainup.controller.Exceptions.UsuarioException
 import ar.com.unq.eis.trainup.controller.dto.UsuarioDTO
 import ar.com.unq.eis.trainup.services.UsuarioService
+import org.apache.coyote.BadRequestException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -65,6 +67,15 @@ class UsuarioController(
             ResponseEntity.status(HttpStatus.NO_CONTENT).build()
         } catch(e: NoSuchElementException){
             ResponseEntity.status(HttpStatus.NOT_FOUND).build()
+        }
+    }
+
+    fun loguearUsuario(@PathVariable username: String, password: String): ResponseEntity<Any>{
+        return try {
+            val usuario = usuarioService.logIn(username, password)
+              ResponseEntity.ok(UsuarioDTO.desdeModelo(usuario))
+        }catch (e: BadRequestException){
+            ResponseEntity.badRequest().body(UsuarioException(e.message!!)
         }
     }
 }

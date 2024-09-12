@@ -3,6 +3,7 @@ package ar.com.unq.eis.trainup.services.impl
 import ar.com.unq.eis.trainup.dao.UsuarioDAO
 import ar.com.unq.eis.trainup.model.Usuario
 import ar.com.unq.eis.trainup.services.UsuarioService
+import org.apache.coyote.BadRequestException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -37,8 +38,8 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO) : Usuari
 
     }
 
-    fun logIn(username: String, password: String): Usuario {
+    override fun logIn(username: String, password: String): Usuario {
         return usuarioDAO.findByUsernameAndPassword(username, password)
-            .orElseThrow { NoSuchElementException("Los campos ingresados son incorrectos") }
+            .orElseThrow { BadRequestException("Los campos ingresados son incorrectos") }
     }
 }
