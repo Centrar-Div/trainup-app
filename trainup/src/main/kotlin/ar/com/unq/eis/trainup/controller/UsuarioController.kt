@@ -13,8 +13,6 @@ class UsuarioController(
     @Autowired private val usuarioService: UsuarioService
 ){
 
-
-    // chequear excepciones (que sean mas claras)
     @PostMapping
     fun crearUsuario(@RequestBody usuarioDTO: UsuarioDTO): ResponseEntity<UsuarioDTO> {
         return try {
@@ -26,10 +24,10 @@ class UsuarioController(
     }
 
 
-    @GetMapping("/{id}")
-    fun obtenerUsuarioPorID(@PathVariable userId: String): ResponseEntity<UsuarioDTO> {
+    @GetMapping("/{username}")
+    fun obtenerUsuarioPorID(@PathVariable username: String): ResponseEntity<UsuarioDTO> {
         return try {
-            val usuario = usuarioService.obtenerUsuarioPorId(userId)
+            val usuario = usuarioService.obtenerUsuarioPorUsername(username)
             ResponseEntity.ok(UsuarioDTO.desdeModelo(usuario))
         } catch (e: NoSuchElementException) {
             ResponseEntity.status(HttpStatus.NOT_FOUND).build()

@@ -8,7 +8,7 @@ interface UsuarioService {
 
     fun obtenerUsuarios(): List<Usuario>
 
-    fun obtenerUsuarioPorId(id: String): Usuario
+    fun obtenerUsuarioPorUsername(username: String): Usuario
 
     fun actualizarUsuario(usuarioActualizado: Usuario): Usuario
 

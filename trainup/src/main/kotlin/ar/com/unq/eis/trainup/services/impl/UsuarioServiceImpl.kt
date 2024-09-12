@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO) : UsuarioService {
+
     override fun crearUsuario(usuario: Usuario): Usuario {
         return usuarioDAO.save(usuario)
     }
@@ -17,8 +18,8 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO) : Usuari
         return usuarioDAO.findAll()
     }
 
-    override fun obtenerUsuarioPorId(id: String): Usuario {
-        return usuarioDAO.findByIdOrNull(id) ?: throw NoSuchElementException("No existe usuario con id ${id}")
+    override fun obtenerUsuarioPorUsername(username: String): Usuario {
+        return usuarioDAO.findByUsername(username) ?: throw NoSuchElementException("No existe usuario ${username}")
     }
 
     override fun actualizarUsuario(usuarioActualizado: Usuario): Usuario {
@@ -35,7 +36,6 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO) : Usuari
         }
 
     }
-
 
     fun logIn(username: String, password: String): Usuario {
         return usuarioDAO.findByUsernameAndPassword(username, password)

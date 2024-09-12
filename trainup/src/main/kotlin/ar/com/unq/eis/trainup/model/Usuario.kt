@@ -1,6 +1,7 @@
 package ar.com.unq.eis.trainup.model
 
 import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDate
 
@@ -9,7 +10,10 @@ class Usuario() {
 
     @Id
     var id: String? = null;
+
+    @Indexed(unique = true)  // Marca este campo como unico (Casi como PK)
     var username: String = "";
+
     var password: String = "";
     var rutinasSeguidas: MutableList<Rutina> = mutableListOf();
     var nombre: String = "";
