@@ -15,20 +15,22 @@ const Login = () => {
   }
 
   return (
-    <Form name='Iniciar sesion' btnName='Iniciar sesion' handlerSubmit={handlerSubmit}>
-      <ElementForm 
-        title='Correo electronico' 
-        type='email' 
-        id='email' 
-        name='email' 
-        setText={setEmail}/>
-      <ElementForm 
-        title='Contraseña' 
-        type='password' 
-        id='password' 
-        name='password'
-        setText={setPassword}/>
-    </Form>
+    <div className='max-size-vh flx center '>
+      <Form name='Iniciar sesion' btnName='Iniciar sesion' handlerSubmit={handlerSubmit}>
+        <ElementForm 
+          title='Correo electronico' 
+          type='email' 
+          id='email' 
+          name='email' 
+          setText={setEmail}/>
+        <ElementForm 
+          title='Contraseña' 
+          type='password' 
+          id='password' 
+          name='password'
+          setText={setPassword}/>
+      </Form>
+    </div>
   )
 }
 

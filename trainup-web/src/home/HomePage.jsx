@@ -21,6 +21,14 @@ const HomePage = () => {
           repeticiones: 10,
           peso: 10,
           musculos: 'Biceps'
+        },
+        {
+          id: 'e_2',
+          nombre: 'Jumping Jackse',
+          descripcion: 'Este es el ejercicio 2',
+          repeticiones: 10,
+          peso: 10,
+          musculos: 'Biceps'
         }
       ]
     },
@@ -61,16 +69,20 @@ const HomePage = () => {
   ]
 
   const handlerClick = (rutina) => {
-    navigate('/es/home/rutina', { state: { ejercicios: rutina.ejercicios } })
+    console.log(rutina)
+    navigate('/es/home/rutina', { state: { ejercicios: rutina.ejercicios, nombre: rutina.nombre } })
   }
 
   return (
     <div>
       <h1>Home</h1>
-      <div className='rutinas'>
+      <div className='container-boxinfo'>
         {
           rutinasMock.map(rutina => (
-            <div key={rutina.id} onClick={handlerClick} className='rutina'>
+            <div 
+              key={rutina.id} 
+              onClick={() => handlerClick(rutina)} 
+              className='boxinfo'>
               <h2>{rutina.nombre}</h2>
               <p>{rutina.descripcion}</p>
               <p>{rutina.categoria}</p>
