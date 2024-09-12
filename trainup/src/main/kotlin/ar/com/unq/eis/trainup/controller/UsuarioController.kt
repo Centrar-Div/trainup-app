@@ -27,7 +27,7 @@ class UsuarioController(
 
 
     @GetMapping("/{username}")
-    fun obtenerUsuarioPorID(@PathVariable username: String): ResponseEntity<UsuarioDTO> {
+    fun obtenerUsuarioPorUsername(@PathVariable username: String): ResponseEntity<UsuarioDTO> {
         return try {
             val usuario = usuarioService.obtenerUsuarioPorUsername(username)
             ResponseEntity.ok(UsuarioDTO.desdeModelo(usuario))
@@ -75,7 +75,7 @@ class UsuarioController(
             val usuario = usuarioService.logIn(username, password)
               ResponseEntity.ok(UsuarioDTO.desdeModelo(usuario))
         }catch (e: BadRequestException){
-            ResponseEntity.badRequest().body(UsuarioException(e.message!!)
+            ResponseEntity.badRequest().body(UsuarioException(e.message!!))
         }
     }
 }
