@@ -5,7 +5,9 @@ import ar.com.unq.eis.trainup.model.Usuario
 import ar.com.unq.eis.trainup.services.UsuarioService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
+import org.springframework.stereotype.Service
 
+@Service
 class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO) : UsuarioService {
     override fun crearUsuario(usuario: Usuario): Usuario {
         return usuarioDAO.save(usuario)
