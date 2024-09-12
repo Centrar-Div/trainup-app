@@ -34,13 +34,14 @@ class TrainupApplicationTests {
 			Ejercicio(nombre = "Curl de bíceps", descripcion = "Curl con barra", repeticiones = 10, peso = 30.0, musculo = "Bíceps"),
 			Ejercicio(nombre = "Fondos", descripcion = "Fondos en paralelas", repeticiones = 15, peso = 0.0, musculo = "Tríceps")
 		)
+		ejerciciosFuerza.forEach { ejercicioService.crearEjercicio(it) }
+
 		val rutinaFuerza = Rutina(
 			nombre = "Rutina de fuerza",
 			descripcion = "Entrenamiento enfocado en fuerza máxima",
 			categoria = "Fuerza",
 			ejercicios =ejerciciosFuerza
 		)
-		ejerciciosFuerza.forEach { ejercicioService.crearEjercicio(it) }
 		rutinaService.crearRutina(rutinaFuerza)
 
 		// Rutina 2 - Hipertrofia
@@ -53,15 +54,13 @@ class TrainupApplicationTests {
 			Ejercicio(nombre = "Martillo", descripcion = "Curl de bíceps martillo", repeticiones = 12, peso = 14.0, musculo = "Bíceps"),
 			Ejercicio(nombre = "Extensión de tríceps", descripcion = "Extensión de tríceps en polea", repeticiones = 12, peso = 30.0, musculo = "Tríceps")
 		)
-
+		ejerciciosHipertrofia.forEach { ejercicioService.crearEjercicio(it) }
 		val rutinaHipertrofia = Rutina(
 			nombre = "Rutina de hipertrofia",
 			descripcion = "Entrenamiento enfocado en el crecimiento muscular",
 			categoria = "Hipertrofia",
 			ejercicios = ejerciciosHipertrofia
 		)
-
-		ejerciciosHipertrofia.forEach { ejercicioService.crearEjercicio(it) }
 		rutinaService.crearRutina(rutinaHipertrofia)
 
 		// Rutina 3 - Resistencia
@@ -74,13 +73,13 @@ class TrainupApplicationTests {
 			Ejercicio(nombre = "Sprints", descripcion = "Sprints de 100 metros", repeticiones = 5, peso = 0.0, musculo = "Piernas"),
 			Ejercicio(nombre = "Skipping", descripcion = "Skipping", repeticiones = 50, peso = 0.0, musculo = "Piernas")
 		)
+		ejerciciosResistencia.forEach { ejercicioService.crearEjercicio(it) }
 		val rutinaResistencia = Rutina(
 			nombre = "Rutina de resistencia",
 			descripcion = "Entrenamiento para mejorar la resistencia cardiovascular y muscular",
 			categoria = "Resistencia",
 			ejercicios = ejerciciosResistencia
 		)
-		ejerciciosResistencia.forEach { ejercicioService.crearEjercicio(it) }
 		rutinaService.crearRutina(rutinaResistencia)
 
 		// Rutina 4 - Funcional
@@ -93,14 +92,13 @@ class TrainupApplicationTests {
 			Ejercicio(nombre = "Farmer's walk", descripcion = "Farmer's walk con mancuernas", repeticiones = 50, peso = 25.0, musculo = "Full body"),
 			Ejercicio(nombre = "Escaladores", descripcion = "Mountain climbers", repeticiones = 30, peso = 0.0, musculo = "Core")
 		)
-
+		ejerciciosFuncional.forEach { ejercicioService.crearEjercicio(it) }
 		val rutinaFuncional = Rutina(
 			nombre = "Rutina funcional",
 			descripcion = "Entrenamiento funcional para todo el cuerpo",
 			categoria = "Funcional",
 			ejercicios = ejerciciosFuncional
 		)
-		ejerciciosFuncional.forEach { ejercicioService.crearEjercicio(it) }
 		rutinaService.crearRutina(rutinaFuncional)
 	}
 }
