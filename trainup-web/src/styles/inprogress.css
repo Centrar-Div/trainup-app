@@ -1,0 +1,23 @@
+.in-progress {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh; 
+    padding: 3rem;
+    color: #ffffff;
+    text-align: center;
+    font-family: Arial, sans-serif;
+}
+
+.in-progress h1 {
+    font-size: 10rem;
+    color: #e74c3c;
+    word-spacing: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.in-progress p {
+    font-size: 2rem;
+    color: #555; 
+}

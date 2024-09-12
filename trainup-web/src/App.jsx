@@ -5,23 +5,26 @@ import './styles/default.css'
 import './styles/textbar.css'
 import LandingPage from './landingPage/LandingPage'
 import Login from './login/Login'
-import { LoginProvider, useLogin } from './context/LoginContext'
+import { LoginProvider } from './context/LoginContext'
 import Navbar from './navbar/Navbar'
 import TemplatePage from './TemplatePage'
-import { useEffect, useState } from 'react'
 import Sidebar from './navbar/Sidebar'
 import HomePage from './home/HomePage'
 import Rutina from './home/Rutina'
+import InProgress from './utils/InProgress'
+import Profile from './home/Profile'
 
 const Layout = () => {
   const location = useLocation()
   const hideNavbarRoutes = ['/login', '/init']
-  const shouldShowNavbar = !hideNavbarRoutes.includes(location.pathname)
+  const shouldShowSide   = !hideNavbarRoutes.includes(location.pathname)
+  const shouldShowNavbar = !location.pathname.startsWith('/es');
+
 
   return (
     <>
       {shouldShowNavbar && <Navbar />}
-      {shouldShowNavbar && <Sidebar />}
+      {shouldShowSide   && <Sidebar />}
     </>
   )
 }
@@ -37,6 +40,8 @@ function App() {
         <Route path='/es' element={<TemplatePage/>} >
           <Route path='home' element={<HomePage/>} />
           <Route path='home/rutina' element={<Rutina/>}/>
+          <Route path='home/profile' element={<Profile/>}/>
+          <Route path='home/inProgress' element={<InProgress/>}/>
         </Route>
         <Route path='/login' element={<Login/>} />
         <Route path='*' element={<Navigate to='/init'/>}/>

@@ -77,19 +77,27 @@ const HomePage = () => {
     <div>
       <h1>Home</h1>
       <div className='container-boxinfo'>
-        {
-          rutinasMock.map(rutina => (
-            <div 
-              key={rutina.id} 
-              onClick={() => handlerClick(rutina)} 
-              className='boxinfo'>
-              <h2>{rutina.nombre}</h2>
-              <p>{rutina.descripcion}</p>
-              <p>{rutina.categoria}</p>
-              <p>{rutina.fechaDeCreacion}</p>
-            </div>
-          ))
-        }
+          {
+            rutinasMock.map(rutina => (
+              <div 
+                key={rutina.id} 
+                onClick={() => handlerClick(rutina)} 
+                className='boxinfo'>
+                <div className="card-header">
+                  <h2>{rutina.nombre}</h2>
+                </div>
+
+                <div className="card-body">
+                  <p>{rutina.descripcion}</p>
+                </div>
+
+                <div className="card-footer">
+                  <p className="category">{rutina.categoria}</p>
+                  <p>{rutina.fechaDeCreacion}</p>
+                </div>
+              </div>
+            ))
+          }
       </div>
     </div>
   )

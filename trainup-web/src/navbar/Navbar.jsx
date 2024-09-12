@@ -1,28 +1,33 @@
-
-import React, { useEffect, useState } from 'react'
-import '../styles/navbar.css'
-import { useLogin } from '../context/LoginContext'
+import React, { useState } from 'react';
+import '../styles/navbar.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
+  const [isOpen, setIsOpen] = useState(false);
 
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <nav>
-        <button className='default-btn rounded-login-btn secondary-btn'></button>
-        <ul>
-            <li>
-              <button className='default-btn primary-btn'>perfil</button>
-            </li>
-            <li>
-              <button className='default-btn primary-btn'>about</button>
-            </li>
-            <li>
-              <button className='default-btn primary-btn'>contact</button>
-            </li>
+    <nav className="navbar">
+      <button 
+        className='default-btn rounded-login-btn secondary-btn'
+        onClick={toggleMenu} 
+      >
+        <FontAwesomeIcon icon={faBars} />
+      </button>
+      <div className={`nav-container ${isOpen ? 'open' : ''}`}>
+        <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
+          <li><a href="/init">Home</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Services</a></li>
+          <li><a href="#">Contact</a></li>
         </ul>
-    </nav>   
-  )
-}
-
+      </div>
+    </nav>
+  );
+};
 
 export default Navbar;
