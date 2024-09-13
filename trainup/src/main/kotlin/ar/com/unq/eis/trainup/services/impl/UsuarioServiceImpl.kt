@@ -1,5 +1,6 @@
 package ar.com.unq.eis.trainup.services.impl
 
+import ar.com.unq.eis.trainup.controller.Exceptions.UsuarioException
 import ar.com.unq.eis.trainup.dao.UsuarioDAO
 import ar.com.unq.eis.trainup.model.Usuario
 import ar.com.unq.eis.trainup.services.UsuarioService
@@ -20,12 +21,15 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO) : Usuari
     }
 
     override fun obtenerUsuarioPorUsername(username: String): Usuario {
-        return usuarioDAO.findByUsername(username) ?: throw NoSuchElementException("No existe usuario ${username}")
+        return usuarioDAO.findByUsername(username) ?: throw UsuarioException("No existe usuario ${username}")
+    }
+
+    override fun obtenerUsuarioPorID(id: String): Usuario {
+        return usuarioDAO.findByIdOrNull(id)?: throw UsuarioException("No existe usuario con id ${id}")
     }
 
     override fun actualizarUsuario(usuarioActualizado: Usuario): Usuario {
-        var usuario = usuarioDAO.findByIdOrNull(usuarioActualizado.id)
-            ?: throw NoSuchElementException("No existe usuario con id ${usuarioActualizado.id}")
+        val usuario = this.obtenerUsuarioPorID(usuarioActualizado.id!!)
         return usuarioDAO.save(usuarioActualizado)
     }
 
@@ -33,13 +37,13 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO) : Usuari
         if (usuarioDAO.existsById(id)) {
             usuarioDAO.deleteById(id)
         }else{
-            throw NoSuchElementException("No existe usuario con id ${id}")
+            throw UsuarioException("No existe usuario con id ${id}")
         }
 
     }
 
     override fun logIn(username: String, password: String): Usuario {
         return usuarioDAO.findByUsernameAndPassword(username, password)
-            .orElseThrow { BadRequestException("Los campos ingresados son incorrectos") }
+            .orElseThrow { UsuarioException("usuario no encontrado") }
     }
 }

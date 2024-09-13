@@ -10,6 +10,8 @@ interface UsuarioService {
 
     fun obtenerUsuarioPorUsername(username: String): Usuario
 
+    fun obtenerUsuarioPorID(id:String): Usuario
+
     fun actualizarUsuario(usuarioActualizado: Usuario): Usuario
 
     fun eliminarUsuario(id: String)
