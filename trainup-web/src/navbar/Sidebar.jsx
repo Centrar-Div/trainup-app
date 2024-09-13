@@ -1,14 +1,11 @@
 import React from 'react'
 import '../styles/sidebar.css'
-import { useLogin } from '../context/LoginContext'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faCompass, faCheck, faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
 
 const Sidebar = () => {
     const navigate = useNavigate()
-
-
 
     return (
         <div className='sidebar'>

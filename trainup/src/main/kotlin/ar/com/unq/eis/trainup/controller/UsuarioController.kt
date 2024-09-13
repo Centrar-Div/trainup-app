@@ -26,8 +26,7 @@ class UsuarioController(
         }
     }
 
-
-    @GetMapping("/{username}")
+    @GetMapping("username/{username}")
     fun obtenerUsuarioPorUsername(@PathVariable username: String): ResponseEntity<*> {
         return try {
             val usuario = usuarioService.obtenerUsuarioPorUsername(username)
@@ -36,7 +35,8 @@ class UsuarioController(
             ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
         }
     }
-    @GetMapping("/{username}")
+
+    @GetMapping("id/{id}")
     fun obtenerUsuarioPorID(@PathVariable id: String): ResponseEntity<*> {
         return try {
             val usuario = usuarioService.obtenerUsuarioPorID(id)

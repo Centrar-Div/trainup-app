@@ -11,8 +11,9 @@ const Login = () => {
   const [password, setPassword] = useState('')
 
   const handlerSubmit = (e) => {
-    validateLogin(usuario, password)
-  }
+    e.preventDefault(); 
+    validateLogin(usuario, password);
+  };
 
   return (
     <div className='max-size-vh flx center '>

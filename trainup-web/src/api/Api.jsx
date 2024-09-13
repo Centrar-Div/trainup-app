@@ -1,19 +1,18 @@
 import axios from 'axios';
-import { notification } from 'antd'; 
+import { notification } from 'antd';
+import 'antd/dist/reset.css';
 
 // URL base de la API 
 const BASE_URL = 'http://localhost:8080/api';
 
 // Manejador de errores
 const handleError = (error) => {
-  const errorMessage = error.response?.data || 'Ocurrió un error inesperado';
-
+  const errorMessage = error.response?.data?.msg || 'Ocurrió un error inesperado';
   notification.error({
     message: 'Error',
     description: errorMessage,
     placement: 'topRight',
   });
-  
   throw new Error(errorMessage);
 };
 
@@ -130,7 +129,7 @@ const crearUsuario = async (usuarioDTO) => {
 
 const obtenerUsuarioPorUsername = async (username) => {
   try {
-    const response = await axios.get(`${BASE_URL}/usuario/${username}`);
+    const response = await axios.get(`${BASE_URL}/usuario/username/${username}`);
     return response.data;
   } catch (error) {
     handleError(error);
