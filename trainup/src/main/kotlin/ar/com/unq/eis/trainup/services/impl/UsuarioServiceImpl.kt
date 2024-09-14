@@ -16,8 +16,7 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO) : Usuari
         val username = usuario.username
         if (usuarioDAO.findByUsername(username) == null) {
             return usuarioDAO.save(usuario)
-        }
-        else{
+        } else {
             throw UsuarioException("Ya existe un usuario con username: ${username}")
         }
     }
@@ -31,18 +30,22 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO) : Usuari
     }
 
     override fun obtenerUsuarioPorID(id: String): Usuario {
-        return usuarioDAO.findByIdOrNull(id)?: throw UsuarioException("No existe usuario con id ${id}")
+        return usuarioDAO.findByIdOrNull(id) ?: throw UsuarioException("No existe usuario con id ${id}")
     }
 
     override fun actualizarUsuario(usuarioActualizado: Usuario): Usuario {
-        val usuario = this.obtenerUsuarioPorID(usuarioActualizado.id!!)
-        return usuarioDAO.save(usuarioActualizado)
+        if (usuarioDAO.existsById(usuarioActualizado.id!!)) {
+            return usuarioDAO.save(usuarioActualizado)
+        } else {
+            throw UsuarioException("No existe usuario con id ${usuarioActualizado.id!!}")
+        }
+
     }
 
     override fun eliminarUsuario(id: String) {
         if (usuarioDAO.existsById(id)) {
             usuarioDAO.deleteById(id)
-        }else{
+        } else {
             throw UsuarioException("No existe usuario con id ${id}")
         }
 

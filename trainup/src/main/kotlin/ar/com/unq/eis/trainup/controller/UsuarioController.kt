@@ -17,12 +17,15 @@ class UsuarioController(
 ) {
 
     @PostMapping
-    fun crearUsuario(@RequestBody usuarioDTO: UsuarioDTO): ResponseEntity<UsuarioDTO> {
+    fun crearUsuario(@RequestBody usuarioDTO: UsuarioDTO): ResponseEntity<*> {
         return try {
             val usuario = usuarioService.crearUsuario(usuarioDTO.aModelo())
             ResponseEntity.ok(UsuarioDTO.desdeModelo(usuario))
-        } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build()
+        } catch (e: IllegalStateException){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
+        }
+        catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorDTO(e))
         }
     }
 
@@ -62,7 +65,7 @@ class UsuarioController(
         }
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     fun actualizarUsuario(@RequestBody usuarioDTO: UsuarioDTO): ResponseEntity<*> {
         return try {
             val usuario = usuarioService.actualizarUsuario(usuarioDTO.aModelo())
