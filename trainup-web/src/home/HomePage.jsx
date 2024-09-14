@@ -8,7 +8,6 @@ const HomePage = () => {
   const navigate = useNavigate();
 
   const handlerClick = (rutina) => {
-    console.log(rutina);
     navigate('/es/home/rutina', { state: { ejercicios: rutina.ejercicios, nombre: rutina.nombre } });
   }
 

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { obtenerUsuarioPorUsername } from '../api/Api'; 
+import { obtenerUsuarioPorUsername, handleError } from '../api/Api'; 
 import { notification } from 'antd';
 import 'antd/dist/reset.css';
 
@@ -15,10 +15,10 @@ export const LoginProvider = ({children}) => {
     const validateLogin = async (username, password) => {
         try {
             const userData = await obtenerUsuarioPorUsername(username);
-            if (userData && userData.password === password) { 
+            if (userData && userData.password === password) {
                 setIsLogin(true);
                 setUser(userData);
-                localStorage.setItem('user', JSON.stringify(userData)); 
+                localStorage.setItem('user', JSON.stringify(userData));
                 navigate('/es/home');
             } else {
                 notification.error({
@@ -28,11 +28,7 @@ export const LoginProvider = ({children}) => {
                 });
             }
         } catch (error) {
-            notification.error({
-                message: 'Error de Conexión',
-                description: 'No se pudo conectar al servidor. Inténtelo de nuevo más tarde.',
-                placement: 'topRight',
-            });
+            handleError(error);
         }
     };
 

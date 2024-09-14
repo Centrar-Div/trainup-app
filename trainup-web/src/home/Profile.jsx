@@ -1,21 +1,45 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { notification } from 'antd';
 import '../styles/profile.css';
+import { actualizarUsuario } from "../api/Api";
+import { useLogin } from '../context/LoginContext';
 
 const Profile = () => {
+  const { user } = useLogin();  
+  console.log("UserDTO", user);
+
   const [profileData, setProfileData] = useState({
-    name: 'Juan Pérez',
-    age: '30 años',
-    birthDate: '15 de marzo de 1994',
-    address: 'Calle Ficticia 123, Ciudad Imaginaria',
-    phone: '+54 11 1234-5678',
-    gender: 'Masculino',
-    height: '1.80 m',
-    weight: '75 kg',
-    goal: 'Mantenerse en forma'
+    name: '',
+    age: '',
+    birthDate: '',
+    address: '',
+    phone: '',
+    gender: '',
+    height: '',
+    weight: '',
+    goal: ''
   });
 
   const [editField, setEditField] = useState(null);
   const [editData, setEditData] = useState(profileData);
+
+  useEffect(() => {
+    if (user) {
+      const newProfileData = {
+        name: user.nombre || '', 
+        age: user.edad || '',   
+        birthDate: user.fecNacimiento || '', 
+        address: user.domicilio || '', 
+        phone: user.telefono || '', 
+        gender: user.genero || '', 
+        height: user.altura || '', 
+        weight: user.peso || '',  
+        goal: user.objetivo || '' 
+      };
+      setProfileData(newProfileData);
+      setEditData(newProfileData); 
+    }
+  }, [user]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -36,10 +60,39 @@ const Profile = () => {
     setEditField(null);
   };
 
-  const handleSave = () => {
+  const handleSaveProfileData = () => {
     setProfileData(editData);
     setEditField(null);
+    notification.success({
+      message: 'Datos Guardados',
+      description: 'Tus datos han sido guardados localmente.',
+      placement: 'topRight',
+    });
   };
+
+  const handleSave = async () => {
+    setProfileData(editData);
+    setEditField(null);
+  
+    try {
+      await actualizarUsuario({
+        id: user.id,
+        ...editData
+      });
+      notification.success({
+        message: 'Actualización Exitosa',
+        description: 'Tus datos se han actualizado correctamente.',
+        placement: 'topRight',
+      });
+    } catch (error) {
+      notification.error({
+        message: 'Error al Actualizar',
+        description: 'No se pudo actualizar tus datos. Inténtalo de nuevo más tarde.',
+        placement: 'topRight',
+      });
+    }
+  };
+  
 
   const renderField = (fieldName, label) => (
     <div className='profile-field'>
@@ -47,7 +100,7 @@ const Profile = () => {
       <input
         type='text'
         name={fieldName}
-        value={editData[fieldName]}
+        value={editData[fieldName] || ''}
         onChange={handleChange}
         disabled={editField !== fieldName && editField !== null}
         className={editField === fieldName ? 'editable' : 'disabled'}
@@ -55,7 +108,7 @@ const Profile = () => {
       {editField === fieldName ? (
         <>
           <button className='cancel-btn' onClick={handleCancel}>Cancelar</button>
-          <button className='save-btn' onClick={handleSave}>Guardar</button>
+          <button className='save-btn' onClick={handleSaveProfileData}>Guardar</button>
         </>
       ) : (
         <button className='edit-btn' onClick={() => handleEditClick(fieldName)}>Editar</button>

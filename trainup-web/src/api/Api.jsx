@@ -5,9 +5,15 @@ import 'antd/dist/reset.css';
 // URL base de la API 
 const BASE_URL = 'http://localhost:8080/api';
 
-// Manejador de errores
 const handleError = (error) => {
-  const errorMessage = error.response?.data?.msg || 'Ocurrió un error inesperado';
+  let errorMessage = 'Ocurrió un error inesperado';
+
+  if (error.response) {
+    errorMessage = error.response.data?.msg || 'Error en la respuesta del servidor';
+  } else if (error.request) {
+    errorMessage = 'No se pudo conectar al servidor. Inténtelo de nuevo más tarde.';
+  }
+
   notification.error({
     message: 'Error',
     description: errorMessage,
@@ -150,6 +156,7 @@ const actualizarUsuario = async (usuarioDTO) => {
     const response = await axios.put(`${BASE_URL}/usuario/${usuarioDTO.id}`, usuarioDTO);
     return response.data;
   } catch (error) {
+    console.error('Error en actualizarUsuario:', error.response || error.message);
     handleError(error);
   }
 };
@@ -165,6 +172,7 @@ const eliminarUsuario = async (id) => {
 
 
 export {
+  handleError,
   crearRutina,
   obtenerRutinas,
   obtenerRutinaPorId,
