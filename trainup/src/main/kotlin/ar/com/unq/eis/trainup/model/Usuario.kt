@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
 import java.time.LocalDate
+import java.util.*
 
 @Document(collection = "usuarios")
 class Usuario() {
@@ -43,10 +44,10 @@ class Usuario() {
         require(nombre.isNotBlank()) { "El nombre no puede estar vacío" }
 
         // pueden ser vacios?
-        require(telefono.isNotBlank()) { "El telefono no puede estar vacío" }
-        require(genero.isNotBlank()) { "El genero no puede estar vacío" }
-        require(altura.isNotBlank()) { "La altura no puede estar vacía" }
-        require(peso.isNotBlank()) { "El peso no puede estar vacío" }
+//        require(telefono.isNotBlank()) { "El telefono no puede estar vacío" }
+//        require(genero.isNotBlank()) { "El genero no puede estar vacío" }
+//        require(altura.isNotBlank()) { "La altura no puede estar vacía" }
+//        require(peso.isNotBlank()) { "El peso no puede estar vacío" }
 
         this.username = username;
         this.password = password;
@@ -60,5 +61,16 @@ class Usuario() {
         this.objetivo=objetivo
     }
 
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other == null || javaClass != other.javaClass) return false
+        val usuario = other as Usuario?
+        return id == usuario!!.id
+    }
+
+    override fun hashCode(): Int {
+        return Objects.hash(id)
+    }
 
 }

@@ -13,7 +13,13 @@ import org.springframework.stereotype.Service
 class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO) : UsuarioService {
 
     override fun crearUsuario(usuario: Usuario): Usuario {
-        return usuarioDAO.save(usuario)
+        val username = usuario.username
+        if (usuarioDAO.findByUsername(username) == null) {
+            return usuarioDAO.save(usuario)
+        }
+        else{
+            throw UsuarioException("Ya existe un usuario con username: ${username}")
+        }
     }
 
     override fun obtenerUsuarios(): List<Usuario> {
