@@ -284,10 +284,151 @@ class TrainupApplicationTests {
             "ganar musculatura"
         )
 
-        usuario0.rutinasSeguidas.add(rutinaFuerza)
-        usuario0.rutinasSeguidas.add(rutinaResistencia)
-        usuario0.rutinasSeguidas.add(rutinaHipertrofia)
-        usuario0.rutinasSeguidas.add(rutinaFuncional)
+        //RUTINA 5
+        val ejerciciosPotencia = listOf(
+            Ejercicio(
+                nombre = "Peso muerto",
+                descripcion = "Peso muerto con barra",
+                repeticiones = 8,
+                peso = 80.0,
+                musculo = "Espalda baja"
+            ),
+            Ejercicio(
+                nombre = "Sentadilla con barra",
+                descripcion = "Sentadilla profunda con barra",
+                repeticiones = 10,
+                peso = 70.0,
+                musculo = "Piernas"
+            ),
+            Ejercicio(
+                nombre = "Press banca",
+                descripcion = "Press de banca con barra",
+                repeticiones = 8,
+                peso = 60.0,
+                musculo = "Pectorales"
+            ),
+            Ejercicio(
+                nombre = "Remo con barra",
+                descripcion = "Remo con barra para espalda",
+                repeticiones = 10,
+                peso = 50.0,
+                musculo = "Espalda alta"
+            ),
+            Ejercicio(
+                nombre = "Press militar",
+                descripcion = "Press militar de pie",
+                repeticiones = 8,
+                peso = 40.0,
+                musculo = "Hombros"
+            )
+        )
+        ejerciciosFuerza.forEach { ejercicioService.crearEjercicio(it) }
+        val rutinaPotencia = Rutina(
+            nombre = "Rutina de Fuerza y Potencia",
+            descripcion = "Entrenamiento para mejorar fuerza máxima y potencia",
+            categoria = "Fuerza",
+            ejercicios = ejerciciosFuerza
+        )
+
+
+        //RUTINA 6
+        val ejerciciosCore = listOf(
+            Ejercicio(
+                nombre = "Burpees",
+                descripcion = "Burpees con salto",
+                repeticiones = 20,
+                peso = 0.0,
+                musculo = "Full body"
+            ),
+            Ejercicio(
+                nombre = "Plancha",
+                descripcion = "Plancha estática",
+                repeticiones = 1,
+                peso = 0.0,
+                musculo = "Core"
+            ),
+            Ejercicio(
+                nombre = "Zancadas caminando",
+                descripcion = "Zancadas con mancuernas",
+                repeticiones = 20,
+                peso = 15.0,
+                musculo = "Piernas"
+            ),
+            Ejercicio(
+                nombre = "Russian twists",
+                descripcion = "Giros rusos con balón medicinal",
+                repeticiones = 40,
+                peso = 8.0,
+                musculo = "Core"
+            ),
+            Ejercicio(
+                nombre = "Elevación de piernas",
+                descripcion = "Elevación de piernas colgando",
+                repeticiones = 15,
+                peso = 0.0,
+                musculo = "Core"
+            )
+        )
+        ejerciciosResistencia.forEach { ejercicioService.crearEjercicio(it) }
+        val rutinaCore = Rutina(
+            nombre = "Rutina de Resistencia y Core",
+            descripcion = "Entrenamiento centrado en resistencia muscular y core",
+            categoria = "Resistencia",
+            ejercicios = ejerciciosResistencia
+        )
+
+        //RUTINA 7
+        val ejerciciosHIIT = listOf(
+            Ejercicio(
+                nombre = "Sprints en cinta",
+                descripcion = "Sprints a máxima velocidad",
+                repeticiones = 10,
+                peso = 0.0,
+                musculo = "Piernas"
+            ),
+            Ejercicio(
+                nombre = "Salto con rodillas al pecho",
+                descripcion = "Salto explosivo con rodillas al pecho",
+                repeticiones = 15,
+                peso = 0.0,
+                musculo = "Piernas"
+            ),
+            Ejercicio(
+                nombre = "Clean con mancuernas",
+                descripcion = "Clean explosivo con mancuernas",
+                repeticiones = 12,
+                peso = 20.0,
+                musculo = "Full body"
+            ),
+            Ejercicio(
+                nombre = "Push-ups",
+                descripcion = "Flexiones explosivas",
+                repeticiones = 20,
+                peso = 0.0,
+                musculo = "Pectorales"
+            ),
+            Ejercicio(
+                nombre = "Mountain climbers",
+                descripcion = "Escaladores a alta velocidad",
+                repeticiones = 40,
+                peso = 0.0,
+                musculo = "Core"
+            )
+        )
+        ejerciciosHIIT.forEach { ejercicioService.crearEjercicio(it) }
+        val rutinaHIIT = Rutina(
+            nombre = "Rutina HIIT",
+            descripcion = "Entrenamiento de intervalos de alta intensidad",
+            categoria = "HIIT",
+            ejercicios = ejerciciosHIIT
+        )
+
+
+
+        usuario0.rutinasSeguidas.add(rutinaPotencia)
+        usuario0.rutinasSeguidas.add(rutinaCore)
+        usuario0.rutinasSeguidas.add(rutinaHIIT)
+
 
         usuarioService.crearUsuario(usuario0)
     }
