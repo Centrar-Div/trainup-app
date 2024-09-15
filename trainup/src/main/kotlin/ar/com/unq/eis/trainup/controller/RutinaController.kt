@@ -1,6 +1,7 @@
 package ar.com.unq.eis.trainup.controller
 
 import ar.com.unq.eis.trainup.controller.dto.EjercicioDTO
+import ar.com.unq.eis.trainup.controller.dto.ErrorDTO
 import ar.com.unq.eis.trainup.controller.dto.RutinaDTO
 import ar.com.unq.eis.trainup.model.Ejercicio
 import ar.com.unq.eis.trainup.model.Rutina
@@ -17,7 +18,7 @@ class RutinaController(
 ) {
 
     @PostMapping
-    fun crearRutina(@RequestBody rutinaDTO: RutinaDTO): ResponseEntity<RutinaDTO> {
+    fun crearRutina(@RequestBody rutinaDTO: RutinaDTO): ResponseEntity<Any> {
         return try {
             val rutina = Rutina(
                 nombre = rutinaDTO.nombre,
@@ -48,12 +49,12 @@ class RutinaController(
                 )
             )
         } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null)
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorDTO(e))
         }
     }
 
     @GetMapping
-    fun obtenerRutinas(): ResponseEntity<List<RutinaDTO>> {
+    fun obtenerRutinas(): ResponseEntity<Any> {
         return try {
             val rutinas = rutinaService.obtenerRutinas()
             ResponseEntity.ok(rutinas.map { rutina ->
@@ -69,12 +70,12 @@ class RutinaController(
                 )
             })
         } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(emptyList())
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorDTO(e))
         }
     }
 
     @GetMapping("/{id}")
-    fun obtenerRutinaPorId(@PathVariable id: String): ResponseEntity<RutinaDTO> {
+    fun obtenerRutinaPorId(@PathVariable id: String): ResponseEntity<Any> {
         return try {
             val rutina = rutinaService.obtenerRutinaPorId(id)
             if (rutina != null) {
@@ -91,15 +92,15 @@ class RutinaController(
                     )
                 )
             } else {
-                ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(Exception("Rutina no encontrada")))
             }
         } catch (e: NoSuchElementException) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body(null)
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
         }
     }
 
     @PutMapping("/{id}")
-    fun actualizarRutina(@PathVariable id: String, @RequestBody rutinaDTO: RutinaDTO): ResponseEntity<RutinaDTO> {
+    fun actualizarRutina(@PathVariable id: String, @RequestBody rutinaDTO: RutinaDTO): ResponseEntity<Any> {
         return try {
             val rutinaActualizada = Rutina(
                 id = id,
@@ -124,17 +125,17 @@ class RutinaController(
                 )
             )
         } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null)
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorDTO(e))
         }
     }
 
     @DeleteMapping("/{id}")
-    fun eliminarRutina(@PathVariable id: String): ResponseEntity<Void> {
+    fun eliminarRutina(@PathVariable id: String): ResponseEntity<Any> {
         return try {
             rutinaService.eliminarRutina(id)
             ResponseEntity.status(HttpStatus.NO_CONTENT).build()
         } catch (e: NoSuchElementException) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).build()
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
         }
     }
 }

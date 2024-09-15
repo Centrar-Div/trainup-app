@@ -6,6 +6,7 @@ import { useLogin } from '../context/LoginContext';
 
 const Profile = () => {
   const { user } = useLogin();  
+  console.log("UserDTO", user);
 
   const [profileData, setProfileData] = useState({
     id: '',
@@ -40,7 +41,7 @@ const Profile = () => {
         objetivo: user.objetivo || '' 
       };
       setProfileData(newProfileData);
-      setEditData(newProfileData); 
+      setEditData(newProfileData);
     }
   }, [user]);
 
@@ -76,7 +77,7 @@ const Profile = () => {
   const handleSave = async () => {
     setProfileData(editData);
     setEditField(null);
-  
+
     try {
       await actualizarUsuario(editData); 
       notification.success({
@@ -92,7 +93,7 @@ const Profile = () => {
       });
     }
   };
-  
+
 
   const renderField = (fieldName, label) => (
     <div className='profile-field'>
