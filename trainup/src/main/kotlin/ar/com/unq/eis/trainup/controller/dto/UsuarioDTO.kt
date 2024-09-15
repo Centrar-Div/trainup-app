@@ -20,8 +20,22 @@ class UsuarioDTO(
 
 
     fun aModelo(): Usuario {
-        return Usuario(username, password, nombre, edad!!, fecNacimiento!!, telefono, genero, altura, peso, objetivo)
+        val usuario = Usuario(
+            username = username,
+            password = password,
+            nombre = nombre,
+            edad = edad!!,
+            fecNacimiento = fecNacimiento!!,
+            telefono = telefono,
+            genero = genero,
+            altura = altura,
+            peso = peso,
+            objetivo = objetivo
+        )
+        usuario.id = this.id
+        return usuario
     }
+
 
     companion object {
         fun desdeModelo(usuario: Usuario): UsuarioDTO {

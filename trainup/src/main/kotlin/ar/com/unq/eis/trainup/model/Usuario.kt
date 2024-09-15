@@ -26,7 +26,6 @@ class Usuario() {
     var peso: String = "";
     var objetivo: String = "";
 
-
     constructor(username: String,
                 password: String,
                 nombre:String,
