@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { obtenerUsuarioPorUsername, handleError, logearUsuario } from '../api/Api'; 
+import { logearUsuario } from '../api/Api'; 
 import { notification } from 'antd';
 import 'antd/dist/reset.css';
 
@@ -8,15 +8,12 @@ const LoginContext = createContext()
 
 export const LoginProvider = ({children}) => {
     
-    const [isLogin, setIsLogin] = useState(false)
     const [user, setUser] = useState(null);
     const navigate = useNavigate()
     
     useEffect(() => {
-
         const username = localStorage.getItem('username');
         const password = localStorage.getItem('password');
-        console.log(user);
         if (username && password) {
             logearUsuario(username, password).then(({data}) => {
                 setUser(data);
@@ -42,14 +39,20 @@ export const LoginProvider = ({children}) => {
     };
 
     const restartLogin = () => {
-        setIsLogin(false);
         setUser(null);
-        localStorage.removeItem('user'); 
+        localStorage.clear(); 
         navigate('/init');
+        notification.success({ 
+            message: 'Sesión Cerrada',
+            description: 'Has cerrado la sesión correctamente.',
+            placement: 'topRight',
+        });
     };
+    
+    
   
     return (
-        <LoginContext.Provider value={{ isLogin, user, restartLogin, validateLogin }}>
+        <LoginContext.Provider value={{ user, restartLogin, validateLogin }}>
             {children}
         </LoginContext.Provider>
     );
