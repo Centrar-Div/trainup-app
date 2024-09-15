@@ -20,7 +20,10 @@ class UsuarioDTO(
 
 
     fun aModelo(): Usuario {
-        return Usuario(username, password, nombre, edad!!, fecNacimiento!!, telefono, genero, altura, peso, objetivo)
+        val usuario: Usuario = Usuario(username, password, nombre, edad!!, fecNacimiento!!, telefono, genero, altura, peso, objetivo)
+        usuario.id = id
+
+        return usuario
     }
 
     companion object {

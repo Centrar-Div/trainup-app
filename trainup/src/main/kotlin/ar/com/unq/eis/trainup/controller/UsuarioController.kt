@@ -65,16 +65,13 @@ class UsuarioController(
         }
     }
 
-    @PutMapping
+    @PutMapping()
     fun actualizarUsuario(@RequestBody usuarioDTO: UsuarioDTO): ResponseEntity<*> {
         return try {
             val usuario = usuarioService.actualizarUsuario(usuarioDTO.aModelo())
             ResponseEntity.ok(UsuarioDTO.desdeModelo(usuario))
         }catch (e: UsuarioException){
             ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
-        }
-        catch (e: Exception){
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("ocurrio un error")
         }
     }
 
