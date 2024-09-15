@@ -1,5 +1,6 @@
 package ar.com.unq.eis.trainup.model
 
+import ar.com.unq.eis.trainup.controller.Exceptions.RutinaException
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
@@ -17,6 +18,7 @@ class Usuario() {
 
     var password: String = "";
     var rutinasSeguidas: MutableList<Rutina> = mutableListOf();
+    var rutinasCompletadas: MutableList<Rutina> = mutableListOf();
     var nombre: String = "";
     var edad: Int? = null;
     var fecNacimiento: LocalDate? = null;
@@ -71,6 +73,15 @@ class Usuario() {
 
     override fun hashCode(): Int {
         return Objects.hash(id)
+    }
+
+
+    fun completarRutina(rutina: Rutina){
+        if (rutinasSeguidas.find { r -> r == rutina } == null) {
+            throw RutinaException("El usuario no sigue a dicha rutina")
+        }
+        rutinasSeguidas.remove(rutina)
+        rutinasCompletadas.add(rutina)
     }
 
 }

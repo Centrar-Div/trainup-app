@@ -1,7 +1,10 @@
 package ar.com.unq.eis.trainup.services.impl
 
+import ar.com.unq.eis.trainup.controller.Exceptions.RutinaException
 import ar.com.unq.eis.trainup.controller.Exceptions.UsuarioException
+import ar.com.unq.eis.trainup.dao.RutinaDAO
 import ar.com.unq.eis.trainup.dao.UsuarioDAO
+import ar.com.unq.eis.trainup.model.Rutina
 import ar.com.unq.eis.trainup.model.Usuario
 import ar.com.unq.eis.trainup.services.UsuarioService
 import org.apache.coyote.BadRequestException
@@ -10,7 +13,8 @@ import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 
 @Service
-class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO) : UsuarioService {
+class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO,
+                         @Autowired private val rutinaDAO: RutinaDAO) : UsuarioService {
 
     override fun crearUsuario(usuario: Usuario): Usuario {
         val username = usuario.username
@@ -54,5 +58,17 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO) : Usuari
     override fun logIn(username: String, password: String): Usuario {
         return usuarioDAO.findByUsernameAndPassword(username, password)
             .orElseThrow { UsuarioException("usuario no encontrado") }
+    }
+
+    override fun completarRutina(usuarioID:String, rutinaID: String) {
+        val usuario = this.obtenerUsuarioPorID(usuarioID)
+        val rutina = this.rutinaDAO.findByIdOrNull(rutinaID)?: throw RutinaException("No existe rutina con id ${rutinaID}")
+
+        try {
+            usuario.completarRutina(rutina)
+        } catch (e: RutinaException) {
+            throw throw RutinaException("Error completando la rutina: ${e.message}")
+        }
+
     }
 }
