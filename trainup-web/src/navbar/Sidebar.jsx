@@ -3,9 +3,12 @@ import '../styles/sidebar.css'
 import { useNavigate } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHome, faCompass, faCheck, faUser, faSignOutAlt } from '@fortawesome/free-solid-svg-icons'
+import { useLogin } from '../context/LoginContext';
+
 
 const Sidebar = () => {
     const navigate = useNavigate()
+    const { restartLogin } = useLogin()
 
     return (
         <div className='sidebar'>
@@ -31,7 +34,7 @@ const Sidebar = () => {
                     </button>
                 </li>
                 <li className='sidebar-logout'>
-                    <button className='sidebar-btn' onClick={() => navigate('/init')}>
+                    <button className='sidebar-btn' onClick={restartLogin}>
                         <FontAwesomeIcon icon={faSignOutAlt} className="icon" /> Cerrar Sesión
                     </button>
                 </li>

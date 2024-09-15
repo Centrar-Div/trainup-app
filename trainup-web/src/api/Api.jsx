@@ -3,7 +3,8 @@ import { notification } from 'antd';
 import 'antd/dist/reset.css';
 
 // URL base de la API 
-const BASE_URL = 'http://localhost:8080/api';
+// const BASE_URL = 'http://localhost:8080/api';
+axios.defaults.baseURL = "http://localhost:8080/api"
 
 const handleError = (error) => {
   let errorMessage = 'Ocurrió un error inesperado';
@@ -28,7 +29,7 @@ const handleError = (error) => {
 
 const crearRutina = async (rutinaDTO) => {
   try {
-    const response = await axios.post(`${BASE_URL}/rutinas`, rutinaDTO);
+    const response = await axios.post(`/rutinas`, rutinaDTO);
     return response.data;
   } catch (error) {
     handleError(error);
@@ -37,7 +38,7 @@ const crearRutina = async (rutinaDTO) => {
 
 const obtenerRutinas = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/rutinas`);
+    const response = await axios.get(`/rutinas`);
     return response.data;
   } catch (error) {
     handleError(error);
@@ -46,7 +47,7 @@ const obtenerRutinas = async () => {
 
 const obtenerRutinaPorId = async (id) => {
   try {
-    const response = await axios.get(`${BASE_URL}/rutinas/${id}`);
+    const response = await axios.get(`/rutinas/${id}`);
     return response.data;
   } catch (error) {
     handleError(error);
@@ -55,7 +56,7 @@ const obtenerRutinaPorId = async (id) => {
 
 const actualizarRutina = async (rutinaID, rutina) => {
   try {
-    const response = await axios.put(`${BASE_URL}/rutinas/${rutinaID}`, rutina);
+    const response = await axios.put(`/rutinas/${rutinaID}`, rutina);
     return response.data;
   } catch (error) {
     handleError(error);
@@ -64,7 +65,7 @@ const actualizarRutina = async (rutinaID, rutina) => {
 
 const eliminarRutina = async (id) => {
   try {
-    const response = await axios.delete(`${BASE_URL}/rutinas/${id}`);
+    const response = await axios.delete(`/rutinas/${id}`);
     return response.data;
   } catch (error) {
     handleError(error);
@@ -77,7 +78,7 @@ const eliminarRutina = async (id) => {
 
 const crearEjercicio = async (ejercicioDTO) => {
   try {
-    const response = await axios.post(`${BASE_URL}/ejercicios`, ejercicioDTO);
+    const response = await axios.post(`/ejercicios`, ejercicioDTO);
     return response.data;
   } catch (error) {
     handleError(error);
@@ -86,7 +87,7 @@ const crearEjercicio = async (ejercicioDTO) => {
 
 const obtenerEjercicios = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/ejercicios`);
+    const response = await axios.get(`/ejercicios`);
     return response.data;
   } catch (error) {
     handleError(error);
@@ -95,7 +96,7 @@ const obtenerEjercicios = async () => {
 
 const obtenerEjercicioPorId = async (id) => {
   try {
-    const response = await axios.get(`${BASE_URL}/ejercicios/${id}`);
+    const response = await axios.get(`/ejercicios/${id}`);
     return response.data;
   } catch (error) {
     handleError(error);
@@ -104,7 +105,7 @@ const obtenerEjercicioPorId = async (id) => {
 
 const actualizarEjercicio = async (ejercicioID, ejercicio) => {
   try {
-    const response = await axios.put(`${BASE_URL}/ejercicios/${ejercicioID}`, ejercicio);
+    const response = await axios.put(`/ejercicios/${ejercicioID}`, ejercicio);
     return response.data;
   } catch (error) {
     handleError(error);
@@ -113,7 +114,7 @@ const actualizarEjercicio = async (ejercicioID, ejercicio) => {
 
 const eliminarEjercicio = async (id) => {
   try {
-    const response = await axios.delete(`${BASE_URL}/ejercicios/${id}`);
+    const response = await axios.delete(`/ejercicios/${id}`);
     return response.data;
   } catch (error) {
     handleError(error);
@@ -126,7 +127,7 @@ const eliminarEjercicio = async (id) => {
 
 const crearUsuario = async (usuarioDTO) => {
   try {
-    const response = await axios.post(`${BASE_URL}/usuario`, usuarioDTO);
+    const response = await axios.post(`/usuario`, usuarioDTO);
     return response.data;
   } catch (error) {
     handleError(error);
@@ -135,7 +136,7 @@ const crearUsuario = async (usuarioDTO) => {
 
 const obtenerUsuarioPorUsername = async (username) => {
   try {
-    const response = await axios.get(`${BASE_URL}/usuario/username/${username}`);
+    const response = await axios.get(`/usuario/username/${username}`);
     return response.data;
   } catch (error) {
     handleError(error);
@@ -144,7 +145,7 @@ const obtenerUsuarioPorUsername = async (username) => {
 
 const obtenerUsuarios = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/usuario`);
+    const response = await axios.get(`/usuario`);
     return response.data;
   } catch (error) {
     handleError(error);
@@ -153,7 +154,7 @@ const obtenerUsuarios = async () => {
 
 const actualizarUsuario = async (usuarioDTO) => {
   try {
-    const response = await axios.put(`${BASE_URL}/usuario/${usuarioDTO.id}`, usuarioDTO);
+    const response = await axios.put('/usuario', usuarioDTO);  
     return response.data;
   } catch (error) {
     console.error('Error en actualizarUsuario:', error.response || error.message);
@@ -163,15 +164,19 @@ const actualizarUsuario = async (usuarioDTO) => {
 
 const eliminarUsuario = async (id) => {
   try {
-    await axios.delete(`${BASE_URL}/${id}`);
+    await axios.delete(`/${id}`);
     return; 
   } catch (error) {
     handleError(error);
   }
 };
 
+const logearUsuario = (username, password) => {
+  return axios.post('/usuario/login', { username, password });
+}
 
 export {
+  logearUsuario,
   handleError,
   crearRutina,
   obtenerRutinas,
