@@ -1,5 +1,6 @@
 package ar.com.unq.eis.trainup.controller
 
+import ar.com.unq.eis.trainup.controller.Exceptions.RutinaException
 import ar.com.unq.eis.trainup.controller.Exceptions.UsuarioException
 import ar.com.unq.eis.trainup.controller.dto.ErrorDTO
 import ar.com.unq.eis.trainup.controller.dto.LoginDTO
@@ -100,6 +101,16 @@ class UsuarioController(
             ResponseEntity.ok(UsuarioDTO.desdeModelo(usuario))
         } catch (e: UsuarioException) {
             ResponseEntity.badRequest().body(ErrorDTO(e))
+        }
+    }
+
+    @PostMapping("/completarRutina/{userId}/{rutinaId}")
+    fun completarRutina(@PathVariable userId: String, rutinaId: String):ResponseEntity<*>{
+        return try {
+            usuarioService.completarRutina(userId,rutinaId)
+            ResponseEntity.ok("rutina completada exitosamente")
+        }catch (e: RutinaException){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
         }
     }
 }

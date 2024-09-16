@@ -5,7 +5,7 @@ import { actualizarUsuario } from "../api/Api";
 import { useLogin } from '../context/LoginContext';
 
 const Profile = () => {
-  const { user } = useLogin();  
+  const { user } = useLogin();
   console.log("UserDTO", user);
 
   const [profileData, setProfileData] = useState({
@@ -26,18 +26,18 @@ const Profile = () => {
   useEffect(() => {
     if (user) {
       const newProfileData = {
-        name: user.nombre || '', 
-        age: user.edad || '',   
-        birthDate: user.fecNacimiento || '', 
-        address: user.domicilio || '', 
-        phone: user.telefono || '', 
-        gender: user.genero || '', 
-        height: user.altura || '', 
-        weight: user.peso || '',  
-        goal: user.objetivo || '' 
+        name: user.nombre || '',
+        age: user.edad || '',
+        birthDate: user.fecNacimiento || '',
+        address: user.domicilio || '',
+        phone: user.telefono || '',
+        gender: user.genero || '',
+        height: user.altura || '',
+        weight: user.peso || '',
+        goal: user.objetivo || ''
       };
       setProfileData(newProfileData);
-      setEditData(newProfileData); 
+      setEditData(newProfileData);
     }
   }, [user]);
 
@@ -73,7 +73,7 @@ const Profile = () => {
   const handleSave = async () => {
     setProfileData(editData);
     setEditField(null);
-  
+
     try {
       await actualizarUsuario({
         id: user.id,
@@ -92,7 +92,7 @@ const Profile = () => {
       });
     }
   };
-  
+
 
   const renderField = (fieldName, label) => (
     <div className='profile-field'>
@@ -121,8 +121,8 @@ const Profile = () => {
       <div className='profile-header'>
         <h1>Perfil</h1>
       </div>
-      <div className='profile-card'>
-        <div className='profile-info'>
+      <div className='profile-card default-box'>
+        <div className='profile-info default-box column-box'>
           {renderField('name', 'Nombre')}
           {renderField('age', 'Edad')}
           {renderField('birthDate', 'Nacimiento')}

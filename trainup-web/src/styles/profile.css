@@ -4,7 +4,6 @@
     align-items: center;
     justify-content: flex-start;
     height: 100vh;
-    overflow-x: hidden;
     padding: 1rem;
 }
 
@@ -22,6 +21,7 @@
 
 .profile-card {
     display: flex;
+    height: fit-content;
     flex-direction: column;
     align-items: stretch;
     background: #ededed;
@@ -31,7 +31,7 @@
     max-width: 900px;
     padding: 2rem;
     position: relative;
-    overflow: hidden;
+    /* overflow-y: scroll; */
     margin-bottom: 2rem;
     transition: box-shadow 0.3s ease;
 }
@@ -56,7 +56,7 @@
 .profile-info strong {
     color: #333;
     font-weight: bold;
-    width: 150px; 
+    width: 150px;
 }
 
 .profile-info input {

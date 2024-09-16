@@ -14,20 +14,20 @@
     flex-direction: column;
     justify-content: space-between;
     width: 30%;
-    background-color: #ffffff;
+    background-color: #e7e7e7e9;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     overflow: hidden;
-    border-left: 5px solid #8783f1; 
+    border-left: 5px solid #8783f1;
 }
 
 .boxinfo:hover {
     transform: translateY(-10px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-    background-color: #f7f7ff; 
+    background-color: #f7f7ff;
 }
 
 .card-header h3 {
@@ -70,15 +70,15 @@
 }
 
 @media (max-width: 1024px) {
-  .boxinfo {
-    width: 45%;
-  }
+    .boxinfo {
+        width: 45%;
+    }
 }
 
 @media (max-width: 768px) {
-  .boxinfo {
-    width: 100%;
-  }
+    .boxinfo {
+        width: 100%;
+    }
 }
 
 .card-footer {
