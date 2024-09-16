@@ -1,14 +1,21 @@
 package ar.com.unq.eis.trainup.modeloTest
 
+import ar.com.unq.eis.trainup.controller.Exceptions.RutinaException
+import ar.com.unq.eis.trainup.controller.Exceptions.UsuarioException
+import ar.com.unq.eis.trainup.model.Ejercicio
+import ar.com.unq.eis.trainup.model.Rutina
 import ar.com.unq.eis.trainup.model.Usuario
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import java.time.LocalDate
 import kotlin.test.assertEquals
 
 class UsuarioTest {
 
+    lateinit var ejercicios: List<Ejercicio>
+    lateinit var rutina: Rutina
     lateinit var usuario: Usuario
 
     @BeforeEach
@@ -24,6 +31,30 @@ class UsuarioTest {
             "170",
             "60",
             "ganar musculatura"
+        )
+
+         ejercicios = listOf(
+            Ejercicio(
+                nombre = "Sprints en cinta",
+                descripcion = "Sprints a máxima velocidad",
+                repeticiones = 10,
+                peso = 0.0,
+                musculo = "Piernas"
+            ),
+            Ejercicio(
+                nombre = "Salto con rodillas al pecho",
+                descripcion = "Salto explosivo con rodillas al pecho",
+                repeticiones = 15,
+                peso = 0.0,
+                musculo = "Piernas"
+            )
+        )
+
+        rutina = Rutina(
+            nombre = "Rutina HIIT",
+            descripcion = "Entrenamiento de intervalos de alta intensidad",
+            categoria = "HIIT",
+            ejercicios = ejercicios
         )
     }
 
@@ -100,4 +131,33 @@ class UsuarioTest {
 
         assertEquals("El nombre no puede estar vacío", exception.message)
     }
+
+
+    @Test
+    fun `completar rutina exitoso`(){
+
+        // usuario agrega la rutina a sus seguidas. no tiene completadas
+
+        usuario.rutinasSeguidas.add(rutina)
+
+        assertEquals(listOf(rutina),usuario.rutinasSeguidas)
+        assertEquals(emptyList(),usuario.rutinasCompletadas)
+
+        // exercise
+        usuario.completarRutina(rutina)
+
+        // rutina pasa a sus rutinas completadas y deja de estar en seguidas
+        assertEquals(listOf(rutina),usuario.rutinasCompletadas)
+        assertEquals(listOf(),usuario.rutinasSeguidas)
+    }
+
+
+    @Test
+    fun `completar rutina fallido`(){
+        val exception = assertThrows<UsuarioException> {
+            usuario.completarRutina(rutina)
+        }
+        assertEquals("El usuario no sigue a dicha rutina", exception.message)
+    }
+
 }

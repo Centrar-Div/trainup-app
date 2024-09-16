@@ -1,6 +1,6 @@
 package ar.com.unq.eis.trainup.model
 
-import ar.com.unq.eis.trainup.controller.Exceptions.RutinaException
+import ar.com.unq.eis.trainup.controller.Exceptions.UsuarioException
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.index.Indexed
 import org.springframework.data.mongodb.core.mapping.Document
@@ -77,7 +77,7 @@ class Usuario() {
 
     fun completarRutina(rutina: Rutina){
         if (rutinasSeguidas.find { r -> r == rutina } == null) {
-            throw RutinaException("El usuario no sigue a dicha rutina")
+            throw UsuarioException("El usuario no sigue a dicha rutina")
         }
         rutinasSeguidas.remove(rutina)
         rutinasCompletadas.add(rutina)
