@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { logearUsuario } from '../api/Api'; 
+import { obtenerUsuarioPorUsername, handleError, logearUsuario } from '../api/Api'; 
 import { notification } from 'antd';
 import 'antd/dist/reset.css';
 
@@ -12,8 +12,10 @@ export const LoginProvider = ({children}) => {
     const navigate = useNavigate()
     
     useEffect(() => {
+
         const username = localStorage.getItem('username');
         const password = localStorage.getItem('password');
+        console.log(user);
         if (username && password) {
             logearUsuario(username, password).then(({data}) => {
                 setUser(data);

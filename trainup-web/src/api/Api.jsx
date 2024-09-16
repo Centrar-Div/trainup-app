@@ -154,7 +154,7 @@ const obtenerUsuarios = async () => {
 
 const actualizarUsuario = async (usuarioDTO) => {
   try {
-    const response = await axios.put('/usuario', usuarioDTO);  
+    const response = await axios.put(`/usuario/${usuarioDTO.id}`, usuarioDTO);
     return response.data;
   } catch (error) {
     console.error('Error en actualizarUsuario:', error.response || error.message);

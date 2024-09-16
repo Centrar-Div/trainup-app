@@ -66,7 +66,7 @@ class UsuarioController(
         }
     }
 
-    @PutMapping
+    @PutMapping()
     fun actualizarUsuario(@RequestBody usuarioDTO: UsuarioDTO): ResponseEntity<*> {
         return try {
             val usuario = usuarioService.actualizarUsuario(usuarioDTO.aModelo())

@@ -20,19 +20,9 @@ class UsuarioDTO(
 
 
     fun aModelo(): Usuario {
-        val usuario = Usuario(
-            username = username,
-            password = password,
-            nombre = nombre,
-            edad = edad!!,
-            fecNacimiento = fecNacimiento!!,
-            telefono = telefono,
-            genero = genero,
-            altura = altura,
-            peso = peso,
-            objetivo = objetivo
-        )
-        usuario.id = this.id
+        val usuario: Usuario = Usuario(username, password, nombre, edad!!, fecNacimiento!!, telefono, genero, altura, peso, objetivo)
+        usuario.id = id
+
         return usuario
     }
 
