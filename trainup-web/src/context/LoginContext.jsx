@@ -8,7 +8,6 @@ const LoginContext = createContext()
 
 export const LoginProvider = ({children}) => {
     
-    const [isLogin, setIsLogin] = useState(false)
     const [user, setUser] = useState(null);
     const navigate = useNavigate()
     
@@ -42,14 +41,20 @@ export const LoginProvider = ({children}) => {
     };
 
     const restartLogin = () => {
-        setIsLogin(false);
         setUser(null);
-        localStorage.removeItem('user'); 
+        localStorage.clear(); 
         navigate('/init');
+        notification.success({ 
+            message: 'Sesión Cerrada',
+            description: 'Has cerrado la sesión correctamente.',
+            placement: 'topRight',
+        });
     };
+    
+    
   
     return (
-        <LoginContext.Provider value={{ isLogin, user, restartLogin, validateLogin }}>
+        <LoginContext.Provider value={{ user, restartLogin, validateLogin }}>
             {children}
         </LoginContext.Provider>
     );

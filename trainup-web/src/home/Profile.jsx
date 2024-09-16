@@ -5,19 +5,21 @@ import { actualizarUsuario } from "../api/Api";
 import { useLogin } from '../context/LoginContext';
 
 const Profile = () => {
-  const { user } = useLogin();
+  const { user } = useLogin();  
   console.log("UserDTO", user);
 
   const [profileData, setProfileData] = useState({
-    name: '',
-    age: '',
-    birthDate: '',
-    address: '',
-    phone: '',
-    gender: '',
-    height: '',
-    weight: '',
-    goal: ''
+    id: '',
+    username: '',
+    password: '',
+    nombre: '',
+    edad: '',
+    fecNacimiento: '',
+    telefono: '',
+    genero: '',
+    altura: '',
+    peso: '',
+    objetivo: ''
   });
 
   const [editField, setEditField] = useState(null);
@@ -26,15 +28,17 @@ const Profile = () => {
   useEffect(() => {
     if (user) {
       const newProfileData = {
-        name: user.nombre || '',
-        age: user.edad || '',
-        birthDate: user.fecNacimiento || '',
-        address: user.domicilio || '',
-        phone: user.telefono || '',
-        gender: user.genero || '',
-        height: user.altura || '',
-        weight: user.peso || '',
-        goal: user.objetivo || ''
+        id: user.id || '',
+        username: user.username || '',
+        password: user.password || '',
+        nombre: user.nombre || '', 
+        edad: user.edad || '',   
+        fecNacimiento: user.fecNacimiento || '', 
+        telefono: user.telefono || '', 
+        genero: user.genero || '', 
+        altura: user.altura || '', 
+        peso: user.peso || '',  
+        objetivo: user.objetivo || '' 
       };
       setProfileData(newProfileData);
       setEditData(newProfileData);
@@ -75,10 +79,7 @@ const Profile = () => {
     setEditField(null);
 
     try {
-      await actualizarUsuario({
-        id: user.id,
-        ...editData
-      });
+      await actualizarUsuario(editData); 
       notification.success({
         message: 'Actualización Exitosa',
         description: 'Tus datos se han actualizado correctamente.',
@@ -121,17 +122,16 @@ const Profile = () => {
       <div className='profile-header'>
         <h1>Perfil</h1>
       </div>
-      <div className='profile-card default-box'>
-        <div className='profile-info default-box column-box'>
-          {renderField('name', 'Nombre')}
-          {renderField('age', 'Edad')}
-          {renderField('birthDate', 'Nacimiento')}
-          {renderField('address', 'Domicilio')}
-          {renderField('phone', 'Teléfono')}
-          {renderField('gender', 'Género')}
-          {renderField('height', 'Altura')}
-          {renderField('weight', 'Peso')}
-          {renderField('goal', 'Objetivo')}
+      <div className='profile-card'>
+        <div className='profile-info'>
+          {renderField('nombre', 'Nombre')}
+          {renderField('edad', 'Edad')}
+          {renderField('fecNacimiento', 'Nacimiento')}
+          {renderField('telefono', 'Teléfono')}
+          {renderField('genero', 'Género')}
+          {renderField('altura', 'Altura')}
+          {renderField('peso', 'Peso')}
+          {renderField('objetivo', 'Objetivo')}
         </div>
         <div className='profile-actions'>
           <button className='save-btn' onClick={handleSave}>Guardar Cambios</button>

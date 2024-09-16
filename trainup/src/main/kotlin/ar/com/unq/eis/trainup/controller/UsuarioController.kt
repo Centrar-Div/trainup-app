@@ -105,11 +105,13 @@ class UsuarioController(
     }
 
     @PostMapping("/completarRutina/{userId}/{rutinaId}")
-    fun completarRutina(@PathVariable userId: String, rutinaId: String):ResponseEntity<*>{
+    fun completarRutina(@PathVariable userId: String, @PathVariable rutinaId: String):ResponseEntity<*>{
         return try {
             usuarioService.completarRutina(userId,rutinaId)
             ResponseEntity.ok("rutina completada exitosamente")
         }catch (e: RutinaException){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
+        }catch (e: UsuarioException){
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
         }
     }

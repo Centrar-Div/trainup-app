@@ -26,6 +26,7 @@ class UsuarioDTO(
         return usuario
     }
 
+
     companion object {
         fun desdeModelo(usuario: Usuario): UsuarioDTO {
             return UsuarioDTO(usuario.id,

@@ -66,8 +66,9 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO,
 
         try {
             usuario.completarRutina(rutina)
-        } catch (e: RutinaException) {
-            throw throw RutinaException("Error completando la rutina: ${e.message}")
+            actualizarUsuario(usuario)
+        } catch (e: UsuarioException) {
+            throw UsuarioException("El usuario ${usuario.username} no sigue a rutina id: ${rutinaID}")
         }
 
     }
