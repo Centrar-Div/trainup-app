@@ -13,6 +13,7 @@ import HomePage from './home/HomePage'
 import Rutina from './home/Rutina'
 import InProgress from './utils/InProgress'
 import Profile from './home/Profile'
+import RutinasCompletadas from './home/RutinasCompletadas'
 
 const Layout = () => {
   const location = useLocation()
@@ -41,6 +42,7 @@ function App() {
           <Route path='home' element={<HomePage/>} />
           <Route path='home/rutina' element={<Rutina/>}/>
           <Route path='home/profile' element={<Profile/>}/>
+          <Route path='home/completadas' element={<RutinasCompletadas/>}/>
           <Route path='home/inProgress' element={<InProgress/>}/>
         </Route>
         <Route path='/login' element={<Login/>} />

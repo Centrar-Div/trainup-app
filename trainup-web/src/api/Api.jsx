@@ -175,6 +175,17 @@ const logearUsuario = (username, password) => {
   return axios.post('/usuario/login', { username, password });
 }
 
+const completarRutina = async (userId, rutinaId) => {
+  try {
+    const response = await axios.post(`/usuario/completarRutina/${userId}/${rutinaId}`);
+
+    return response.data;
+  } catch (error) {
+    handleError(error);
+  }
+};
+
+
 export {
   logearUsuario,
   handleError,
@@ -192,5 +203,6 @@ export {
   obtenerUsuarioPorUsername,
   obtenerUsuarios,
   actualizarUsuario,
-  eliminarUsuario
+  eliminarUsuario,
+  completarRutina
 };
