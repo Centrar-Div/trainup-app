@@ -92,7 +92,7 @@ class TrainupApplicationTests {
             categoria = "Fuerza",
             ejercicios = ejerciciosFuerza
         )
-        rutinaService.crearRutina(rutinaFuerza)
+       val rutinaFuerzaPersistida = rutinaService.crearRutina(rutinaFuerza)
 
         // Rutina 2 - Hipertrofia
         val ejerciciosHipertrofia = listOf(
@@ -153,7 +153,7 @@ class TrainupApplicationTests {
             categoria = "Hipertrofia",
             ejercicios = ejerciciosHipertrofia
         )
-        rutinaService.crearRutina(rutinaHipertrofia)
+        val rutinaHipertrofiaPersistida = rutinaService.crearRutina(rutinaHipertrofia)
 
         // Rutina 3 - Resistencia
         val ejerciciosResistencia = listOf(
@@ -208,7 +208,7 @@ class TrainupApplicationTests {
             categoria = "Resistencia",
             ejercicios = ejerciciosResistencia
         )
-        rutinaService.crearRutina(rutinaResistencia)
+        val rutinaResistenciaPersisitida = rutinaService.crearRutina(rutinaResistencia)
 
         // Rutina 4 - Funcional
         val ejerciciosFuncional = listOf(
@@ -269,7 +269,7 @@ class TrainupApplicationTests {
             categoria = "Funcional",
             ejercicios = ejerciciosFuncional
         )
-        rutinaService.crearRutina(rutinaFuncional)
+        var rutinaFuncionalPerisistida = rutinaService.crearRutina(rutinaFuncional)
 
         usuario0 = Usuario(
             "userMock",
@@ -425,9 +425,9 @@ class TrainupApplicationTests {
 
 
 
-        usuario0.rutinasSeguidas.add(rutinaPotencia)
-        usuario0.rutinasSeguidas.add(rutinaCore)
-        usuario0.rutinasSeguidas.add(rutinaHIIT)
+        usuario0.rutinasSeguidas.add(rutinaFuerzaPersistida)
+        usuario0.rutinasSeguidas.add(rutinaFuncionalPerisistida)
+        usuario0.rutinasSeguidas.add(rutinaHipertrofiaPersistida)
 
 
         usuarioService.crearUsuario(usuario0)

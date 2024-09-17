@@ -8,6 +8,7 @@ class UsuarioDTO(
     var username: String = "",
     var password: String = "",
     var rutinasSeguidas: List<RutinaDTO> = mutableListOf(),
+    var rutinasCompletadas: List<RutinaDTO> = mutableListOf(),
     var nombre: String = "",
     var edad: Int? = null,
     var fecNacimiento: LocalDate? = null,
@@ -18,21 +19,23 @@ class UsuarioDTO(
     var objetivo: String = ""
 ) {
 
-
     fun aModelo(): Usuario {
-        val usuario: Usuario = Usuario(username, password, nombre, edad!!, fecNacimiento!!, telefono, genero, altura, peso, objetivo)
+        val usuario = Usuario(username, password, nombre, edad!!, fecNacimiento!!, telefono, genero, altura, peso, objetivo)
         usuario.id = id
+        usuario.rutinasSeguidas.addAll(rutinasSeguidas.map { it.aModelo() })
+        usuario.rutinasCompletadas.addAll(rutinasCompletadas.map { it.aModelo() })
 
         return usuario
     }
 
-
     companion object {
         fun desdeModelo(usuario: Usuario): UsuarioDTO {
-            return UsuarioDTO(usuario.id,
+            return UsuarioDTO(
+                usuario.id,
                 usuario.username,
                 usuario.password,
-                usuario.rutinasSeguidas.map { rutina -> RutinaDTO.desdeModelo(rutina) },
+                usuario.rutinasSeguidas.map { RutinaDTO.desdeModelo(it) },
+                usuario.rutinasCompletadas.map { RutinaDTO.desdeModelo(it) },
                 usuario.nombre,
                 usuario.edad,
                 usuario.fecNacimiento,
@@ -41,8 +44,7 @@ class UsuarioDTO(
                 usuario.altura,
                 usuario.peso,
                 usuario.objetivo
-                )
+            )
         }
     }
-
 }
