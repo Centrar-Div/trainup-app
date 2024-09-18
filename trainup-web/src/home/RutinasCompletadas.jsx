@@ -28,7 +28,9 @@ const RutinasCompletadas = () => {
         <p className="rutinas-completadas-summary">
           ¡Felicidades! Has completado <span className="count">{rutinasCount}</span> {rutinasCount === 1 ? 'rutina' : 'rutinas'}.
         </p>
-        <button className="explore-btn" onClick={() => navigate('/es/home/inProgress')}>Ver Más Rutinas</button>
+        {rutinasCount > 0 && (
+          <button className="explore-btn" onClick={() => navigate('/es/home/inProgress')}>Ver Más Rutinas</button>
+        )}
       </div>
       <div className="list-rutinas-container">
         <ListRutinas rutinas={user.rutinasCompletadas} esCompletada={true} />

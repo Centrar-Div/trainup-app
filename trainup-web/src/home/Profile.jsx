@@ -6,8 +6,6 @@ import { useLogin } from '../context/LoginContext';
 
 const Profile = () => {
   const { user } = useLogin();  
-  console.log("UserDTO", user);
-
   const [profileData, setProfileData] = useState({
     id: '',
     username: '',
@@ -24,7 +22,11 @@ const Profile = () => {
 
   const [editField, setEditField] = useState(null);
   const [editData, setEditData] = useState(profileData);
+  
+  // TEMPORAL EL SIGUIENTE SPRINT LO SACAN! 
+  const showButtons = false;
 
+  
   useEffect(() => {
     if (user) {
       const newProfileData = {
@@ -106,13 +108,17 @@ const Profile = () => {
         disabled={editField !== fieldName && editField !== null}
         className={editField === fieldName ? 'editable' : 'disabled'}
       />
-      {editField === fieldName ? (
+      {showButtons && (
         <>
-          <button className='cancel-btn' onClick={handleCancel}>Cancelar</button>
-          <button className='save-btn' onClick={handleSaveProfileData}>Guardar</button>
+          {editField === fieldName ? (
+            <>
+              <button className='cancel-btn' onClick={handleCancel}>Cancelar</button>
+              <button className='save-btn' onClick={handleSaveProfileData}>Guardar</button>
+            </>
+          ) : (
+            <button className='edit-btn' onClick={() => handleEditClick(fieldName)}>Editar</button>
+          )}
         </>
-      ) : (
-        <button className='edit-btn' onClick={() => handleEditClick(fieldName)}>Editar</button>
       )}
     </div>
   );
@@ -134,7 +140,9 @@ const Profile = () => {
           {renderField('objetivo', 'Objetivo')}
         </div>
         <div className='profile-actions'>
-          <button className='save-btn' onClick={handleSave}>Guardar Cambios</button>
+          {showButtons && (
+            <button className='save-btn' onClick={handleSave}>Guardar Cambios</button>
+          )}
         </div>
       </div>
     </div>
