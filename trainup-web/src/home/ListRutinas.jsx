@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLogin } from '../context/LoginContext';
 import { completarRutina } from '../api/Api';
 import NotRutins from '../utils/NotRutins';
+import Loader from '../utils/Loader';
 
 const ListRutinas = ({ rutinas, esCompletada }) => {
   const navigate = useNavigate();
@@ -27,6 +28,7 @@ const ListRutinas = ({ rutinas, esCompletada }) => {
   };
 
   const marcarComoCompletada = async () => {
+    setLoading(true); 
     try {
       await completarRutina(user.id, rutinaIdToComplete);
       notification.success({
@@ -34,18 +36,21 @@ const ListRutinas = ({ rutinas, esCompletada }) => {
         description: 'Se ha completado la rutina correctamente.',
         placement: 'topRight',
       });
-      setIsModalVisible(false); 
+      setIsModalVisible(false);
     } catch (error) {
       notification.error({
         message: 'Error',
         description: 'Hubo un problema al completar la rutina. Inténtalo de nuevo.',
         placement: 'topRight',
       });
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="container-boxinfo">
+      {loading && <Loader />}
       {
         rutinas && rutinas.length > 0 ? (
           rutinas.map(rutina => (
