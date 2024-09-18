@@ -24,7 +24,7 @@ const Sidebar = () => {
                     </button>
                 </li>
                 <li>
-                    <button className='sidebar-btn' onClick={() => navigate('/es/home/inProgress')}>
+                    <button className='sidebar-btn' onClick={() => navigate('/es/home/completadas')}>
                         <FontAwesomeIcon icon={faCheck} className="icon" /> Completadas
                     </button>
                 </li>

@@ -14,7 +14,7 @@
     flex-direction: column;
     justify-content: space-between;
     width: 30%;
-    background-color: #e7e7e7e9;
+    background-color: #e7e7e7;
     padding: 20px;
     border-radius: 15px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
@@ -30,7 +30,7 @@
     background-color: #f7f7ff;
 }
 
-.card-header h3 {
+.card-header h2 {
     font-size: 1.8rem;
     color: #2c3e50;
     margin-bottom: 12px;
@@ -51,34 +51,6 @@
     margin-bottom: 15px;
     font-size: 1rem;
     line-height: 1.6;
-}
-
-.card-details {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.card-details p {
-    font-size: 1rem;
-    color: #666;
-}
-
-.card-details p strong {
-    color: #333;
-    font-weight: bold;
-}
-
-@media (max-width: 1024px) {
-    .boxinfo {
-        width: 45%;
-    }
-}
-
-@media (max-width: 768px) {
-    .boxinfo {
-        width: 100%;
-    }
 }
 
 .card-footer {
@@ -102,3 +74,58 @@
     color: #999;
     font-size: 0.9rem;
 }
+
+.card-footer .status {
+    font-size: 1rem;
+    color: #333;
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-transform: uppercase;
+    font-weight: bold;
+    border: 1px solid #666; 
+}
+
+.card-footer .status.completed {
+    background-color: #d6ffd1;
+    border-color: #95fd98;
+}
+
+.card-footer .status.incomplete {
+    background-color: #ffd1d1;
+    border-color: #ff9890;
+}
+
+.complete-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #8783f1;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.complete-btn:hover {
+    background-color: #5a56b7;
+    transform: scale(1.1);
+}
+
+.complete-btn.completed {
+    background-color: #4caf50;
+    color: white;
+}
+
+.boxinfo {
+    position: relative;
+}
+
+
+

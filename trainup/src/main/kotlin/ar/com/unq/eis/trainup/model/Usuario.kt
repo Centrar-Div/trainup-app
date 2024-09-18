@@ -75,12 +75,13 @@ class Usuario() {
     }
 
 
-    fun completarRutina(rutina: Rutina){
-        if (rutinasSeguidas.find { r -> r == rutina } == null) {
+    fun completarRutina(rutina: Rutina) {
+        if (rutinasSeguidas.find { r -> r.id == rutina.id } == null) {
             throw UsuarioException("El usuario no sigue a dicha rutina")
         }
-        rutinasSeguidas.remove(rutina)
+        rutinasSeguidas.removeIf { r -> r.id == rutina.id }
         rutinasCompletadas.add(rutina)
     }
+
 
 }
