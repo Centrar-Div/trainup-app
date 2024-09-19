@@ -34,7 +34,7 @@ const ListRutinas = ({ rutinas, esCompletada }) => {
         description: 'Se ha completado la rutina correctamente.',
         placement: 'topRight',
       });
-      setIsModalVisible(false); 
+      setIsModalVisible(false);
       window.location.reload();
     } catch (error) {
       notification.error({
