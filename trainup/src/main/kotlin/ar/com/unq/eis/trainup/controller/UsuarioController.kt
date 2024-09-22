@@ -73,8 +73,11 @@ class UsuarioController(
             ResponseEntity.ok(UsuarioDTO.desdeModelo(usuario))
         }catch (e: UsuarioException){
             ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error inesperado")
         }
     }
+
 
     @DeleteMapping("/{id}")
     fun eliminarUsuario(@PathVariable userId: String): ResponseEntity<*> {
