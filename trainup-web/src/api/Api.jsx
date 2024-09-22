@@ -27,14 +27,16 @@ const handleError = (error) => {
  * Funciones relacionadas con "Rutinas"
 */
 
-const crearRutina = async (rutinaDTO) => {
-  try {
-    const response = await axios.post(`/rutinas`, rutinaDTO);
-    return response.data;
-  } catch (error) {
-    handleError(error);
-  }
-};
+const crearRutina = (body) => axios.post(`/rutinas`, body)
+
+// const crearRutina = async (body) => {
+//   try {
+//     const response = await axios.post(`/rutinas`, body);
+//     return response.data;
+//   } catch (error) {
+//     handleError(error);
+//   }
+// };
 
 const obtenerRutinas = async () => {
   try {

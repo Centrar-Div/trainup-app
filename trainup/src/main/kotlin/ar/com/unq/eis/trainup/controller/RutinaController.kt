@@ -1,5 +1,6 @@
 package ar.com.unq.eis.trainup.controller
 
+import ar.com.unq.eis.trainup.controller.dto.BodyRutinaDTO
 import ar.com.unq.eis.trainup.controller.dto.EjercicioDTO
 import ar.com.unq.eis.trainup.controller.dto.ErrorDTO
 import ar.com.unq.eis.trainup.controller.dto.RutinaDTO
@@ -18,39 +19,16 @@ class RutinaController(
 ) {
 
     @PostMapping
-    fun crearRutina(@RequestBody rutinaDTO: RutinaDTO): ResponseEntity<Any> {
-        return try {
-            val rutina = Rutina(
-                nombre = rutinaDTO.nombre,
-                descripcion = rutinaDTO.descripcion,
-                categoria = rutinaDTO.categoria,
-                ejercicios = rutinaDTO.ejercicios.map {
-                    Ejercicio(
-                        id = it.id,
-                        nombre = it.nombre,
-                        descripcion = it.descripcion,
-                        repeticiones = it.repeticiones,
-                        peso = it.peso,
-                        musculo = it.musculo
-                    )
-                }.toMutableList()
-            )
-            val nuevaRutina = rutinaService.crearRutina(rutina)
-            ResponseEntity.ok(
-                RutinaDTO(
-                    nuevaRutina.id,
-                    nuevaRutina.nombre,
-                    nuevaRutina.descripcion,
-                    nuevaRutina.categoria,
-                    nuevaRutina.fechaCreacion,
-                    nuevaRutina.ejercicios.map {
-                        EjercicioDTO(it.id, it.nombre, it.descripcion, it.repeticiones, it.peso, it.musculo)
-                    }.toMutableList()
-                )
-            )
-        } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorDTO(e))
+    fun crearRutina(@RequestBody bodyRutinaDTO: BodyRutinaDTO): ResponseEntity<Any> {
+
+        try {
+            return rutinaService.crearRutina(bodyRutinaDTO.aModelo()).let {
+                ResponseEntity.status(HttpStatus.CREATED).body(RutinaDTO.desdeModelo(it))
+            }
+        } catch (e: Exception ){
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(Exception("El body de la rutina no es valido")))
         }
+
     }
 
     @GetMapping
