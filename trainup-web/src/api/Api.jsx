@@ -130,6 +130,8 @@ const obtenerUsuarioPorUsername = async (username) => {
   }
 };
 
+const obtenerUsuarioPorID = (id) => axios.get(`usuario/id/${id}`)
+
 const obtenerUsuarios = async () => {
   try {
     const response = await axios.get(`/usuario`);
@@ -192,5 +194,6 @@ export {
   obtenerUsuarios,
   actualizarUsuario,
   eliminarUsuario,
-  completarRutina
+  completarRutina,
+  obtenerUsuarioPorID
 };

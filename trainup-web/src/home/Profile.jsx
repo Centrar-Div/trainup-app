@@ -56,7 +56,6 @@ const Profile = () => {
         ...prevData,
         [name]: value,
       }));
-
       if (name === 'edad') {
         const yearOfBirth = new Date().getFullYear() - Math.max(0, Math.min(99, value));
         setEditData(prevData => ({
