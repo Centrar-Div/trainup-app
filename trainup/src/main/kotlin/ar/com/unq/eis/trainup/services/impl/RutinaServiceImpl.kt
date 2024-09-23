@@ -51,6 +51,8 @@ class RutinaServiceImpl(
             if (rutinaExistente.isPresent) {
                 val rutina = rutinaExistente.get()
                 rutina.nombre = rutinaActualizada.nombre
+                rutina.descripcion = rutinaActualizada.descripcion
+                rutina.categoria = rutinaActualizada.categoria
                 rutina.ejercicios = rutinaActualizada.ejercicios
                 rutinaDAO.save(rutina)
             } else {

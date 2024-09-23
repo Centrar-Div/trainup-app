@@ -12,6 +12,22 @@
   transition: all 0.3s ease;
 }
 
+.none-style-btn > .icon {
+  color: #2424245d;
+  transition: 0.2s;
+}
+
+.none-style-btn > .icon:hover {
+  color: #242424a1;
+  transition: 0.2s;
+}
+.none-style-btn {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
 .modern-btn {
   padding: 8px 35px;
   border: 2px solid #2c2c2c;
@@ -109,3 +125,4 @@
   height: 50px !important;
   border-radius: 50%;
 }
+

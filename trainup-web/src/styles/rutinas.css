@@ -127,5 +127,12 @@
     position: relative;
 }
 
+.card-btns {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    justify-content: flex-end;
+}
+
 
 

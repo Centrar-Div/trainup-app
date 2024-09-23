@@ -24,7 +24,7 @@ const Sidebar = () => {
                     </button>
                 </li>
                 <li>
-                    <button className='sidebar-btn' onClick={() => navigate('/es/home/inProgress')}>
+                    <button className='sidebar-btn' onClick={() => navigate('/es/home/explorador')}>
                         <FontAwesomeIcon icon={faCompass} className="icon" /> Explorar
                     </button>
                 </li>

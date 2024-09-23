@@ -28,24 +28,9 @@ const handleError = (error) => {
 */
 
 const crearRutina = (body) => axios.post(`/rutinas`, body)
-
-// const crearRutina = async (body) => {
-//   try {
-//     const response = await axios.post(`/rutinas`, body);
-//     return response.data;
-//   } catch (error) {
-//     handleError(error);
-//   }
-// };
-
-const obtenerRutinas = async () => {
-  try {
-    const response = await axios.get(`/rutinas`);
-    return response.data;
-  } catch (error) {
-    handleError(error);
-  }
-};
+const obtenerRutinas = () => axios.get(`/rutinas`)
+const actualizarRutina = (id, body) => axios.put(`/rutinas/${id}`, body)
+const eliminarRutina = (id) => axios.delete(`/rutinas/${id}`)
 
 const obtenerRutinaPorId = async (id) => {
   try {
@@ -56,23 +41,23 @@ const obtenerRutinaPorId = async (id) => {
   }
 };
 
-const actualizarRutina = async (rutinaID, rutina) => {
-  try {
-    const response = await axios.put(`/rutinas/${rutinaID}`, rutina);
-    return response.data;
-  } catch (error) {
-    handleError(error);
-  }
-};
+// const actualizarRutina = async (rutinaID, rutina) => {
+//   try {
+//     const response = await axios.put(`/rutinas/${rutinaID}`, rutina);
+//     return response.data;
+//   } catch (error) {
+//     handleError(error);
+//   }
+// };
 
-const eliminarRutina = async (id) => {
-  try {
-    const response = await axios.delete(`/rutinas/${id}`);
-    return response.data;
-  } catch (error) {
-    handleError(error);
-  }
-};
+// const eliminarRutina = async (id) => {
+//   try {
+//     const response = await axios.delete(`/rutinas/${id}`);
+//     return response.data;
+//   } catch (error) {
+//     handleError(error);
+//   }
+// };
 
 /* 
 * Funciones relacionadas con "Ejercicios"
