@@ -1,36 +1,31 @@
 import React, { useState } from 'react'
-import { notification } from 'antd';
-import Form from '../login/Form'
-import ElementForm from '../login/ElementForm'
-import { crearRutina } from '../api/Api'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
+import { actualizarRutina } from '../api/Api';
+import Form from '../login/Form';
+import ElementForm from '../login/ElementForm';
 
-
-const CrearRutina = () => {
-
+const EditarRutina = () => {
+    const location = useLocation()
+    const {rutinaId, rutinaNombre, rutinaDescripcion, rutinaCategoria} = location.state;
     const navigate = useNavigate()
 
-    const [nombre, setNombre] = useState('')
-    const [descripcion, setDescripcion] = useState('')
-    const [categoria, setCategoria] = useState('')
+    const [nombre, setNombre] = useState(rutinaNombre)
+    const [descripcion, setDescripcion] = useState(rutinaDescripcion)
+    const [categoria, setCategoria] = useState(rutinaCategoria)
 
 
     const handlerSubmit = (e) => {
-        e.preventDefault(); // no eliminar
-        crearRutina({nombre, descripcion, categoria}).then(({ data }) => {
-            navigate('/es/home')
+        e.preventDefault(); 
+        actualizarRutina(rutinaId, {nombre, descripcion, categoria}).then(({ data }) => {
+            navigate('/es/home/explorador')
         }).catch((error) => {
-            notification.error({
-                message: 'Campos vacios',
-                description: 'Por favor complete todos los campos',
-                placement: 'topRight',
-              });
+            console.error(error);
         });
     }
 
   return (
     <div className='max-size-vh flx center '>
-        <Form name='Crear Rutina' btnName='Crear Rutina' handlerSubmit={handlerSubmit}> 
+        <Form name='Editar Rutina' btnName='Editar Rutina' handlerSubmit={handlerSubmit}> 
         
             <ElementForm
                 title='Titulo' 
@@ -55,7 +50,7 @@ const CrearRutina = () => {
             />
         </Form>
     </div>
-  )
+)
 }
 
-export default CrearRutina
+export default EditarRutina

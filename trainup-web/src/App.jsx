@@ -15,6 +15,8 @@ import InProgress from './utils/InProgress'
 import Profile from './home/Profile'
 import RutinasCompletadas from './home/RutinasCompletadas'
 import CrearRutina from './home/CrearRutina'
+import ExploradorPage from './home/ExploradorPage'
+import EditarRutina from './home/EditarRutina'
 
 const Layout = () => {
   const location = useLocation()
@@ -45,7 +47,8 @@ function App() {
           <Route path='home/profile' element={<Profile/>}/>
           <Route path='home/completadas' element={<RutinasCompletadas/>}/>
           <Route path='home/crear/rutina' element={<CrearRutina/>}/>
-          <Route path='home/inProgress' element={<InProgress/>}/>
+          <Route path='home/explorador' element={<ExploradorPage/>}/>
+          <Route path='home/rutina/editar' element={<EditarRutina/>}/>
         </Route>
         <Route path='/login' element={<Login/>} />
         <Route path='*' element={<Navigate to='/init'/>}/>
