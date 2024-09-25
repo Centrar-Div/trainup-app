@@ -6,7 +6,7 @@ import ElementForm from '../login/ElementForm';
 
 const EditarRutina = () => {
     const location = useLocation()
-    const {rutinaId, rutinaNombre, rutinaDescripcion, rutinaCategoria} = location.state;
+    const { rutinaId, rutinaNombre, rutinaDescripcion, rutinaCategoria } = location.state;
     const navigate = useNavigate()
 
     const [nombre, setNombre] = useState(rutinaNombre)
@@ -15,42 +15,42 @@ const EditarRutina = () => {
 
 
     const handlerSubmit = (e) => {
-        e.preventDefault(); 
-        actualizarRutina(rutinaId, {nombre, descripcion, categoria}).then(({ data }) => {
+        e.preventDefault();
+        actualizarRutina(rutinaId, { nombre, descripcion, categoria }).then(({ data }) => {
             navigate('/es/home/explorador')
         }).catch((error) => {
             console.error(error);
         });
     }
 
-  return (
-    <div className='max-size-vh flx center '>
-        <Form name='Editar Rutina' btnName='Editar Rutina' handlerSubmit={handlerSubmit}> 
-        
-            <ElementForm
-                title='Titulo' 
-                type='text' 
-                id='titulo' 
-                name='titulo' 
-                setText={setNombre}
-            />
-            <ElementForm
-                title='Descripcion' 
-                type='text' 
-                id='descripcion' 
-                name='descripcion' 
-                setText={setDescripcion}
-            />
-            <ElementForm
-                title='Categoria' 
-                type='text' 
-                id='categoria' 
-                name='categoria' 
-                setText={setCategoria}
-            />
-        </Form>
-    </div>
-)
+    return (
+        <div className='max-size-vh flx center '>
+            <Form name='Editar Rutina' btnName='Guardar' handlerSubmit={handlerSubmit}>
+
+                <ElementForm
+                    title='Titulo'
+                    type='text'
+                    id='titulo'
+                    name='titulo'
+                    setText={setNombre}
+                />
+                <ElementForm
+                    title='Descripcion'
+                    type='text'
+                    id='descripcion'
+                    name='descripcion'
+                    setText={setDescripcion}
+                />
+                <ElementForm
+                    title='Categoria'
+                    type='text'
+                    id='categoria'
+                    name='categoria'
+                    setText={setCategoria}
+                />
+            </Form>
+        </div>
+    )
 }
 
 export default EditarRutina

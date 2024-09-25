@@ -17,45 +17,45 @@ const CrearRutina = () => {
 
     const handlerSubmit = (e) => {
         e.preventDefault(); // no eliminar
-        crearRutina({nombre, descripcion, categoria}).then(({ data }) => {
+        crearRutina({ nombre, descripcion, categoria }).then(({ data }) => {
             navigate('/es/home')
         }).catch((error) => {
             notification.error({
                 message: 'Campos vacios',
                 description: 'Por favor complete todos los campos',
                 placement: 'topRight',
-              });
+            });
         });
     }
 
-  return (
-    <div className='max-size-vh flx center '>
-        <Form name='Nueva Rutina' btnName='Nueva Rutina' handlerSubmit={handlerSubmit}> 
-        
-            <ElementForm
-                title='Titulo' 
-                type='text' 
-                id='titulo' 
-                name='titulo' 
-                setText={setNombre}
-            />
-            <ElementForm
-                title='Descripcion' 
-                type='text' 
-                id='descripcion' 
-                name='descripcion' 
-                setText={setDescripcion}
-            />
-            <ElementForm
-                title='Categoria' 
-                type='text' 
-                id='categoria' 
-                name='categoria' 
-                setText={setCategoria}
-            />
-        </Form>
-    </div>
-  )
+    return (
+        <div className='max-size-vh flx center '>
+            <Form name='Nueva Rutina' btnName='Guardar' handlerSubmit={handlerSubmit}>
+
+                <ElementForm
+                    title='Titulo'
+                    type='text'
+                    id='titulo'
+                    name='titulo'
+                    setText={setNombre}
+                />
+                <ElementForm
+                    title='Descripcion'
+                    type='text'
+                    id='descripcion'
+                    name='descripcion'
+                    setText={setDescripcion}
+                />
+                <ElementForm
+                    title='Categoria'
+                    type='text'
+                    id='categoria'
+                    name='categoria'
+                    setText={setCategoria}
+                />
+            </Form>
+        </div>
+    )
 }
 
 export default CrearRutina
