@@ -85,7 +85,11 @@ const ListRutinas = ({ rutinas, esCompletada }) => {
             </div>
           ))
         ) : (
-          <NotRutins />
+          <NotRutins 
+            titulo="No tienes rutinas seguidas en este momento" 
+            mensaje="¡No te preocupes! Aquí podrás ver las rutinas que sigues una vez que empieces a seguir algunas."
+            showButton={true}
+            />
         )
       }
       <Modal

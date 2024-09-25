@@ -1,11 +1,13 @@
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react'
+import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { eliminarRutina } from '../api/Api';
 import { notification } from 'antd';
+import Modal from 'antd/es/modal/Modal';
 
 const CardRutinaSimple = ({rutina}) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   const navigate = useNavigate()
 
@@ -30,6 +32,8 @@ const CardRutinaSimple = ({rutina}) => {
   }
 
   const handlerDelete = (rutina) => {
+
+    setIsOpen(false);
     eliminarRutina(rutina.id).then(({data}) => {
       notification.success({
         message: 'Rutina eliminada',
@@ -64,10 +68,20 @@ const CardRutinaSimple = ({rutina}) => {
           <button className='none-style-btn' onClick={() => handlerEdit(rutina)}>
             <FontAwesomeIcon icon={faPenToSquare} className="icon" />
           </button>
-          <button className='none-style-btn' onClick={() => handlerDelete(rutina)}>
+          <button className='none-style-btn' onClick={() => setIsOpen(true)}>
             <FontAwesomeIcon icon={faTrash} className="icon" />
           </button>
       </div>  
+      <Modal
+        title="Confirmar acción"
+        open={isOpen}
+        onOk={() => handlerDelete(rutina)}
+        onCancel={() => setIsOpen(false)}
+        okText="Eliminar"
+        cancelText="Cancelar"
+      >
+        <p>¿Estás seguro de que deseas eliminar la rutina?</p>
+      </Modal>
     </div>
   )
 }

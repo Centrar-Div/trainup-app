@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { obtenerRutinas } from '../api/Api'
 import CardRutinaSimple from './CardRutinaSimple'
+import NotRutins from '../utils/NotRutins'
 
 const ExploradorPage = () => {
 
@@ -16,8 +17,13 @@ const ExploradorPage = () => {
 
   return (
     <div className='temp-content-body '>
-        {
-            rutinas.map((rutina) => <CardRutinaSimple rutina={rutina} />)
+        { rutinas.length > 0 ?
+            rutinas.map((rutina) => <CardRutinaSimple rutina={rutina} />):
+            <NotRutins 
+                titulo="No existen rutinas todavia" 
+                mensaje="Nadie ha creado rutinas todavia, se el primero en crear una"
+                showButton={false}
+            />
         }
     </div>
   )

@@ -15,7 +15,7 @@ const Sidebar = () => {
             <ul>
                 <li>
                     <button className='sidebar-btn' onClick={() => navigate('/es/home/crear/rutina')}>
-                        <FontAwesomeIcon icon={faPlus} className="icon" /> Crear Rutina
+                        <FontAwesomeIcon icon={faPlus} className="icon" /> Nueva Rutina
                     </button>
                 </li>
                 <li>

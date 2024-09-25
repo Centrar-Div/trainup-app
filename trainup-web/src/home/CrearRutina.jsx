@@ -30,7 +30,7 @@ const CrearRutina = () => {
 
   return (
     <div className='max-size-vh flx center '>
-        <Form name='Crear Rutina' btnName='Crear Rutina' handlerSubmit={handlerSubmit}> 
+        <Form name='Nueva Rutina' btnName='Nueva Rutina' handlerSubmit={handlerSubmit}> 
         
             <ElementForm
                 title='Titulo' 
