@@ -4,6 +4,7 @@ import ar.com.unq.eis.trainup.controller.Exceptions.RutinaException
 import ar.com.unq.eis.trainup.controller.Exceptions.UsuarioException
 import ar.com.unq.eis.trainup.controller.dto.ErrorDTO
 import ar.com.unq.eis.trainup.controller.dto.LoginDTO
+import ar.com.unq.eis.trainup.controller.dto.UserBodyDTO
 import ar.com.unq.eis.trainup.controller.dto.UsuarioDTO
 import ar.com.unq.eis.trainup.services.UsuarioService
 import org.springframework.beans.factory.annotation.Autowired
@@ -18,7 +19,7 @@ class UsuarioController(
 ) {
 
     @PostMapping
-    fun crearUsuario(@RequestBody usuarioDTO: UsuarioDTO): ResponseEntity<*> {
+    fun crearUsuario(@RequestBody usuarioDTO: UserBodyDTO): ResponseEntity<*> {
         return try {
             val usuario = usuarioService.crearUsuario(usuarioDTO.aModelo())
             ResponseEntity.ok(UsuarioDTO.desdeModelo(usuario))
