@@ -4,7 +4,6 @@ import '../styles/boxes.css'
 
 const Form = ({children, name, btnName, handlerSubmit}) => {
   
-
   return (
     <div className='default-box secondary-box' >
       <form className='flx column-box gap-s jc-center' onSubmit={handlerSubmit} action="">

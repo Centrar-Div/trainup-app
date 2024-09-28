@@ -16,7 +16,7 @@ const LandingPage = () => {
         <h3>TU MEJOR APLICACIÓN DE ENTRENAMIENTO</h3>
         <div className='flx jc-center gap-s'>
           <button className='default-btn modern-btn' onClick={() => navigate('/login')}>Iniciar sesión</button>
-          <button className='default-btn modern-btn button-reg'>Empieza tu Entrenamiento</button>
+          <button className='default-btn modern-btn'  onClick={() => navigate('/register')}>Empieza tu Entrenamiento</button>
         </div>
       </header>
       <section className='landing-features'>
