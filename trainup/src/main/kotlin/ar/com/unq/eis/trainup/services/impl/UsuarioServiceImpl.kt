@@ -7,7 +7,6 @@ import ar.com.unq.eis.trainup.dao.UsuarioDAO
 import ar.com.unq.eis.trainup.model.Rutina
 import ar.com.unq.eis.trainup.model.Usuario
 import ar.com.unq.eis.trainup.services.UsuarioService
-import org.apache.coyote.BadRequestException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -62,7 +61,7 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO,
 
     override fun completarRutina(usuarioID:String, rutinaID: String) {
         val usuario = this.obtenerUsuarioPorID(usuarioID)
-        val rutina = this.rutinaDAO.findByIdOrNull(rutinaID)?: throw RutinaException("No existe rutina con id ${rutinaID}")
+        val rutina = getRutinaByID(rutinaID)
 
         try {
             usuario.completarRutina(rutina)
@@ -71,5 +70,20 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO,
             throw UsuarioException("El usuario ${usuario.username} no sigue a rutina id: ${rutinaID}")
         }
 
+    }
+
+    private fun getRutinaByID(rutinaID: String): Rutina {
+        val rutina =
+            this.rutinaDAO.findByIdOrNull(rutinaID) ?: throw RutinaException("No existe rutina con id ${rutinaID}")
+        return rutina
+    }
+
+    override fun updateFollowRutina(usuarioID: String, rutinaID: String):Usuario {
+        val usuario = this.obtenerUsuarioPorID(usuarioID)
+        val rutina = this.getRutinaByID(rutinaID)
+
+        usuario.followUnfollowRutina(rutina)
+
+        return usuarioDAO.save(usuario)
     }
 }

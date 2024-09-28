@@ -1,6 +1,5 @@
 package ar.com.unq.eis.trainup.modeloTest
 
-import ar.com.unq.eis.trainup.controller.Exceptions.RutinaException
 import ar.com.unq.eis.trainup.controller.Exceptions.UsuarioException
 import ar.com.unq.eis.trainup.model.Ejercicio
 import ar.com.unq.eis.trainup.model.Rutina
@@ -159,5 +158,12 @@ class UsuarioTest {
         }
         assertEquals("El usuario no sigue a dicha rutina", exception.message)
     }
+
+    @Test
+    fun `seguir rutina`(){
+        usuario.followUnfollowRutina(rutina);
+        assertEquals(listOf(rutina), usuario.rutinasSeguidas)
+    }
+
 
 }
