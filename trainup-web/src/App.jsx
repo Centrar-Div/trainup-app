@@ -11,7 +11,7 @@ import TemplatePage from './TemplatePage'
 import Sidebar from './navbar/Sidebar'
 import HomePage from './home/HomePage'
 import Rutina from './home/Rutina'
-import InProgress from './utils/InProgress'
+import Register from './login/Register'
 import Profile from './home/Profile'
 import RutinasCompletadas from './home/RutinasCompletadas'
 import CrearRutina from './home/CrearRutina'
@@ -20,7 +20,7 @@ import EditarRutina from './home/EditarRutina'
 
 const Layout = () => {
   const location = useLocation()
-  const hideNavbarRoutes = ['/login', '/init']
+  const hideNavbarRoutes = ['/login', '/init', '/register']
   const shouldShowSide   = !hideNavbarRoutes.includes(location.pathname)
   const shouldShowNavbar = !location.pathname.startsWith('/es');
 
@@ -51,6 +51,8 @@ function App() {
           <Route path='home/rutina/editar' element={<EditarRutina/>}/>
         </Route>
         <Route path='/login' element={<Login/>} />
+        <Route path='/register' element={<Register/>} />
+
         <Route path='*' element={<Navigate to='/init'/>}/>
       </Routes>
       </LoginProvider>

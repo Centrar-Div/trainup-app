@@ -57,6 +57,11 @@
     height: 100%;
 }
 
+.full-width{
+    width: 100%;
+}
+
 .none {
     display: none;
 }
+

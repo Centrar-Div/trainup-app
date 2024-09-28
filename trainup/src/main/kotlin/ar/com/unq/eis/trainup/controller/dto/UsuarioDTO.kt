@@ -48,3 +48,54 @@ class UsuarioDTO(
         }
     }
 }
+
+
+class UserBodyDTO(
+    var id: String? = null,
+    var username: String = "",
+    var password: String = "",
+    var nombre: String = "",
+    var edad: Int? = null,
+    var fecNacimiento: LocalDate? = null,
+    var telefono: String = "",
+    var genero: String = "",
+    var altura: String = "",
+    var peso: String = "",
+    var objetivo: String = ""
+) {
+
+    // Función para convertir UserBodyDTO a modelo Usuario
+    fun aModelo(): Usuario {
+        return Usuario(
+            username = this.username,
+            password = this.password,
+            nombre = this.nombre,
+            edad = this.edad!!,
+            fecNacimiento = this.fecNacimiento ?: LocalDate.now(),
+            telefono = this.telefono,
+            genero = this.genero,
+            altura = this.altura,
+            peso = this.peso,
+            objetivo = this.objetivo
+        )
+    }
+
+    companion object {
+        fun desdeModelo(usuario: Usuario): UserBodyDTO {
+            return UserBodyDTO(
+                id = usuario.id,
+                username = usuario.username,
+                password = usuario.password,
+                nombre = usuario.nombre,
+                fecNacimiento = usuario.fecNacimiento,
+                telefono = usuario.telefono,
+                genero = usuario.genero,
+                altura = usuario.altura,
+                edad = usuario.edad,
+                peso = usuario.peso,
+                objetivo = usuario.objetivo
+            )
+        }
+    }
+}
+
