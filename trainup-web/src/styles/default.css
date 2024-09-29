@@ -27,6 +27,10 @@
     padding: 0 !important;
 }
 
+.mt-10{
+    margin-top: 3rem;
+}
+
 .jc-center {
     justify-content: center;
 }
