@@ -6,13 +6,13 @@ import { eliminarRutina } from '../api/Api';
 import { notification } from 'antd';
 import Modal from 'antd/es/modal/Modal';
 
-const CardRutinaSimple = ({rutina}) => {
+const CardRutinaSimple = ({ rutina }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const navigate = useNavigate()
 
   const handlerClick = (rutina) => {
-    navigate('/es/home/rutina', { state: { ejercicios: rutina.ejercicios, nombre: rutina.nombre } });
+    navigate('/es/home/rutina', { state: { rutinaID: rutina.id, ejercicios: rutina.ejercicios, nombre: rutina.nombre } });
   };
 
   const handlerEdit = (rutinaEdit) => {
@@ -20,21 +20,21 @@ const CardRutinaSimple = ({rutina}) => {
     const rutinaNombre = rutinaEdit.nombre;
     const rutinaDescripcion = rutinaEdit.descripcion;
     const rutinaCategoria = rutinaEdit.categoria;
-    
-    navigate('/es/home/rutina/editar', { 
-      state: { 
-        rutinaId, 
+
+    navigate('/es/home/rutina/editar', {
+      state: {
+        rutinaId,
         rutinaNombre,
         rutinaDescripcion,
         rutinaCategoria
-       } 
+      }
     })
   }
 
   const handlerDelete = (rutina) => {
 
     setIsOpen(false);
-    eliminarRutina(rutina.id).then(({data}) => {
+    eliminarRutina(rutina.id).then(({ data }) => {
       notification.success({
         message: 'Rutina eliminada',
         description: 'La rutina ha sido eliminada correctamente.',
@@ -53,25 +53,25 @@ const CardRutinaSimple = ({rutina}) => {
     <div key={rutina.id} className="boxinfo">
       <div className="height-100" onClick={() => handlerClick(rutina)}>
         <div className="card-header">
-            <h2>{rutina.nombre}</h2>
+          <h2>{rutina.nombre}</h2>
         </div>
 
         <div className="card-body">
-            <p>{rutina.descripcion}</p>
+          <p>{rutina.descripcion}</p>
         </div>
       </div>
       <div className="card-footer">
-          <p className="category">{rutina.categoria}</p>
-          <p>{rutina.fechaDeCreacion}</p>
+        <p className="category">{rutina.categoria}</p>
+        <p>{rutina.fechaDeCreacion}</p>
       </div>
       <div className='card-btns'>
-          <button className='none-style-btn' onClick={() => handlerEdit(rutina)}>
-            <FontAwesomeIcon icon={faPenToSquare} className="icon" />
-          </button>
-          <button className='none-style-btn' onClick={() => setIsOpen(true)}>
-            <FontAwesomeIcon icon={faTrash} className="icon" />
-          </button>
-      </div>  
+        <button className='none-style-btn' onClick={() => handlerEdit(rutina)}>
+          <FontAwesomeIcon icon={faPenToSquare} className="icon" />
+        </button>
+        <button className='none-style-btn' onClick={() => setIsOpen(true)}>
+          <FontAwesomeIcon icon={faTrash} className="icon" />
+        </button>
+      </div>
       <Modal
         title="Confirmar acción"
         open={isOpen}

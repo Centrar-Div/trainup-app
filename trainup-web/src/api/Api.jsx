@@ -155,7 +155,7 @@ const actualizarUsuario = async (usuarioDTO) => {
 const eliminarUsuario = async (id) => {
   try {
     await axios.delete(`/${id}`);
-    return; 
+    return;
   } catch (error) {
     handleError(error);
   }
@@ -174,6 +174,10 @@ const completarRutina = async (userId, rutinaId) => {
     handleError(error);
   }
 };
+
+export const isFollowing = (userID, rutinaID) => {
+  return axios.get(`/usuario/isFollowing/${userID}/${rutinaID}`);
+}
 
 
 export {

@@ -1,13 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { isFollowing } from '../api/Api';
+import FollowBtn from './FollowBtn';
 
 const Rutina = () => {
     const location = useLocation();
-    const { ejercicios, nombre } = location.state || {};
+    const { rutinaID, ejercicios, nombre } = location.state || {};
+    const [isFollowed, setIsFollowed] = useState(false)
+
+    useEffect(() => {
+        isFollowing(localStorage.getItem('id'), rutinaID).then(({ data }) => {
+            setIsFollowed(data);
+            console.log(data)
+        });
+    }, [rutinaID]);
 
     return (
         <>
             <h1>Ejercicios de {nombre}</h1>
+            <FollowBtn initFollow={isFollowed} />
             <div className='container-boxinfo'>
                 {ejercicios.map(ejercicio => (
                     <div key={ejercicio.id} className='boxinfo'>

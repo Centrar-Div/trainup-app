@@ -13,7 +13,7 @@ const ListRutinas = ({ rutinas, esCompletada }) => {
   const [rutinaIdToComplete, setRutinaIdToComplete] = useState(null);
 
   const handlerClick = (rutina) => {
-    navigate('/es/home/rutina', { state: { ejercicios: rutina.ejercicios, nombre: rutina.nombre } });
+    navigate('/es/home/rutina', { state: { rutinaID: rutina.id, ejercicios: rutina.ejercicios, nombre: rutina.nombre } });
   };
 
   const showModal = (rutinaId) => {
@@ -85,11 +85,11 @@ const ListRutinas = ({ rutinas, esCompletada }) => {
             </div>
           ))
         ) : (
-          <NotRutins 
-            titulo="No tienes rutinas seguidas en este momento" 
+          <NotRutins
+            titulo="No tienes rutinas seguidas en este momento"
             mensaje="¡No te preocupes! Aquí podrás ver las rutinas que sigues una vez que empieces a seguir algunas."
             showButton={true}
-            />
+          />
         )
       }
       <Modal
