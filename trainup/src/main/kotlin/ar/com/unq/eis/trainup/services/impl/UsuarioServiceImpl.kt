@@ -86,4 +86,12 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO,
 
         return usuarioDAO.save(usuario)
     }
+
+    override fun isFollowing(usuarioID: String, rutinaID: String): Boolean {
+        val usuario = this.obtenerUsuarioPorID(usuarioID)
+        val rutina = this.getRutinaByID(rutinaID)
+
+        return usuario.isFollowing(rutina)
+
+    }
 }

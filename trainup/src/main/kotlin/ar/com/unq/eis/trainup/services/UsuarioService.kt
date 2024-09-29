@@ -20,4 +20,6 @@ interface UsuarioService {
 
     fun completarRutina(usuarioID:String, rutinaID:String)
      fun updateFollowRutina(usuarioID: String, rutinaID: String):Usuario
+
+     fun isFollowing(usuarioID: String, rutinaID: String):Boolean
 }

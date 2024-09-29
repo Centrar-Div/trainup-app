@@ -90,5 +90,9 @@ class Usuario() {
 
     }
 
+    fun isFollowing(rutina:Rutina):Boolean{
+        return rutinasSeguidas.contains(rutina)
+    }
+
 
 }
