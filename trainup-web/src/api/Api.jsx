@@ -175,8 +175,12 @@ const completarRutina = async (userId, rutinaId) => {
   }
 };
 
-export const isFollowing = (userID, rutinaID) => {
-  return axios.get(`/usuario/isFollowing/${userID}/${rutinaID}`);
+export const isFollowing = (rutinaID) => {
+  return axios.get(`/usuario/isFollowing/${localStorage.getItem('id')}/${rutinaID}`);
+}
+
+export const seguirRutina = (rutinaID) => {
+  return axios.put(`/usuario/follow/${localStorage.getItem('id')}/${rutinaID}`);
 }
 
 
