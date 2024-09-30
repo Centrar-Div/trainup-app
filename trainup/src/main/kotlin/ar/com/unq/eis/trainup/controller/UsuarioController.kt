@@ -116,4 +116,29 @@ class UsuarioController(
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
         }
     }
+
+
+    @PutMapping("/follow/{userId}/{rutinaId}")
+    fun updateFollow(@PathVariable userId: String, @PathVariable rutinaId: String):ResponseEntity<*>{
+        return try{
+            val user = usuarioService.updateFollowRutina(userId, rutinaId)
+            ResponseEntity.ok(UsuarioDTO.desdeModelo(user))
+        }catch (e: RutinaException){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
+        }catch (e: UsuarioException){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
+        }
+    }
+
+    @GetMapping("/isFollowing/{userId}/{rutinaId}")
+    fun isFollowing(@PathVariable userId: String, @PathVariable rutinaId: String):ResponseEntity<*>{
+        return try {
+            val res = usuarioService.isFollowing(userId,rutinaId)
+            ResponseEntity.ok(res)
+        }catch (e: RutinaException){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
+        }catch (e: UsuarioException){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
+        }
+    }
 }

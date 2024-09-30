@@ -14,7 +14,6 @@ import org.junit.jupiter.api.assertThrows
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
 import java.time.LocalDate
-import kotlin.test.AfterTest
 import kotlin.test.assertEquals
 import kotlin.test.assertNotNull
 
@@ -223,6 +222,27 @@ class UsuarioServiceImplTest {
 
         assertEquals(listOf(rutina), userTest.rutinasCompletadas)
 
+    }
+
+
+    @Test
+    fun `seguir rutina`(){
+
+        val user = usuarioService.updateFollowRutina(usuarioCreado.id!!,rutina.id!!)
+        val rutinasSeguidas = user.rutinasSeguidas
+        assertEquals(user.rutinasSeguidas.size, 1)
+        assertEquals(listOf(rutina),rutinasSeguidas)
+    }
+
+    @Test
+    fun `dejar de seguir rutina`(){
+        //sigo la rutina
+        usuarioService.updateFollowRutina(usuarioCreado.id!!,rutina.id!!)
+        assertEquals(usuarioCreado.rutinasSeguidas.size, 0)
+
+        val user = usuarioService.updateFollowRutina(usuarioCreado.id!!,rutina.id!!)
+        assertEquals(user.rutinasSeguidas.size, 0)
+        assertEquals(emptyList(),user.rutinasSeguidas)
     }
 
 
