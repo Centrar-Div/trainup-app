@@ -16,11 +16,14 @@ const EditarRutina = () => {
 
     const handlerSubmit = (e) => {
         e.preventDefault();
-        actualizarRutina(rutinaId, { nombre, descripcion, categoria }).then(({ data }) => {
-            navigate('/es/home/explorador')
-        }).catch((error) => {
-            console.error(error);
-        });
+        if (nombre && descripcion && categoria) {
+            actualizarRutina(rutinaId, { nombre, descripcion, categoria }).then(({ data }) => {
+                navigate('/es/home/explorador')
+            }).catch((error) => {
+                console.error(error);
+            });
+        }
+
     }
 
     return (
@@ -33,6 +36,8 @@ const EditarRutina = () => {
                     id='titulo'
                     name='titulo'
                     setText={setNombre}
+                    initialValue={nombre}
+                    required={true}
                 />
                 <ElementForm
                     title='Descripcion'
@@ -40,6 +45,8 @@ const EditarRutina = () => {
                     id='descripcion'
                     name='descripcion'
                     setText={setDescripcion}
+                    initialValue={descripcion}
+                    required={true}
                 />
                 <ElementForm
                     title='Categoria'
@@ -47,6 +54,8 @@ const EditarRutina = () => {
                     id='categoria'
                     name='categoria'
                     setText={setCategoria}
+                    initialValue={categoria}
+                    required={true}
                 />
             </Form>
         </div>
