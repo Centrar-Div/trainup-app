@@ -35,6 +35,15 @@ const Register = () => {
     return age;
   };
 
+  const generateRandomDate = () => {
+    const today = new Date();
+    const minDate = new Date(today.getFullYear() - 13, today.getMonth(), today.getDate());
+    const maxDate = new Date(today.getFullYear() - 99, today.getMonth(), today.getDate());
+    const randomDate = new Date(minDate.getTime() + Math.random() * (maxDate.getTime() - minDate.getTime()));
+    
+    return randomDate.toISOString().split('T')[0];
+  };
+
   const handlerSubmit = async (e) => {
     e.preventDefault();
   
@@ -48,23 +57,24 @@ const Register = () => {
       return;
     }
   
-    const edad = calculateEdad(formData.fecNacimiento);
+    const fechaNacimiento = formData.fecNacimiento || generateRandomDate();
+    const edad = calculateEdad(fechaNacimiento);
     const usuarioDTO = {
-      username: formData.username,      
-      password: formData.password,       
-      nombre: formData.nombreCompleto,        
-      edad: edad,                          
-      fecNacimiento: formData.fecNacimiento, 
-      telefono: formData.telefono,       
-      genero: formData.genero,           
-      altura: formData.altura,           
-      peso: formData.peso,               
-      objetivo: formData.objetivo,       
+      username: formData.username,
+      password: formData.password,
+      nombre: formData.nombreCompleto,
+      edad: edad,
+      fecNacimiento: fechaNacimiento,
+      telefono: formData.telefono,
+      genero: formData.genero,
+      altura: formData.altura,
+      peso: formData.peso,
+      objetivo: formData.objetivo,
     };
   
     try {
       await crearUsuario(usuarioDTO);
-      notification.success({ 
+      notification.success({
         message: 'Registro exitoso',
         description: 'El usuario ha sido creado exitosamente.',
       });
@@ -79,17 +89,16 @@ const Register = () => {
         peso: '',
         objetivo: ''
       });
-      setErrors({}); 
+      setErrors({});
     } catch (error) {
-      notification.error({ 
+      notification.error({
         message: 'Error al crear usuario',
         description: error.response?.data?.message || 'Ocurrió un error inesperado.',
       });
-    } finally{
-      navigate("/login")
+    } finally {
+      navigate("/login");
     }
   };
-
   
 
   const handleChange = (key, value) => {
