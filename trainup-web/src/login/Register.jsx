@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../styles/register.css';
 import { notification } from 'antd';
 import { crearUsuario } from '../api/Api'
+import { useNavigate } from 'react-router-dom'
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -17,6 +18,7 @@ const Register = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const navigate = useNavigate()
 
   const validateRequired = (value) => {
     return value && typeof value === 'string' && value.trim() !== '';
@@ -83,6 +85,8 @@ const Register = () => {
         message: 'Error al crear usuario',
         description: error.response?.data?.message || 'Ocurrió un error inesperado.',
       });
+    } finally{
+      navigate("/login")
     }
   };
 
