@@ -13,7 +13,7 @@ class Ejercicio {
     var repeticiones: Int = 0
     var peso: Double = 0.0
     var musculo: String = ""
-
+    var completado: Boolean = false // Nuevo atributo
 
     constructor(
         id: String? = null,
@@ -21,7 +21,8 @@ class Ejercicio {
         descripcion: String,
         repeticiones: Int,
         peso: Double,
-        musculo: String
+        musculo: String,
+        completado: Boolean = false
     ) {
         this.id = id
 
@@ -47,9 +48,10 @@ class Ejercicio {
         this.repeticiones = repeticiones
         this.peso = peso
         this.musculo = musculo
+        this.completado = completado
     }
 
     override fun toString(): String {
-        return "Ejercicio(id='$id', nombre='$nombre', descripcion='$descripcion', repeticiones=$repeticiones, peso=$peso, musculo='$musculo')"
+        return "Ejercicio(id='$id', nombre='$nombre', descripcion='$descripcion', repeticiones=$repeticiones, peso=$peso, musculo='$musculo', completado=$completado)"
     }
 }

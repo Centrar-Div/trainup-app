@@ -3,6 +3,7 @@ package ar.com.unq.eis.trainup.controller.dto
 import ar.com.unq.eis.trainup.model.Usuario
 import java.time.LocalDate
 
+
 class UsuarioDTO(
     var id: String? = null,
     var username: String = "",
@@ -16,11 +17,12 @@ class UsuarioDTO(
     var genero: String = "",
     var altura: String = "",
     var peso: String = "",
-    var objetivo: String = ""
+    var objetivo: String = "",
+    var esAdmin: Boolean = false
 ) {
 
     fun aModelo(): Usuario {
-        val usuario = Usuario(username, password, nombre, edad!!, fecNacimiento!!, telefono, genero, altura, peso, objetivo)
+        val usuario = Usuario(username, password, nombre, edad!!, fecNacimiento!!, telefono, genero, altura, peso, objetivo, esAdmin) // Incluir esAdmin
         usuario.id = id
         usuario.rutinasSeguidas.addAll(rutinasSeguidas.map { it.aModelo() })
         usuario.rutinasCompletadas.addAll(rutinasCompletadas.map { it.aModelo() })
@@ -43,7 +45,8 @@ class UsuarioDTO(
                 usuario.genero,
                 usuario.altura,
                 usuario.peso,
-                usuario.objetivo
+                usuario.objetivo,
+                usuario.esAdmin // Mapear esAdmin
             )
         }
     }
@@ -64,7 +67,6 @@ class UserBodyDTO(
     var objetivo: String = ""
 ) {
 
-    // Función para convertir UserBodyDTO a modelo Usuario
     fun aModelo(): Usuario {
         return Usuario(
             username = this.username,

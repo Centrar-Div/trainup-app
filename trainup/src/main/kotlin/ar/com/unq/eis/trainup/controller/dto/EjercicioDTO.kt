@@ -8,7 +8,8 @@ data class EjercicioDTO(
     var descripcion: String = "",
     var repeticiones: Int = 0,
     var peso: Double = 0.0,
-    var musculo: String = ""
+    var musculo: String = "",
+    var completado: Boolean = false
 ) {
 
     companion object {
@@ -19,7 +20,8 @@ data class EjercicioDTO(
                 descripcion = ejercicio.descripcion,
                 repeticiones = ejercicio.repeticiones,
                 peso = ejercicio.peso,
-                musculo = ejercicio.musculo
+                musculo = ejercicio.musculo,
+                completado = ejercicio.completado
             )
         }
     }
@@ -31,7 +33,8 @@ data class EjercicioDTO(
             descripcion = this.descripcion,
             repeticiones = this.repeticiones,
             peso = this.peso,
-            musculo = this.musculo
+            musculo = this.musculo,
+            completado = this.completado
         )
     }
 }

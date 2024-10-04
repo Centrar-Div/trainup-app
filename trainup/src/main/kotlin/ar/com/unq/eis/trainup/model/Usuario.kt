@@ -13,7 +13,7 @@ class Usuario() {
     @Id
     var id: String? = null;
 
-    @Indexed(unique = true)  // Marca este campo como unico (Casi como PK)
+    @Indexed(unique = true)
     var username: String = "";
 
     var password: String = "";
@@ -27,31 +27,27 @@ class Usuario() {
     var altura: String = "";
     var peso: String = "";
     var objetivo: String = "";
+    var esAdmin: Boolean = false
 
-    constructor(username: String,
-                password: String,
-                nombre:String,
-                edad:Int,
-                fecNacimiento:LocalDate,
-                telefono:String,
-                genero: String,
-                altura:String,
-                peso:String,
-                objetivo:String,
-        )
-            : this() {
+    constructor(
+        username: String,
+        password: String,
+        nombre: String,
+        edad: Int,
+        fecNacimiento: LocalDate,
+        telefono: String,
+        genero: String,
+        altura: String,
+        peso: String,
+        objetivo: String,
+        esAdmin: Boolean = false
+    ) : this() {
         require(username.isNotBlank()) { "El username no puede estar vacío" }
         require(password.isNotBlank()) { "La contraseña no puede estar vacía" }
         require(nombre.isNotBlank()) { "El nombre no puede estar vacío" }
 
-        // pueden ser vacios?
-//        require(telefono.isNotBlank()) { "El telefono no puede estar vacío" }
-//        require(genero.isNotBlank()) { "El genero no puede estar vacío" }
-//        require(altura.isNotBlank()) { "La altura no puede estar vacía" }
-//        require(peso.isNotBlank()) { "El peso no puede estar vacío" }
-
-        this.username = username;
-        this.password = password;
+        this.username = username
+        this.password = password
         this.nombre = nombre
         this.edad = edad
         this.fecNacimiento = fecNacimiento
@@ -59,9 +55,9 @@ class Usuario() {
         this.genero = genero
         this.altura = altura
         this.peso = peso
-        this.objetivo=objetivo
+        this.objetivo = objetivo
+        this.esAdmin = esAdmin
     }
-
 
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -73,7 +69,6 @@ class Usuario() {
     override fun hashCode(): Int {
         return Objects.hash(id)
     }
-
 
     fun completarRutina(rutina: Rutina) {
         if (rutina !in rutinasSeguidas) {
@@ -87,12 +82,9 @@ class Usuario() {
         if (!rutinasSeguidas.remove(rutina)) {
             rutinasSeguidas.add(rutina)
         }
-
     }
 
-    fun isFollowing(rutina:Rutina):Boolean{
+    fun isFollowing(rutina: Rutina): Boolean {
         return rutinasSeguidas.contains(rutina)
     }
-
-
 }
