@@ -1,38 +1,43 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { isFollowing } from '../api/Api';
+import { useLogin } from '../context/LoginContext';
 import FollowBtn from './FollowBtn';
 import Loader from '../utils/Loader';
-import Ejercicio from './Ejercicio';  
+import Ejercicio from './Ejercicio';
 
 const Rutina = () => {
     const location = useLocation();
     const { rutinaID, ejercicios, nombre } = location.state || {};
+    const { user } = useLogin();
     const [isFollowed, setIsFollowed] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        isFollowing(rutinaID).then(({ data }) => {
-            setIsFollowed(data);
+        if (user) {
+            const sigueRutina = user.rutinasSeguidas.some(rutina => rutina.id === rutinaID);
+            setIsFollowed(sigueRutina);
             setIsLoading(false);
-        });
-    }, [rutinaID]);
+        }
+    }, [user, rutinaID]);
 
-    return (
-        isLoading ?
+    if (isLoading) {
+        return (
             <div className="rutinas-completadas-container">
                 <Loader />
             </div>
-            :
-            <>
-                <h1>Ejercicios de {nombre}</h1>
-                <FollowBtn initFollow={isFollowed} rutinaID={rutinaID} />
-                <div className='container-boxinfo'>
-                    {ejercicios.map(ejercicio => (
-                        <Ejercicio key={ejercicio.id} ejercicio={ejercicio} />
-                    ))}
-                </div>
-            </>
+        );
+    }
+
+    return (
+        <>
+            <h1>Ejercicios de {nombre}</h1>
+            <FollowBtn initFollow={isFollowed} rutinaID={rutinaID} />
+            <div className='container-boxinfo'>
+                {ejercicios.map(ejercicio => (
+                    <Ejercicio key={ejercicio.id} ejercicio={ejercicio} />
+                ))}
+            </div>
+        </>
     );
 };
 

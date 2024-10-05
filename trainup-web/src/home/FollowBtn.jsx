@@ -5,7 +5,7 @@ import { useLogin } from '../context/LoginContext';
 const FollowBtn = ({ initFollow, rutinaID }) => {
 
     const [isFollowing, setIsFollowing] = useState(initFollow);
-    const { user, setUser } = useLogin();
+    const { setUser } = useLogin();
 
     const handleClick = () => {
         setIsFollowing(!isFollowing);
