@@ -22,14 +22,34 @@ class EjercicioController(
                 descripcion = ejercicioDTO.descripcion,
                 repeticiones = ejercicioDTO.repeticiones,
                 peso = ejercicioDTO.peso,
-                musculo = ejercicioDTO.musculo
+                musculo = ejercicioDTO.musculo,
+                series = ejercicioDTO.series,
+                descansoSegundos = ejercicioDTO.descansoSegundos,
+                equipo = ejercicioDTO.equipo,
+                instrucciones = ejercicioDTO.instrucciones,
+                completado = ejercicioDTO.completado
             )
             val nuevoEjercicio = ejercicioService.crearEjercicio(ejercicio)
-            ResponseEntity.ok(EjercicioDTO(nuevoEjercicio.id, nuevoEjercicio.nombre, nuevoEjercicio.descripcion, nuevoEjercicio.repeticiones, nuevoEjercicio.peso, nuevoEjercicio.musculo))
+            ResponseEntity.ok(
+                EjercicioDTO(
+                    nuevoEjercicio.id,
+                    nuevoEjercicio.nombre,
+                    nuevoEjercicio.descripcion,
+                    nuevoEjercicio.repeticiones,
+                    nuevoEjercicio.peso,
+                    nuevoEjercicio.musculo,
+                    nuevoEjercicio.series,
+                    nuevoEjercicio.descansoSegundos,
+                    nuevoEjercicio.equipo,
+                    nuevoEjercicio.instrucciones,
+                    nuevoEjercicio.completado
+                )
+            )
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorDTO(e))
         }
     }
+
 
     @GetMapping
     fun obtenerEjercicios(): ResponseEntity<Any> {

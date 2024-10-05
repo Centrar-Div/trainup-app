@@ -8,8 +8,11 @@ class BodyRutinaDTO(
     var categoria: String = ""
 ) {
     fun aModelo(): Rutina {
-        val rutina = Rutina(this.nombre, this.descripcion, this.categoria, mutableListOf())
-
-        return rutina
+        return Rutina(
+            nombre = this.nombre,
+            descripcion = this.descripcion,
+            categoria = this.categoria,
+            ejercicios = mutableListOf()
+        )
     }
 }

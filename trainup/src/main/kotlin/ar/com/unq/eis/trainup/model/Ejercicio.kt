@@ -13,7 +13,13 @@ class Ejercicio {
     var repeticiones: Int = 0
     var peso: Double = 0.0
     var musculo: String = ""
-    var completado: Boolean = false // Nuevo atributo
+    var series: Int = 0
+    var descansoSegundos: Int = 0
+    var equipo: String = ""
+    var instrucciones: String = ""
+    var completado: Boolean = false
+
+    constructor()
 
     constructor(
         id: String? = null,
@@ -22,36 +28,35 @@ class Ejercicio {
         repeticiones: Int,
         peso: Double,
         musculo: String,
+        series: Int,
+        descansoSegundos: Int,
+        equipo: String,
+        instrucciones: String,
         completado: Boolean = false
     ) {
-        this.id = id
-
         // Validaciones
-        if (nombre.isBlank()) {
-            throw IllegalArgumentException("El nombre no puede estar vacío")
-        }
-        if (descripcion.isBlank()) {
-            throw IllegalArgumentException("La descripción no puede estar vacía")
-        }
-        if (repeticiones <= 0) {
-            throw IllegalArgumentException("Las repeticiones deben ser mayores a 0")
-        }
-        if (peso < 0) {
-            throw IllegalArgumentException("El peso no puede ser negativo")
-        }
-        if (musculo.isBlank()) {
-            throw IllegalArgumentException("El nombre del músculo no puede estar vacío")
-        }
+        require(nombre.isNotBlank()) { "El nombre no puede estar vacío" }
+        require(descripcion.isNotBlank()) { "La descripción no puede estar vacía" }
+        require(repeticiones > 0) { "Las repeticiones deben ser mayores a 0" }
+        require(peso >= 0) { "El peso no puede ser negativo" }
+        require(musculo.isNotBlank()) { "El nombre del músculo no puede estar vacío" }
+        require(series > 0) { "Las series deben ser mayores a 0" }
+        require(descansoSegundos >= 0) { "El tiempo de descanso no puede ser negativo" }
 
+        this.id = id
         this.nombre = nombre
         this.descripcion = descripcion
         this.repeticiones = repeticiones
         this.peso = peso
         this.musculo = musculo
+        this.series = series
+        this.descansoSegundos = descansoSegundos
+        this.equipo = equipo
+        this.instrucciones = instrucciones
         this.completado = completado
     }
 
     override fun toString(): String {
-        return "Ejercicio(id='$id', nombre='$nombre', descripcion='$descripcion', repeticiones=$repeticiones, peso=$peso, musculo='$musculo', completado=$completado)"
+        return "Ejercicio(id='$id', nombre='$nombre', descripcion='$descripcion', repeticiones=$repeticiones, peso=$peso, musculo='$musculo', series=$series, descansoSegundos=$descansoSegundos, equipo='$equipo', instrucciones='$instrucciones', completado=$completado)"
     }
 }
