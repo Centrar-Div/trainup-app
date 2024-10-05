@@ -64,8 +64,9 @@ export const LoginProvider = ({ children }) => {
 
   const actualizarPerfilUsuario = async (datos) => {
     try {
-      const response = await actualizarUsuario(datos);
-      setUser(response.data);
+      await actualizarUsuario(datos);
+      setUser(datos);
+    
       notification.success({
         message: 'Actualización Exitosa',
         description: 'Tus datos se han actualizado correctamente.',
