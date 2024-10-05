@@ -122,7 +122,9 @@ const Ejercicio = ({ ejercicio }) => {
                     <span className="checkmark"></span>
                     {' '}Completado
                 </label>
-                <FontAwesomeIcon icon={faPenToSquare} className="icon edit-icon" onClick={showEditModal} />
+                {user.isAdmin && (
+                    <FontAwesomeIcon icon={faPenToSquare} className="icon edit-icon" onClick={showEditModal} />
+                )}
             </div>
     
             <Modal
@@ -142,32 +144,14 @@ const Ejercicio = ({ ejercicio }) => {
                     <Form.Item
                         label="Nombre"
                         name="nombre"
-                        rules={[
-                            {
-                                validator: (_, value) => {
-                                    if (value === undefined || value.trim() === "") {
-                                        return Promise.reject(new Error('El nombre no puede estar vacío'));
-                                    }
-                                    return Promise.resolve();
-                                }
-                            }
-                        ]}
+                        rules={[{ required: true, message: 'El nombre no puede estar vacío' }]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         label="Descripción"
                         name="descripcion"
-                        rules={[
-                            {
-                                validator: (_, value) => {
-                                    if (value === undefined || value.trim() === "") {
-                                        return Promise.reject(new Error('La descripción no puede estar vacía'));
-                                    }
-                                    return Promise.resolve();
-                                }
-                            }
-                        ]}
+                        rules={[{ required: true, message: 'La descripción no puede estar vacía' }]}
                     >
                         <Input />
                     </Form.Item>
@@ -175,15 +159,8 @@ const Ejercicio = ({ ejercicio }) => {
                         label="Repeticiones"
                         name="repeticiones"
                         rules={[
-                            {
-                                type: 'number',
-                                validator: (_, value) => {
-                                    if (value !== undefined && value < 0) {
-                                        return Promise.reject(new Error('Las repeticiones no pueden ser negativas'));
-                                    }
-                                    return Promise.resolve();
-                                }
-                            }
+                            { required: true, message: 'Las repeticiones son requeridas' },
+                            { type: 'number', min: 1, message: 'Las repeticiones deben ser mayor a 0' }
                         ]}
                     >
                         <Input type="number" />
@@ -192,15 +169,8 @@ const Ejercicio = ({ ejercicio }) => {
                         label="Peso"
                         name="peso"
                         rules={[
-                            {
-                                type: 'number',
-                                validator: (_, value) => {
-                                    if (value !== undefined && value < 0) {
-                                        return Promise.reject(new Error('El peso no puede ser negativo'));
-                                    }
-                                    return Promise.resolve();
-                                }
-                            }
+                            { required: true, message: 'El peso es requerido' },
+                            { type: 'number', min: 0, message: 'El peso no puede ser negativo' }
                         ]}
                     >
                         <Input type="number" />
@@ -208,48 +178,21 @@ const Ejercicio = ({ ejercicio }) => {
                     <Form.Item
                         label="Músculo"
                         name="musculo"
-                        rules={[
-                            {
-                                validator: (_, value) => {
-                                    if (value === undefined || value.trim() === "") {
-                                        return Promise.reject(new Error('El músculo no puede estar vacío'));
-                                    }
-                                    return Promise.resolve();
-                                }
-                            }
-                        ]}
+                        rules={[{ required: true, message: 'El músculo no puede estar vacío' }]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         label="Equipo"
                         name="equipo"
-                        rules={[
-                            {
-                                validator: (_, value) => {
-                                    if (value === undefined || value.trim() === "") {
-                                        return Promise.reject(new Error('El equipo no puede estar vacío'));
-                                    }
-                                    return Promise.resolve();
-                                }
-                            }
-                        ]}
+                        rules={[{ required: true, message: 'El equipo no puede estar vacío' }]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         label="Instrucciones"
                         name="instrucciones"
-                        rules={[
-                            {
-                                validator: (_, value) => {
-                                    if (value === undefined || value.trim() === "") {
-                                        return Promise.reject(new Error('Las instrucciones no pueden estar vacías'));
-                                    }
-                                    return Promise.resolve();
-                                }
-                            }
-                        ]}
+                        rules={[{ required: true, message: 'Las instrucciones no pueden estar vacías' }]}
                     >
                         <Input />
                     </Form.Item>
