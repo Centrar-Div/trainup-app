@@ -90,12 +90,13 @@ const obtenerEjercicioPorId = async (id) => {
   }
 };
 
-const actualizarEjercicio = async (ejercicioID, ejercicio) => {
+const actualizarEjercicio = async (ejercicio) => {
   try {
-    const response = await axios.put(`/ejercicios/${ejercicioID}`, ejercicio);
+    const response = await axios.put(`/ejercicios/actualizar`, ejercicio); 
     return response.data;
   } catch (error) {
-    handleError(error);
+    console.error('Error actualizando el ejercicio:', error);
+    throw error;
   }
 };
 
@@ -144,7 +145,6 @@ const obtenerUsuarios = async () => {
 const actualizarUsuario = async (usuarioDTO) => {
   try {
     const response = await axios.put(`/usuario`, usuarioDTO);
-    console.log(usuarioDTO)
     return response.data;
   } catch (error) {
     console.error('Error en actualizarUsuario:', error.response || error.message);

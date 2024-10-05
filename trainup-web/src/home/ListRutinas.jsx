@@ -29,13 +29,19 @@ const ListRutinas = ({ rutinas, esCompletada }) => {
   const marcarComoCompletada = async () => {
     try {
       await completarRutina(user.id, rutinaIdToComplete);
+      
+      const rutinasActualizadas = user.rutinasSeguidas.map(rutina =>
+        rutina.id === rutinaIdToComplete ? { ...rutina, completada: true } : rutina
+      );
+      setUser({ ...user, rutinasSeguidas: rutinasActualizadas });
+  
       notification.success({
         message: '¡Éxito!',
         description: 'Se ha completado la rutina correctamente.',
         placement: 'topRight',
       });
       setIsModalVisible(false);
-      window.location.reload();
+
     } catch (error) {
       notification.error({
         message: 'Error',

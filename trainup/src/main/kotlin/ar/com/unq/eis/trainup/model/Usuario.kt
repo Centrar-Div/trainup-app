@@ -11,22 +11,22 @@ import java.util.*
 class Usuario() {
 
     @Id
-    var id: String? = null;
+    var id: String? = null
 
     @Indexed(unique = true)
-    var username: String = "";
+    var username: String = ""
 
-    var password: String = "";
-    var rutinasSeguidas: MutableList<Rutina> = mutableListOf();
-    var rutinasCompletadas: MutableList<Rutina> = mutableListOf();
-    var nombre: String = "";
-    var edad: Int? = null;
-    var fecNacimiento: LocalDate? = null;
-    var telefono: String = "";
-    var genero: String = "";
-    var altura: String = "";
-    var peso: String = "";
-    var objetivo: String = "";
+    var password: String = ""
+    var rutinasSeguidas: MutableList<Rutina> = mutableListOf()
+    var rutinasCompletadas: MutableList<Rutina> = mutableListOf()
+    var nombre: String = ""
+    var edad: Int? = null
+    var fecNacimiento: LocalDate? = null
+    var telefono: String = ""
+    var genero: String = ""
+    var altura: String = ""
+    var peso: String = ""
+    var objetivo: String = ""
     var esAdmin: Boolean = false
 
     constructor(
@@ -71,20 +71,24 @@ class Usuario() {
     }
 
     fun completarRutina(rutina: Rutina) {
-        if (rutina !in rutinasSeguidas) {
+        val rutinaExistente = rutinasSeguidas.find { it.id == rutina.id }
+        if (rutinaExistente == null) {
             throw UsuarioException("El usuario no sigue a dicha rutina")
         }
-        rutinasSeguidas.remove(rutina)
+        rutinasSeguidas.removeIf { it.id == rutina.id }
         rutinasCompletadas.add(rutina)
     }
 
     fun followUnfollowRutina(rutina: Rutina) {
-        if (!rutinasSeguidas.remove(rutina)) {
+        val rutinaExistente = rutinasSeguidas.find { it.id == rutina.id }
+        if (rutinaExistente != null) {
+            rutinasSeguidas.removeIf { it.id == rutina.id }
+        } else {
             rutinasSeguidas.add(rutina)
         }
     }
 
     fun isFollowing(rutina: Rutina): Boolean {
-        return rutinasSeguidas.contains(rutina)
+        return rutinasSeguidas.any { it.id == rutina.id }
     }
 }

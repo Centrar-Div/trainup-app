@@ -1,15 +1,16 @@
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { eliminarRutina } from '../api/Api';
 import { notification } from 'antd';
 import Modal from 'antd/es/modal/Modal';
+import { useLogin } from '../context/LoginContext'; 
 
 const CardRutinaSimple = ({ rutina }) => {
   const [isOpen, setIsOpen] = useState(false);
-
-  const navigate = useNavigate()
+  const { user } = useLogin(); 
+  const navigate = useNavigate();
 
   const handlerClick = (rutina) => {
     navigate('/es/home/rutina', { state: { rutinaID: rutina.id, ejercicios: rutina.ejercicios, nombre: rutina.nombre } });
@@ -26,28 +27,29 @@ const CardRutinaSimple = ({ rutina }) => {
         rutinaId,
         rutinaNombre,
         rutinaDescripcion,
-        rutinaCategoria
-      }
-    })
-  }
+        rutinaCategoria,
+      },
+    });
+  };
 
   const handlerDelete = (rutina) => {
-
     setIsOpen(false);
-    eliminarRutina(rutina.id).then(({ data }) => {
-      notification.success({
-        message: 'Rutina eliminada',
-        description: 'La rutina ha sido eliminada correctamente.',
-        placement: 'topRight',
+    eliminarRutina(rutina.id)
+      .then(({ data }) => {
+        notification.success({
+          message: 'Rutina eliminada',
+          description: 'La rutina ha sido eliminada correctamente.',
+          placement: 'topRight',
+        });
+      })
+      .catch((error) => {
+        notification.error({
+          message: 'No se puede eliminar',
+          description: 'La rutina no se puede eliminar porque ya ha sido eliminada.',
+          placement: 'topRight',
+        });
       });
-    }).catch((error) => {
-      notification.error({
-        message: 'No se puede eliminar',
-        description: 'La rutina no se puede eliminar porque ya ha sido eliminada.',
-        placement: 'topRight',
-      });
-    })
-  }
+  };
 
   return (
     <div key={rutina.id} className="boxinfo">
@@ -64,14 +66,18 @@ const CardRutinaSimple = ({ rutina }) => {
         <p className="category">{rutina.categoria}</p>
         <p>{rutina.fechaDeCreacion}</p>
       </div>
-      <div className='card-btns'>
-        <button className='none-style-btn' onClick={() => handlerEdit(rutina)}>
-          <FontAwesomeIcon icon={faPenToSquare} className="icon" />
-        </button>
-        <button className='none-style-btn' onClick={() => setIsOpen(true)}>
-          <FontAwesomeIcon icon={faTrash} className="icon" />
-        </button>
-      </div>
+
+      {user?.esAdmin && (
+        <div className='card-btns'>
+          <button className='none-style-btn' onClick={() => handlerEdit(rutina)}>
+            <FontAwesomeIcon icon={faPenToSquare} className="icon" />
+          </button>
+          <button className='none-style-btn' onClick={() => setIsOpen(true)}>
+            <FontAwesomeIcon icon={faTrash} className="icon" />
+          </button>
+        </div>
+      )}
+
       <Modal
         title="Confirmar acción"
         open={isOpen}
@@ -83,7 +89,7 @@ const CardRutinaSimple = ({ rutina }) => {
         <p>¿Estás seguro de que deseas eliminar la rutina?</p>
       </Modal>
     </div>
-  )
-}
+  );
+};
 
-export default CardRutinaSimple
+export default CardRutinaSimple;
