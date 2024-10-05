@@ -66,12 +66,6 @@ export const LoginProvider = ({ children }) => {
     try {
       await actualizarUsuario(datos);
       setUser(datos);
-    
-      notification.success({
-        message: 'Actualización Exitosa',
-        description: 'Tus datos se han actualizado correctamente.',
-        placement: 'topRight',
-      });
     } catch (error) {
       notification.error({
         message: 'Error al Actualizar',

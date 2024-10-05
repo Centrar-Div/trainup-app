@@ -61,8 +61,10 @@ const Ejercicio = ({ ejercicio }) => {
     };
 
     const handleSaveChanges = async () => {
-        setIsUpdating(true); 
         try {
+            await form.validateFields(); 
+            setIsUpdating(true);
+            
             await actualizarEjercicio(editedFields);
             const usuarioActualizado = {
                 ...user,
@@ -85,7 +87,7 @@ const Ejercicio = ({ ejercicio }) => {
             console.error('Error al actualizar ejercicio:', error);
             notification.error({
                 message: 'Error al actualizar',
-                description: `No se pudo actualizar el ejercicio "${editedFields.nombre}".`,
+                description: `No se pudo actualizar el ejercicio.`,
                 placement: 'topRight',
             });
         } finally {
@@ -122,7 +124,7 @@ const Ejercicio = ({ ejercicio }) => {
                     <span className="checkmark"></span>
                     {' '}Completado
                 </label>
-                {user.isAdmin && (
+                {user.esAdmin && (
                     <FontAwesomeIcon icon={faPenToSquare} className="icon edit-icon" onClick={showEditModal} />
                 )}
             </div>
@@ -139,28 +141,56 @@ const Ejercicio = ({ ejercicio }) => {
                     layout="vertical"
                     initialValues={editedFields}
                     onValuesChange={(_, changedValues) => handleFieldChange(changedValues)}
-                    form={form}  
+                    form={form}
                 >
                     <Form.Item
                         label="Nombre"
                         name="nombre"
-                        rules={[{ required: true, message: 'El nombre no puede estar vacío' }]}
+                        rules={[
+                            {
+                                validator: (_, value) => {
+                                    if (value && value.trim() === "") {
+                                        return Promise.reject(new Error('El nombre no puede estar vacío.'));
+                                    }
+                                    return Promise.resolve();
+                                }
+                            },
+                        ]}
                     >
                         <Input />
                     </Form.Item>
+
                     <Form.Item
                         label="Descripción"
                         name="descripcion"
-                        rules={[{ required: true, message: 'La descripción no puede estar vacía' }]}
+                        rules={[
+                            {
+                                validator: (_, value) => {
+                                    if (value && value.trim() === "") {
+                                        return Promise.reject(new Error('La descripción no puede estar vacía.'));
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
+                        ]}
                     >
                         <Input />
                     </Form.Item>
+
                     <Form.Item
                         label="Repeticiones"
                         name="repeticiones"
                         rules={[
-                            { required: true, message: 'Las repeticiones son requeridas' },
-                            { type: 'number', min: 1, message: 'Las repeticiones deben ser mayor a 0' }
+                            {
+                                validator: (_, value) => {
+                                    if (value !== undefined && value !== null) {
+                                        if (value <= 0) {
+                                            return Promise.reject(new Error('Las repeticiones deben ser mayores a 0.'));
+                                        }
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
                         ]}
                     >
                         <Input type="number" />
@@ -169,8 +199,16 @@ const Ejercicio = ({ ejercicio }) => {
                         label="Peso"
                         name="peso"
                         rules={[
-                            { required: true, message: 'El peso es requerido' },
-                            { type: 'number', min: 0, message: 'El peso no puede ser negativo' }
+                            {
+                                validator: (_, value) => {
+                                    if (value !== undefined && value !== null) {
+                                        if (value < 0) {
+                                            return Promise.reject(new Error('El peso no puede ser negativo.'));
+                                        }
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
                         ]}
                     >
                         <Input type="number" />
@@ -178,21 +216,48 @@ const Ejercicio = ({ ejercicio }) => {
                     <Form.Item
                         label="Músculo"
                         name="musculo"
-                        rules={[{ required: true, message: 'El músculo no puede estar vacío' }]}
+                        rules={[
+                            {
+                                validator: (_, value) => {
+                                    if (value && value.trim() === "") {
+                                        return Promise.reject(new Error('El músculo no puede estar vacío.'));
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
+                        ]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         label="Equipo"
                         name="equipo"
-                        rules={[{ required: true, message: 'El equipo no puede estar vacío' }]}
+                        rules={[
+                            {
+                                validator: (_, value) => {
+                                    if (value && value.trim() === "") {
+                                        return Promise.reject(new Error('El equipo no puede estar vacío.'));
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
+                        ]}
                     >
                         <Input />
                     </Form.Item>
                     <Form.Item
                         label="Instrucciones"
                         name="instrucciones"
-                        rules={[{ required: true, message: 'Las instrucciones no pueden estar vacías' }]}
+                        rules={[
+                            {
+                                validator: (_, value) => {
+                                    if (value && value.trim() === "") {
+                                        return Promise.reject(new Error('Las instrucciones no pueden estar vacías.'));
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
+                        ]}
                     >
                         <Input />
                     </Form.Item>
