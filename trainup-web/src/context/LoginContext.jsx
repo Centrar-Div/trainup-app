@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { logearUsuario, actualizarUsuario, obtenerUsuarioPorID } from '../api/Api';
 import { notification } from 'antd';
@@ -8,41 +8,50 @@ const LoginContext = createContext();
 
 export const LoginProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [authChecked, setAuthChecked] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const storedUsername = localStorage.getItem('username');
-    const storedPassword = localStorage.getItem('password');
-    const storedId = localStorage.getItem('id');
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
+    const userId = localStorage.getItem('id');
     
-    if (storedUsername && storedPassword && !user) {
-      obtenerUsuarioPorID(storedId).then(({ data }) => {
-        setUser(data);
-      }).catch(() => {
-        navigate('/init');
-      });
-    } else if (!storedUsername || !storedPassword) {
-      navigate('/init');
+    if (username && password && userId) {
+      obtenerUsuarioPorID(userId)
+        .then(({ data }) => {
+          setUser(data);
+        })
+        .catch(() => {
+          localStorage.clear(); 
+          navigate('/init'); 
+        })
+        .finally(() => {
+          setAuthChecked(true); 
+        });
+    } else {
+      setAuthChecked(true); 
     }
-  }, [user, navigate]);
-
-  const validateLogin = useCallback((username, password) => {
-    logearUsuario(username, password).then(({ data }) => {
-      localStorage.setItem('id', data.id);
-      localStorage.setItem('username', data.username);
-      localStorage.setItem('password', data.password);
-      setUser(data);
-      navigate('/es/home');
-    }).catch(() => {
-      notification.error({
-        message: 'Error de Autenticación',
-        description: 'El nombre de usuario o la contraseña son incorrectos.',
-        placement: 'topRight',
-      });
-    });
   }, [navigate]);
 
-  const restartLogin = useCallback(() => {
+  const validateLogin = (username, password) => {
+    logearUsuario(username, password)
+      .then(({ data }) => {
+        localStorage.setItem('id', data.id);
+        localStorage.setItem('username', data.username);
+        localStorage.setItem('password', data.password);
+        setUser(data);
+        navigate('/es/home');
+      })
+      .catch(() => {
+        notification.error({
+          message: 'Error de Autenticación',
+          description: 'El nombre de usuario o la contraseña son incorrectos.',
+          placement: 'topRight',
+        });
+      });
+  };
+
+  const restartLogin = () => {
     setUser(null);
     localStorage.clear();
     navigate('/init');
@@ -51,7 +60,7 @@ export const LoginProvider = ({ children }) => {
       description: 'Has cerrado la sesión correctamente.',
       placement: 'topRight',
     });
-  }, [navigate]);
+  };
 
   const actualizarPerfilUsuario = async (datos) => {
     try {
@@ -72,7 +81,7 @@ export const LoginProvider = ({ children }) => {
   };
 
   return (
-    <LoginContext.Provider value={{ user, setUser, restartLogin, validateLogin, actualizarPerfilUsuario }}>
+    <LoginContext.Provider value={{ user, setUser, restartLogin, validateLogin, actualizarPerfilUsuario, authChecked }}>
       {children}
     </LoginContext.Provider>
   );
