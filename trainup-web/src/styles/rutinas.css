@@ -22,6 +22,7 @@
     cursor: pointer;
     overflow: hidden;
     border-left: 5px solid #8783f1;
+    position: relative;
 }
 
 .boxinfo:hover {
@@ -123,10 +124,6 @@
     color: white;
 }
 
-.boxinfo {
-    position: relative;
-}
-
 .card-btns {
     display: flex;
     gap: 10px;
@@ -134,5 +131,53 @@
     justify-content: flex-end;
 }
 
+/* Responsive adjustments */
 
+/* Tablets - Pantallas medianas */
+@media (max-width: 1024px) {
+    .boxinfo {
+        width: 45%;  
+    }
+}
 
+/* Móviles - Pantallas pequeñas */
+@media (max-width: 768px) {
+    .boxinfo {
+        width: 100%;  
+    }
+
+    .card-header h2 {
+        font-size: 1.5rem; 
+    }
+
+    .card-body p {
+        font-size: 0.9rem; 
+    }
+
+    .complete-btn {
+        width: 35px;
+        height: 35px;
+        font-size: 1.2rem;  
+    }
+}
+
+/* Smartphones muy pequeños */
+@media (max-width: 480px) {
+    .boxinfo {
+        padding: 15px; 
+    }
+
+    .card-header h2 {
+        font-size: 1.2rem;  
+    }
+
+    .card-body p {
+        font-size: 0.8rem;  
+    }
+
+    .complete-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 1rem; 
+    }
+}

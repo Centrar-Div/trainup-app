@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { actualizarEjercicio, actualizarUsuario } from '../api/Api';  
+import { actualizarEjercicio } from '../api/Api';  
 import { notification } from 'antd';  
-import { useLogin } from '../context/LoginContext'; 
+import { useLogin} from '../context/LoginContext'; 
 
 const Ejercicio = ({ ejercicio }) => {
     const [completado, setCompletado] = useState(ejercicio.completado);
-    const { user } = useLogin(); 
+    const { user, actualizarPerfilUsuario } = useLogin(); 
 
     const handleCheckboxChange = async () => {
         const updatedEjercicio = {
@@ -26,7 +26,6 @@ const Ejercicio = ({ ejercicio }) => {
     
         try {
             await actualizarEjercicio(updatedEjercicio);
-            
             const usuarioActualizado = {
                 ...user,
                 rutinasSeguidas: user.rutinasSeguidas.map(rutina => ({
@@ -36,13 +35,9 @@ const Ejercicio = ({ ejercicio }) => {
                     )
                 }))
             };
-
-            await actualizarUsuario(usuarioActualizado); 
-            notification.success({
-                message: 'Ejercicio actualizado',
-                description: `El ejercicio "${ejercicio.nombre}" ha sido marcado como ${!completado ? 'completado' : 'incompleto'}.`,
-                placement: 'topRight',
-            });
+            
+            await actualizarPerfilUsuario(usuarioActualizado); 
+           
         } catch (error) {
             console.error('Error actualizando ejercicio:', error);
             notification.error({

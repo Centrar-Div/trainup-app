@@ -1,7 +1,7 @@
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { obtenerUsuarioPorUsername, handleError, logearUsuario, actualizarUsuario, obtenerEjercicioPorId, obtenerUsuarioPorID, } from '../api/Api'; 
+import {logearUsuario, actualizarUsuario, obtenerUsuarioPorID, } from '../api/Api'; 
 import { notification } from 'antd';
 import 'antd/dist/reset.css';
 
@@ -14,14 +14,15 @@ export const LoginProvider = ({ children }) => {
   useEffect(() => {
     const username = localStorage.getItem('username');
     const password = localStorage.getItem('password');
-    if (username && password) {
-       obtenerUsuarioPorID(localStorage.getItem('id')).then( ({ data }) => {
-            setUser(data)
-       });     
-    } else {
+    
+    if (username && password && !user) {
+      obtenerUsuarioPorID(localStorage.getItem('id')).then(({ data }) => {
+        setUser(data);
+      });     
+    } else if (!username || !password) {
       navigate('/init');
     }
-  }, []);
+  }, [user, navigate]);
 
   const validateLogin = (username, password) => {
     logearUsuario(username, password).then(({ data }) => {

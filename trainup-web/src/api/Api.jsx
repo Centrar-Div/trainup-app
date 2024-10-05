@@ -92,7 +92,6 @@ const obtenerEjercicioPorId = async (id) => {
 
 const actualizarEjercicio = async (ejercicio) => {
   try {
-    console.log("Ejercicio",ejercicio)
     const response = await axios.put(`/ejercicios/actualizar`, ejercicio); 
     return response.data;
   } catch (error) {
@@ -146,7 +145,6 @@ const obtenerUsuarios = async () => {
 const actualizarUsuario = async (usuarioDTO) => {
   try {
     const response = await axios.put(`/usuario`, usuarioDTO);
-    console.log(usuarioDTO)
     return response.data;
   } catch (error) {
     console.error('Error en actualizarUsuario:', error.response || error.message);
