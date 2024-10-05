@@ -1,23 +1,24 @@
-import React from 'react'
-import '../styles/sidebar.css'
-import { useNavigate } from 'react-router-dom'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faHome, faCompass, faCheck, faUser, faSignOutAlt, faPlus } from '@fortawesome/free-solid-svg-icons'
+import React from 'react';
+import '../styles/sidebar.css';
+import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHome, faCompass, faCheck, faUser, faSignOutAlt, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { useLogin } from '../context/LoginContext';
 
-
 const Sidebar = () => {
-    const navigate = useNavigate()
-    const { restartLogin } = useLogin()
+    const navigate = useNavigate();
+    const { user, restartLogin } = useLogin();
 
     return (
         <div className='sidebar'>
             <ul>
-                <li>
-                    <button className='sidebar-btn' onClick={() => navigate('/es/home/crear/rutina')}>
-                        <FontAwesomeIcon icon={faPlus} className="icon" /> Nueva Rutina
-                    </button>
-                </li>
+                {user?.esAdmin && (
+                    <li>
+                        <button className='sidebar-btn' onClick={() => navigate('/es/home/crear/rutina')}>
+                            <FontAwesomeIcon icon={faPlus} className="icon" /> Nueva Rutina
+                        </button>
+                    </li>
+                )}
                 <li>
                     <button className='sidebar-btn' onClick={() => navigate('/es/home')}>
                         <FontAwesomeIcon icon={faHome} className="icon" /> Home
@@ -45,7 +46,7 @@ const Sidebar = () => {
                 </li>
             </ul>
         </div>
-    )
+    );
 }
 
-export default Sidebar
+export default Sidebar;

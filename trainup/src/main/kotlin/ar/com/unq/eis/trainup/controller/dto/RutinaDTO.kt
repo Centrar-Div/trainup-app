@@ -27,7 +27,7 @@ data class RutinaDTO(
                 duracionMinutos = rutina.duracionMinutos,
                 objetivo = rutina.objetivo,
                 frecuenciaSemanal = rutina.frecuenciaSemanal,
-                fechaCreacion = rutina.fechaCreacion.toString(), // Conversión directa a String
+                fechaCreacion = rutina.fechaCreacion.toString(),
                 ejercicios = rutina.ejercicios.map { EjercicioDTO.desdeModelo(it) }.toMutableList()
             )
         }
@@ -35,7 +35,7 @@ data class RutinaDTO(
 
     fun aModelo(): Rutina {
         return Rutina(
-            id = this.id,  // Proveer ID si está disponible
+            id = this.id,
             nombre = this.nombre,
             descripcion = this.descripcion,
             categoria = this.categoria,
