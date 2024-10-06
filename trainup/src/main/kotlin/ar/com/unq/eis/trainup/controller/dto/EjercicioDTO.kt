@@ -2,7 +2,7 @@ package ar.com.unq.eis.trainup.controller.dto
 
 import ar.com.unq.eis.trainup.model.Ejercicio
 
-data class EjercicioDTO(
+ class EjercicioDTO(
     var id: String? = null,
     var nombre: String = "",
     var descripcion: String = "",

@@ -1,8 +1,7 @@
 package ar.com.unq.eis.trainup.controller
 
-import ar.com.unq.eis.trainup.controller.dto.BodyRutinaDTO
-import ar.com.unq.eis.trainup.controller.dto.ErrorDTO
-import ar.com.unq.eis.trainup.controller.dto.RutinaDTO
+import ar.com.unq.eis.trainup.controller.dto.*
+import ar.com.unq.eis.trainup.model.Ejercicio
 import ar.com.unq.eis.trainup.services.RutinaService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -45,7 +44,9 @@ class RutinaController(
     @PutMapping("/{id}")
     fun actualizarRutina(@PathVariable id: String, @RequestBody bodyRutinaDTO: BodyRutinaDTO): ResponseEntity<Any> {
         return try {
-            val rutinaAActualizar = rutinaService.obtenerRutinaPorId(id) ?: return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(Exception("Rutina no encontrada")))
+            val rutinaAActualizar =
+                rutinaService.obtenerRutinaPorId(id) ?: return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(ErrorDTO(Exception("Rutina no encontrada")))
             rutinaAActualizar.apply {
                 nombre = bodyRutinaDTO.nombre
                 descripcion = bodyRutinaDTO.descripcion
@@ -67,5 +68,16 @@ class RutinaController(
             ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
         }
     }
-}
 
+    @PostMapping("/{id}/ejercicios")
+    fun agregarEjercicio(@PathVariable id: String, @RequestBody ejercicio: BodyEjercicioDTO): ResponseEntity<Any> {
+        return try {
+            val rutinaActualizada = rutinaService.agregarEjercicio(id, ejercicio.aModelo())
+            ResponseEntity.ok(RutinaDTO.desdeModelo(rutinaActualizada))
+        } catch (e: NoSuchElementException) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
+        }
+    }
+}
