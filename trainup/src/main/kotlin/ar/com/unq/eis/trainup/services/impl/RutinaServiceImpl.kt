@@ -104,7 +104,7 @@ class RutinaServiceImpl : RutinaService {
             val rutinaExistente = rutinaDAO.findById(id)
             if (rutinaExistente.isPresent) {
                 val rutina = rutinaExistente.get()
-                rutina.eliminarEjercicio(ejercicioDAO.save(ejercicio))
+                rutina.eliminarEjercicio(ejercicio)
                 rutinaDAO.save(rutina)
             } else {
                 throw NoSuchElementException("No se encontró la rutina con id: $id")
