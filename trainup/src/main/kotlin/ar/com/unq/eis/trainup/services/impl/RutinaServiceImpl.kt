@@ -1,6 +1,8 @@
 package ar.com.unq.eis.trainup.services.impl
 
+import ar.com.unq.eis.trainup.dao.EjercicioDAO
 import ar.com.unq.eis.trainup.dao.RutinaDAO
+import ar.com.unq.eis.trainup.model.Ejercicio
 import ar.com.unq.eis.trainup.model.Rutina
 import ar.com.unq.eis.trainup.services.RutinaService
 import org.springframework.beans.factory.annotation.Autowired
@@ -9,10 +11,13 @@ import org.springframework.transaction.annotation.Transactional
 
 @Service
 @Transactional
-class RutinaServiceImpl(
+class RutinaServiceImpl : RutinaService {
+
     @Autowired
-    private val rutinaDAO: RutinaDAO
-) : RutinaService {
+    lateinit var rutinaDAO: RutinaDAO
+    @Autowired
+    lateinit var ejercicioDAO: EjercicioDAO
+
 
     override fun crearRutina(rutina: Rutina): Rutina {
         return try {
@@ -76,6 +81,22 @@ class RutinaServiceImpl(
             throw e
         } catch (e: Exception) {
             throw RuntimeException("Error al eliminar la rutina: ${e.message}")
+        }
+    }
+    override fun agregarEjercicio(id: String, ejercicio: Ejercicio): Rutina {
+        return try {
+            val rutinaExistente = rutinaDAO.findById(id)
+            if (rutinaExistente.isPresent) {
+                val rutina = rutinaExistente.get()
+                rutina.agregarEjercicio(ejercicioDAO.save(ejercicio))
+                rutinaDAO.save(rutina)
+            } else {
+                throw NoSuchElementException("No se encontró la rutina con id: $id")
+            }
+        } catch (e: NoSuchElementException) {
+            throw e
+        } catch (e: Exception) {
+            throw RuntimeException("Error al agregar ejercicio a la rutina: ${e.message}")
         }
     }
 }

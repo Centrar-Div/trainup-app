@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @EnableMongoRepositories
 class TrainupApplication
 
-fun main(args: Array<String>) {
+			fun main(args: Array<String>) {
 	runApplication<TrainupApplication>(*args)
 }
 
