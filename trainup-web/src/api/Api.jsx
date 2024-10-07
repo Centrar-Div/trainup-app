@@ -63,14 +63,12 @@ const obtenerRutinaPorId = async (id) => {
 * Funciones relacionadas con "Ejercicios"
 */
 
-const crearEjercicio = async (ejercicioDTO) => {
-  try {
-    const response = await axios.post(`/ejercicios`, ejercicioDTO);
-    return response.data;
-  } catch (error) {
-    handleError(error);
-  }
-};
+const crearEjercicio = (body) => axios.post(`/ejercicios`, body);
+const agregarEjercicioARutina = (rutinaID, ejercicio) => axios.post(`/rutinas/${rutinaID}/ejercicios`,ejercicio ); 
+
+const eliminarEjercicioDeRutina = (rutinaID, ejercicio) => axios.delete(`/rutinas/${rutinaID}/ejercicios`,ejercicio);
+
+
 
 const obtenerEjercicios = async () => {
   try {
@@ -99,15 +97,10 @@ const actualizarEjercicio = async (ejercicio) => {
     throw error;
   }
 };
-
-const eliminarEjercicio = async (id) => {
-  try {
-    const response = await axios.delete(`/ejercicios/${id}`);
-    return response.data;
-  } catch (error) {
-    handleError(error);
-  }
+const eliminarEjercicio = (ejercicioID) => {
+  return axios.delete(`/ejercicios/${ejercicioID}`); 
 };
+
 
 /*
  * Funciones relacionadas con "Usuarios"
@@ -203,5 +196,7 @@ export {
   actualizarUsuario,
   eliminarUsuario,
   completarRutina,
-  obtenerUsuarioPorID
+  obtenerUsuarioPorID,
+  agregarEjercicioARutina,
+  eliminarEjercicioDeRutina
 };

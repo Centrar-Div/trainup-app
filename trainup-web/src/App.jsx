@@ -17,6 +17,7 @@ import RutinasCompletadas from './home/RutinasCompletadas'
 import CrearRutina from './home/CrearRutina'
 import ExploradorPage from './home/ExploradorPage'
 import EditarRutina from './home/EditarRutina'
+import CrearEjercicio from './home/CrearEjercicio'
 
 const Layout = () => {
   const location = useLocation()
@@ -47,6 +48,7 @@ function App() {
           <Route path='home/profile' element={<Profile/>}/>
           <Route path='home/completadas' element={<RutinasCompletadas/>}/>
           <Route path='home/crear/rutina' element={<CrearRutina/>}/>
+          <Route path='home/crear/ejercicio' element={<CrearEjercicio/>}/>
           <Route path='home/explorador' element={<ExploradorPage/>}/>
           <Route path='home/rutina/editar' element={<EditarRutina/>}/>
         </Route>
