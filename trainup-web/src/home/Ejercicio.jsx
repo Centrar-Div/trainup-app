@@ -7,7 +7,7 @@ import { crearEjercicio, actualizarEjercicio, eliminarEjercicioDeRutina, actuali
 import "../styles/ejercicio.css";
 
 
-const Ejercicio = ({updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) => {
+const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) => {
     const { user } = useLogin();
     const [isOpen, setIsOpen] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -37,11 +37,11 @@ const Ejercicio = ({updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) => 
             await form.validateFields();
             setIsUpdating(true);
             actualizarEjercicioEnRutina(rutinaID, editedFields)
-            actualizarEjercicio(editedFields).then(({data}) => {
+            actualizarEjercicio(editedFields).then(({ data }) => {
                 updateEjercicio(data)
             });
-            
-            
+
+
             notification.success({
                 message: '¡Éxito!',
                 description: `El ejercicio "${editedFields.nombre}" ha sido actualizado exitosamente.`,
@@ -82,20 +82,20 @@ const Ejercicio = ({updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) => 
     };
 
     const handleDeleteExercise = () => {
-        eliminarEjercicioDeRutina(rutinaID, ejercicio.id).then(()=>{
+        eliminarEjercicioDeRutina(rutinaID, ejercicio.id).then(() => {
             deleteEjercicio(ejercicio)
             notification.success({
                 message: '¡Éxito!',
                 description: `Ejercicio eliminado con éxito.`,
                 placement: 'topRight',
             });
-        }).catch((error)=> {
+        }).catch((error) => {
             notification.error({
                 message: 'Error al eliminar',
                 description: `El ejercicio no pudo ser eliminado.`,
                 placement: 'topRight',
             })
-        })        
+        })
     };
 
     const isFormInvalid = () => {
@@ -205,7 +205,7 @@ const Ejercicio = ({updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) => 
                 okText="Eliminar"
                 cancelText="Cancelar"
             >
-                <p>¿Estás seguro de que deseas eliminar la rutina?</p>
+                <p>¿Estás seguro de que deseas eliminar el ejercicio?</p>
             </Modal>
         </div>
     );

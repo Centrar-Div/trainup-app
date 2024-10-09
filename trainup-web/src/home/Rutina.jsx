@@ -4,12 +4,12 @@ import { useLogin } from '../context/LoginContext';
 import FollowBtn from './FollowBtn';
 import Loader from '../utils/Loader';
 import Ejercicio from './Ejercicio';
-import { Button } from 'antd'; 
+import { Button } from 'antd';
 import { obtenerRutinaPorId } from '../api/Api';
 
 const Rutina = () => {
     const location = useLocation();
-    const navigate = useNavigate(); 
+    const navigate = useNavigate();
     const { rutinaID, nombre } = location.state || {};
     const { user } = useLogin();
     const [isFollowed, setIsFollowed] = useState(false);
@@ -19,7 +19,7 @@ const Rutina = () => {
     useEffect(() => {
         obtenerRutinaPorId(rutinaID).then(({ data }) => {
             setListaDeEjercicios(data.ejercicios)
-        }).catch((error) => {   
+        }).catch((error) => {
             console.log(error)
         })
 
@@ -63,10 +63,15 @@ const Rutina = () => {
         <>
             <h1>Ejercicios de {nombre}</h1>
             <div className="rutina-header">
-                <FollowBtn initFollow={isFollowed} rutinaID={rutinaID} />
-                <Button onClick={handleCreateExercise} type="primary" style={{ marginLeft: '10px' }}>
-                    Crear Ejercicio
-                </Button>
+
+                {user.esAdmin ?
+                    <Button onClick={handleCreateExercise} type="primary" style={{ marginLeft: '10px' }}>
+                        Crear Ejercicio
+                    </Button>
+                    :
+                    <FollowBtn initFollow={isFollowed} rutinaID={rutinaID} />
+                }
+
             </div>
             <div className='container-boxinfo'>
                 {listaDeEjercicios.map(ejercicio => (
