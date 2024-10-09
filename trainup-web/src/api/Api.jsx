@@ -31,15 +31,7 @@ const crearRutina = (body) => axios.post(`/rutinas`, body)
 const obtenerRutinas = () => axios.get(`/rutinas`)
 const actualizarRutina = (id, body) => axios.put(`/rutinas/${id}`, body)
 const eliminarRutina = (id) => axios.delete(`/rutinas/${id}`)
-
-const obtenerRutinaPorId = async (id) => {
-  try {
-    const response = await axios.get(`/rutinas/${id}`);
-    return response.data;
-  } catch (error) {
-    handleError(error);
-  }
-};
+const obtenerRutinaPorId = (id) => axios.get(`/rutinas/${id}`);
 
 // const actualizarRutina = async (rutinaID, rutina) => {
 //   try {
@@ -63,14 +55,12 @@ const obtenerRutinaPorId = async (id) => {
 * Funciones relacionadas con "Ejercicios"
 */
 
-const crearEjercicio = async (ejercicioDTO) => {
-  try {
-    const response = await axios.post(`/ejercicios`, ejercicioDTO);
-    return response.data;
-  } catch (error) {
-    handleError(error);
-  }
-};
+const crearEjercicio = (body) => axios.post(`/ejercicios`, body);
+const agregarEjercicioARutina = (rutinaID, ejercicio) => axios.post(`/rutinas/${rutinaID}/ejercicios`,ejercicio ); 
+
+const eliminarEjercicioDeRutina = (rutinaID, ejercicioID) => axios.delete(`/rutinas/${rutinaID}/ejercicios/${ejercicioID}`);
+
+
 
 const obtenerEjercicios = async () => {
   try {
@@ -90,24 +80,13 @@ const obtenerEjercicioPorId = async (id) => {
   }
 };
 
-const actualizarEjercicio = async (ejercicio) => {
-  try {
-    const response = await axios.put(`/ejercicios/actualizar`, ejercicio); 
-    return response.data;
-  } catch (error) {
-    console.error('Error actualizando el ejercicio:', error);
-    throw error;
-  }
+const actualizarEjercicio = (ejercicio) => axios.put(`/ejercicios/actualizar`, ejercicio)
+const actualizarEjercicioEnRutina = (id, ejercicio) => axios.put(`/rutinas/${id}/ejercicio/actualizar`, ejercicio)
+
+const eliminarEjercicio = (ejercicioID) => {
+  return axios.delete(`/ejercicios/${ejercicioID}`); 
 };
 
-const eliminarEjercicio = async (id) => {
-  try {
-    const response = await axios.delete(`/ejercicios/${id}`);
-    return response.data;
-  } catch (error) {
-    handleError(error);
-  }
-};
 
 /*
  * Funciones relacionadas con "Usuarios"
@@ -203,5 +182,8 @@ export {
   actualizarUsuario,
   eliminarUsuario,
   completarRutina,
-  obtenerUsuarioPorID
+  obtenerUsuarioPorID,
+  agregarEjercicioARutina,
+  eliminarEjercicioDeRutina,
+  actualizarEjercicioEnRutina
 };

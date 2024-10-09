@@ -1,24 +1,36 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useLogin } from '../context/LoginContext';
 import FollowBtn from './FollowBtn';
 import Loader from '../utils/Loader';
 import Ejercicio from './Ejercicio';
+import { Button } from 'antd'; 
+import { obtenerRutinaPorId } from '../api/Api';
 
 const Rutina = () => {
     const location = useLocation();
-    const { rutinaID, ejercicios, nombre } = location.state || {};
+    const navigate = useNavigate(); 
+    const { rutinaID, nombre } = location.state || {};
     const { user } = useLogin();
     const [isFollowed, setIsFollowed] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [listaDeEjercicios, setListaDeEjercicios] = useState([])
 
     useEffect(() => {
+        obtenerRutinaPorId(rutinaID).then(({ data }) => {
+            setListaDeEjercicios(data.ejercicios)
+        }).catch((error) => {   
+            console.log(error)
+        })
+
         if (user) {
             const sigueRutina = user.rutinasSeguidas.some(rutina => rutina.id === rutinaID);
             setIsFollowed(sigueRutina);
             setIsLoading(false);
         }
+
     }, [user, rutinaID]);
+
 
     if (isLoading) {
         return (
@@ -28,13 +40,37 @@ const Rutina = () => {
         );
     }
 
+    const handleCreateExercise = () => {
+        navigate('/es/home/crear/ejercicio', { state: { rutinaID } }); // Pasar rutinaID al navegar
+    };
+
+    const deleteEjercicio = (ejercicio) => {
+        const ejercicios = listaDeEjercicios.filter(e => e.id !== ejercicio.id);
+        setListaDeEjercicios(ejercicios);
+    }
+
+    const updateEjercicio = (ejercicio) => {
+        const ejercicios = listaDeEjercicios.map(e => {
+            if (e.id === ejercicio.id) {
+                return ejercicio;
+            }
+            return e;
+        });
+        setListaDeEjercicios(ejercicios);
+    }
+
     return (
         <>
             <h1>Ejercicios de {nombre}</h1>
-            <FollowBtn initFollow={isFollowed} rutinaID={rutinaID} />
+            <div className="rutina-header">
+                <FollowBtn initFollow={isFollowed} rutinaID={rutinaID} />
+                <Button onClick={handleCreateExercise} type="primary" style={{ marginLeft: '10px' }}>
+                    Crear Ejercicio
+                </Button>
+            </div>
             <div className='container-boxinfo'>
-                {ejercicios.map(ejercicio => (
-                    <Ejercicio key={ejercicio.id} ejercicio={ejercicio} />
+                {listaDeEjercicios.map(ejercicio => (
+                    <Ejercicio key={ejercicio.id} updateEjercicio={updateEjercicio} deleteEjercicio={deleteEjercicio} ejercicio={ejercicio} rutinaID={rutinaID} />
                 ))}
             </div>
         </>

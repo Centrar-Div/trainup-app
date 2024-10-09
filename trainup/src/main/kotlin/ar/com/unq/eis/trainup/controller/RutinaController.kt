@@ -80,4 +80,28 @@ class RutinaController(
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
         }
     }
-}
+
+    @PutMapping("/{id}/ejercicio/actualizar")
+    fun actualizarEjercicioEnRutina(@PathVariable id: String, @RequestBody ejercicio: EjercicioDTO): ResponseEntity<Any> {
+        return try {
+            val rutinaActualizada = rutinaService.agregarEjercicio(id, ejercicio.aModelo())
+            ResponseEntity.ok(RutinaDTO.desdeModelo(rutinaActualizada))
+        } catch (e: NoSuchElementException) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
+        }
+    }
+
+        @DeleteMapping("/{id}/ejercicios/{idEj}")
+        fun eliminarEjercicio(@PathVariable id: String ,@PathVariable idEj: String ): ResponseEntity<Any> {
+            return try {
+                val rutinaActualizada = rutinaService.eliminarEjercicio(id, idEj)
+                    ResponseEntity.ok(RutinaDTO.desdeModelo(rutinaActualizada))
+            } catch (e: NoSuchElementException) {
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
+            } catch (e: Exception) {
+                ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
+            }
+        }
+    }
