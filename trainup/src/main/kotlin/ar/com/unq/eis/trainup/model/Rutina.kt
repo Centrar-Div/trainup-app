@@ -71,7 +71,14 @@ class Rutina {
     }
 
     fun agregarEjercicio(ejercicio: Ejercicio) {
-        ejercicios.add(ejercicio)
+
+        //actualizar el ejercicio si existe, sino agregarlo
+        val index = ejercicios.indexOfFirst { it.id == ejercicio.id }
+        if (index != -1) {
+            ejercicios[index] = ejercicio
+        } else {
+            ejercicios.add(ejercicio)
+        }
     }
 
     fun eliminarEjercicio(idEjercicio: String) {

@@ -34,6 +34,11 @@
     line-height: 1.6;
 }
 
+.exercise-footer {
+    display: flex;
+    gap: 10px;
+}
+
 .exercise-details {
     display: flex;
     flex-wrap: wrap;

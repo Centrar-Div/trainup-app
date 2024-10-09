@@ -8,11 +8,7 @@ const ExploradorPage = () => {
     const [rutinas, setRutinas] = useState([])
 
     useEffect(() => {
-
-        obtenerRutinas().then(({data}) => {
-            setRutinas(data)
-        })
-
+        obtenerRutinas().then(({data}) =>  setRutinas(data))
     }, [rutinas])
 
   return (

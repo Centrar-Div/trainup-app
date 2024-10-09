@@ -10,24 +10,26 @@ import { obtenerRutinaPorId } from '../api/Api';
 const Rutina = () => {
     const location = useLocation();
     const navigate = useNavigate(); 
-    const { rutinaID, ejercicios, nombre } = location.state || {};
+    const { rutinaID, nombre } = location.state || {};
     const { user } = useLogin();
     const [isFollowed, setIsFollowed] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [listaDeEjercicios, setListaDeEjercicios] = useState([])
 
-    
     useEffect(() => {
-        obtenerRutinaPorId(rutinaID).then(({ data })=>{
-            console.log(data)
-           // setListaDeEjercicios(data.ejercicios)
+        obtenerRutinaPorId(rutinaID).then(({ data }) => {
+            setListaDeEjercicios(data.ejercicios)
+        }).catch((error) => {   
+            console.log(error)
         })
+
         if (user) {
             const sigueRutina = user.rutinasSeguidas.some(rutina => rutina.id === rutinaID);
             setIsFollowed(sigueRutina);
             setIsLoading(false);
         }
-    }, [user, rutinaID, listaDeEjercicios]);
+
+    }, [user, rutinaID]);
 
 
     if (isLoading) {
@@ -42,6 +44,21 @@ const Rutina = () => {
         navigate('/es/home/crear/ejercicio', { state: { rutinaID } }); // Pasar rutinaID al navegar
     };
 
+    const deleteEjercicio = (ejercicio) => {
+        const ejercicios = listaDeEjercicios.filter(e => e.id !== ejercicio.id);
+        setListaDeEjercicios(ejercicios);
+    }
+
+    const updateEjercicio = (ejercicio) => {
+        const ejercicios = listaDeEjercicios.map(e => {
+            if (e.id === ejercicio.id) {
+                return ejercicio;
+            }
+            return e;
+        });
+        setListaDeEjercicios(ejercicios);
+    }
+
     return (
         <>
             <h1>Ejercicios de {nombre}</h1>
@@ -53,7 +70,7 @@ const Rutina = () => {
             </div>
             <div className='container-boxinfo'>
                 {listaDeEjercicios.map(ejercicio => (
-                    <Ejercicio key={ejercicio.id} ejercicio={ejercicio} rutinaID={rutinaID} />
+                    <Ejercicio key={ejercicio.id} updateEjercicio={updateEjercicio} deleteEjercicio={deleteEjercicio} ejercicio={ejercicio} rutinaID={rutinaID} />
                 ))}
             </div>
         </>

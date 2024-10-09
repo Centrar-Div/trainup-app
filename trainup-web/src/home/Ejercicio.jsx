@@ -3,12 +3,13 @@ import { notification, Modal, Input, Form, Button } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useLogin } from '../context/LoginContext';
-import { crearEjercicio, actualizarEjercicio, eliminarEjercicioDeRutina } from '../api/Api';
+import { crearEjercicio, actualizarEjercicio, eliminarEjercicioDeRutina, actualizarEjercicioEnRutina } from '../api/Api';
 import "../styles/ejercicio.css";
 
 
-const Ejercicio = ({ ejercicio, rutinaID }) => {
+const Ejercicio = ({updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) => {
     const { user } = useLogin();
+    const [isOpen, setIsOpen] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editedFields, setEditedFields] = useState(ejercicio || {});
     const [isUpdating, setIsUpdating] = useState(false);
@@ -35,7 +36,12 @@ const Ejercicio = ({ ejercicio, rutinaID }) => {
         try {
             await form.validateFields();
             setIsUpdating(true);
-            await actualizarEjercicio(editedFields);
+            actualizarEjercicioEnRutina(rutinaID, editedFields)
+            actualizarEjercicio(editedFields).then(({data}) => {
+                updateEjercicio(data)
+            });
+            
+            
             notification.success({
                 message: '¡Éxito!',
                 description: `El ejercicio "${editedFields.nombre}" ha sido actualizado exitosamente.`,
@@ -76,15 +82,14 @@ const Ejercicio = ({ ejercicio, rutinaID }) => {
     };
 
     const handleDeleteExercise = () => {
-        console.log(rutinaID)
-        eliminarEjercicioDeRutina(rutinaID,ejercicio.id).then(()=>{
+        eliminarEjercicioDeRutina(rutinaID, ejercicio.id).then(()=>{
+            deleteEjercicio(ejercicio)
             notification.success({
                 message: '¡Éxito!',
                 description: `Ejercicio eliminado con éxito.`,
                 placement: 'topRight',
             });
         }).catch((error)=> {
-            console.log(error)
             notification.error({
                 message: 'Error al eliminar',
                 description: `El ejercicio no pudo ser eliminado.`,
@@ -122,7 +127,7 @@ const Ejercicio = ({ ejercicio, rutinaID }) => {
                 {ejercicio && user.esAdmin && (
                     <>
                         <FontAwesomeIcon icon={faPenToSquare} className="icon edit-icon" onClick={showEditModal} />
-                        <FontAwesomeIcon icon={faTrash} className="icon delete-icon" onClick={handleDeleteExercise} />
+                        <FontAwesomeIcon icon={faTrash} className="icon edit-icon" onClick={() => setIsOpen(true)} />
                     </>
                 )}
             </div>
@@ -191,6 +196,16 @@ const Ejercicio = ({ ejercicio, rutinaID }) => {
                         <Input />
                     </Form.Item>
                 </Form>
+            </Modal>
+            <Modal
+                title="Confirmar acción"
+                open={isOpen}
+                onOk={handleDeleteExercise}
+                onCancel={() => setIsOpen(false)}
+                okText="Eliminar"
+                cancelText="Cancelar"
+            >
+                <p>¿Estás seguro de que deseas eliminar la rutina?</p>
             </Modal>
         </div>
     );

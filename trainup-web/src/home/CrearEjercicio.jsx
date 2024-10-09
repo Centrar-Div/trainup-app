@@ -34,7 +34,7 @@ const CrearEjercicio = () => {
                     description: 'El ejercicio se ha creado y agregado a la rutina correctamente.',
                     placement: 'topRight',
                 });
-                navigate(`/es/home`); 
+                navigate(-1); 
             })
             .catch((e) => {
                 console.log(e)
