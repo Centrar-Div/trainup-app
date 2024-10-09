@@ -74,8 +74,8 @@ class Rutina {
         ejercicios.add(ejercicio)
     }
 
-    fun eliminarEjercicio(ejercicio: Ejercicio) {
-        ejercicios.remove(ejercicio)
+    fun eliminarEjercicio(idEjercicio: String) {
+        ejercicios.removeIf{it-> it.id == idEjercicio}
     }
 
     fun listarEjercicios(): List<Ejercicio> {

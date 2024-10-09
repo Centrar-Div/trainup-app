@@ -99,15 +99,15 @@ class RutinaServiceImpl : RutinaService {
             throw RuntimeException("Error al agregar ejercicio a la rutina: ${e.message}")
         }
     }
-    override fun eliminarEjercicio(id: String, ejercicio: Ejercicio): Rutina {
+    override fun eliminarEjercicio(id: String, idEj: String): Rutina {
         return try {
             val rutinaExistente = rutinaDAO.findById(id)
             if (rutinaExistente.isPresent) {
                 val rutina = rutinaExistente.get()
-                rutina.eliminarEjercicio(ejercicio)
+                rutina.eliminarEjercicio(idEj)
                 rutinaDAO.save(rutina)
             } else {
-                throw NoSuchElementException("No se encontró la rutina con id: $id")
+                throw NoSuchElementException("No se encontró el ejercicio con id: $idEj")
             }
         } catch (e: NoSuchElementException) {
             throw e

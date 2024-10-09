@@ -81,10 +81,10 @@ class RutinaController(
         }
     }
 
-        @DeleteMapping("/{id}/ejercicios")
-        fun eliminarEjercicio(@PathVariable id: String, @RequestBody ejercicio: BodyEjercicioDTO): ResponseEntity<Any> {
+        @DeleteMapping("/{id}/ejercicios/{idEj}")
+        fun eliminarEjercicio(@PathVariable id: String ,@PathVariable idEj: String ): ResponseEntity<Any> {
             return try {
-                val rutinaActualizada = rutinaService.eliminarEjercicio(id, ejercicio.aModelo())
+                val rutinaActualizada = rutinaService.eliminarEjercicio(id,idEj)
                 ResponseEntity.ok(RutinaDTO.desdeModelo(rutinaActualizada))
             } catch (e: NoSuchElementException) {
                 ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
