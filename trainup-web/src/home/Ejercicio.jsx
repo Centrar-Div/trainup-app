@@ -6,6 +6,7 @@ import { useLogin } from '../context/LoginContext';
 import { crearEjercicio, actualizarEjercicio, eliminarEjercicioDeRutina } from '../api/Api';
 import "../styles/ejercicio.css";
 
+
 const Ejercicio = ({ ejercicio, rutinaID }) => {
     const { user } = useLogin();
     const [isModalVisible, setIsModalVisible] = useState(false);
@@ -74,30 +75,22 @@ const Ejercicio = ({ ejercicio, rutinaID }) => {
         }
     };
 
-    const handleDeleteExercise = async () => {
-        const confirm = await Modal.confirm({
-            title: 'Confirmar Eliminación',
-            content: `¿Estás seguro de que deseas eliminar el ejercicio "${ejercicio.nombre}"?`,
-            okText: 'Sí',
-            cancelText: 'No',
-        });
-
-        if (confirm) {
-            try {
-                await eliminarEjercicioDeRutina(rutinaID, ejercicio);
-                notification.success({
-                    message: '¡Éxito!',
-                    description: `Ejercicio eliminado con éxito.`,
-                    placement: 'topRight',
-                });
-            } catch (error) {
-                notification.error({
-                    message: 'Error al eliminar',
-                    description: `El ejercicio no pudo ser eliminado.`,
-                    placement: 'topRight',
-                });
-            }
-        }
+    const handleDeleteExercise = () => {
+        console.log(rutinaID)
+        eliminarEjercicioDeRutina(rutinaID,ejercicio.id).then(()=>{
+            notification.success({
+                message: '¡Éxito!',
+                description: `Ejercicio eliminado con éxito.`,
+                placement: 'topRight',
+            });
+        }).catch((error)=> {
+            console.log(error)
+            notification.error({
+                message: 'Error al eliminar',
+                description: `El ejercicio no pudo ser eliminado.`,
+                placement: 'topRight',
+            })
+        })        
     };
 
     const isFormInvalid = () => {

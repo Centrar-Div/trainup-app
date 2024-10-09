@@ -66,7 +66,7 @@ const obtenerRutinaPorId = async (id) => {
 const crearEjercicio = (body) => axios.post(`/ejercicios`, body);
 const agregarEjercicioARutina = (rutinaID, ejercicio) => axios.post(`/rutinas/${rutinaID}/ejercicios`,ejercicio ); 
 
-const eliminarEjercicioDeRutina = (rutinaID, ejercicio) => axios.delete(`/rutinas/${rutinaID}/ejercicios`,ejercicio);
+const eliminarEjercicioDeRutina = (rutinaID, ejercicioID) => axios.delete(`/rutinas/${rutinaID}/ejercicios/${ejercicioID}`);
 
 
 

@@ -5,6 +5,7 @@ import FollowBtn from './FollowBtn';
 import Loader from '../utils/Loader';
 import Ejercicio from './Ejercicio';
 import { Button } from 'antd'; 
+import { obtenerRutinaPorId } from '../api/Api';
 
 const Rutina = () => {
     const location = useLocation();
@@ -13,14 +14,21 @@ const Rutina = () => {
     const { user } = useLogin();
     const [isFollowed, setIsFollowed] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
+    const [listaDeEjercicios, setListaDeEjercicios] = useState([])
 
+    
     useEffect(() => {
+        obtenerRutinaPorId(rutinaID).then(({ data })=>{
+            console.log(data)
+           // setListaDeEjercicios(data.ejercicios)
+        })
         if (user) {
             const sigueRutina = user.rutinasSeguidas.some(rutina => rutina.id === rutinaID);
             setIsFollowed(sigueRutina);
             setIsLoading(false);
         }
-    }, [user, rutinaID]);
+    }, [user, rutinaID, listaDeEjercicios]);
+
 
     if (isLoading) {
         return (
@@ -44,8 +52,8 @@ const Rutina = () => {
                 </Button>
             </div>
             <div className='container-boxinfo'>
-                {ejercicios.map(ejercicio => (
-                    <Ejercicio key={ejercicio.id} ejercicio={ejercicio} />
+                {listaDeEjercicios.map(ejercicio => (
+                    <Ejercicio key={ejercicio.id} ejercicio={ejercicio} rutinaID={rutinaID} />
                 ))}
             </div>
         </>
