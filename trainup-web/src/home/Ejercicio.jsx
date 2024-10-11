@@ -1,20 +1,23 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { notification, Modal, Input, Form, Button } from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useLogin } from '../context/LoginContext';
-import { crearEjercicio, actualizarEjercicio, eliminarEjercicioDeRutina, actualizarEjercicioEnRutina } from '../api/Api';
+import { crearEjercicio, actualizarEjercicio, eliminarEjercicioDeRutina, actualizarEjercicioEnRutina, actualizarUsuario, completarONoEjercicio } from '../api/Api';
 import "../styles/ejercicio.css";
 
 
 const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) => {
-    const { user } = useLogin();
+    const { user, actualizarPerfilUsuario } = useLogin();     
     const [isOpen, setIsOpen] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editedFields, setEditedFields] = useState(ejercicio || {});
     const [isUpdating, setIsUpdating] = useState(false);
     const [form] = Form.useForm();
     const [isCreating, setIsCreating] = useState(false);
+    const [completado, setCompletado] = useState(ejercicio.completado);
+
+
 
     const showEditModal = () => {
         setEditedFields(ejercicio);
@@ -26,9 +29,19 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
     };
 
     const handleFieldChange = (changedValues) => {
+        const updateValues = Object.keys(changedValues).reduce((acc, key) => {
+            // Convertimos 'repeticiones' y 'peso' a números si es necesario
+            if (key === 'repeticiones' || key === 'peso') {
+                acc[key] = parseInt(changedValues[key], 10); // convertimos a número
+            } else {
+                acc[key] = changedValues[key]; // para los demás campos, dejamos el valor tal cual
+            }
+            return acc;
+        }, {});
+
         setEditedFields(prevFields => ({
             ...prevFields,
-            ...changedValues
+            ...updateValues
         }));
     };
 
@@ -104,9 +117,30 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
         return !fieldsTouched || hasErrors;
     };
 
+    const handleCheckboxChange = async () => {
+        
+
+        const updatedEjercicio = {
+            ...ejercicio,
+            completado: !completado
+        };
+
+        setCompletado(!completado);
+
+        actualizarEjercicio(updatedEjercicio).then(() => {
+            completarONoEjercicio(user.id, rutinaID, ejercicio.id)
+        }).catch(() => {
+            notification.error({
+                message: 'Error al actualizar',
+                description: `No se pudo actualizar el estado del ejercicio "${ejercicio.nombre}".`,
+                placement: 'topRight',
+            });
+        })
+    };
+
     return (
         <div className='exercise-container'>
-            <div className="exercise-header">
+            <div className="exercise-header">   
                 <h3>{ejercicio ? ejercicio.nombre : "Crear Nuevo Ejercicio"}</h3>
             </div>
             <div className="exercise-body">
@@ -124,12 +158,21 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
                 </div>
             )}
             <div className="exercise-footer">
-                {ejercicio && user.esAdmin && (
+                {ejercicio && user.esAdmin ? (
                     <>
                         <FontAwesomeIcon icon={faPenToSquare} className="icon edit-icon" onClick={showEditModal} />
                         <FontAwesomeIcon icon={faTrash} className="icon edit-icon" onClick={() => setIsOpen(true)} />
                     </>
-                )}
+                ) : 
+                <label className="checkbox-container">
+                    <input
+                        type="checkbox"
+                        checked={completado}
+                        onChange={handleCheckboxChange}
+                    />
+                    <span className="checkmark"></span>
+                    {' '}Completado
+                </label>}
             </div>
 
             <Modal
@@ -143,7 +186,7 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
                 <Form
                     layout="vertical"
                     initialValues={editedFields}
-                    onValuesChange={(_, changedValues) => handleFieldChange(changedValues)}
+                    onValuesChange={changedValues => handleFieldChange(changedValues)}
                     form={form}
                 >
                     <Form.Item
@@ -163,16 +206,16 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
                     <Form.Item
                         label="Repeticiones"
                         name="repeticiones"
-                        rules={[{ required: true, type: 'number', min: 1, message: 'Las repeticiones deben ser mayores a 0.' }]}
+                        rules={[{ required: true, min: 1, type:'number', message: 'Las repeticiones deben ser mayores a 0.'}]}
                     >
                         <Input type="number" />
                     </Form.Item>
                     <Form.Item
                         label="Peso"
                         name="peso"
-                        rules={[{ required: true, type: 'number', min: 0, message: 'El peso no puede ser negativo.' }]}
+                        rules={[{ required: true, min: 0, type:'number', message: 'El peso no puede ser negativo.'}]}
                     >
-                        <Input type="number" />
+                        <Input type="number"/>
                     </Form.Item>
                     <Form.Item
                         label="Músculo"

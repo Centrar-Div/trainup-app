@@ -62,17 +62,16 @@ export const LoginProvider = ({ children }) => {
     });
   };
 
-  const actualizarPerfilUsuario = async (datos) => {
-    try {
-      await actualizarUsuario(datos);
-      setUser(datos);
-    } catch (error) {
+  const actualizarPerfilUsuario = (datos) => {
+    actualizarUsuario(datos).then(({datos}) => {
+      setUser(datos)
+    }).catch((error) => {
       notification.error({
         message: 'Error al Actualizar',
         description: 'No se pudo actualizar tus datos. Inténtalo de nuevo más tarde.',
         placement: 'topRight',
       });
-    }
+    });
   };
 
   return (

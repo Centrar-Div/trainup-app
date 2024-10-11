@@ -57,6 +57,7 @@ const obtenerRutinaPorId = (id) => axios.get(`/rutinas/${id}`);
 
 const crearEjercicio = (body) => axios.post(`/ejercicios`, body);
 const agregarEjercicioARutina = (rutinaID, ejercicio) => axios.post(`/rutinas/${rutinaID}/ejercicios`,ejercicio ); 
+const completarONoEjercicio = (usuarioID, rutinaID, ejercicioID) => axios.put(`/usuario/${usuarioID}/completarONoEjercicio/${rutinaID}/${ejercicioID}`); 
 
 const eliminarEjercicioDeRutina = (rutinaID, ejercicioID) => axios.delete(`/rutinas/${rutinaID}/ejercicios/${ejercicioID}`);
 
@@ -121,15 +122,7 @@ const obtenerUsuarios = async () => {
   }
 };
 
-const actualizarUsuario = async (usuarioDTO) => {
-  try {
-    const response = await axios.put(`/usuario`, usuarioDTO);
-    return response.data;
-  } catch (error) {
-    console.error('Error en actualizarUsuario:', error.response || error.message);
-    handleError(error);
-  }
-};
+const actualizarUsuario = (usuarioDTO) => axios.put(`/usuario`, usuarioDTO);
 
 const eliminarUsuario = async (id) => {
   try {
@@ -185,5 +178,6 @@ export {
   obtenerUsuarioPorID,
   agregarEjercicioARutina,
   eliminarEjercicioDeRutina,
-  actualizarEjercicioEnRutina
+  actualizarEjercicioEnRutina,
+  completarONoEjercicio
 };

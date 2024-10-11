@@ -59,9 +59,9 @@ class Rutina {
         ejercicios: MutableList<Ejercicio> = mutableListOf()
     ) {
         // Validaciones
-        require(nombre.isNotBlank()) { "El nombre no puede estar vacío" }
-        require(descripcion.isNotBlank()) { "La descripción no puede estar vacía" }
-        require(categoria.isNotBlank()) { "La categoría no puede estar vacía" }
+        require(nombre.isNotEmpty()) { "El nombre de la rutina no puede estar vacía" }
+        require(descripcion.isNotEmpty()) { "La descripción de la rutina no puede estar vacía" }
+        require(categoria.isNotEmpty()) { "La categoría no puede estar vacía" }
 
         this.nombre = nombre
         this.descripcion = descripcion

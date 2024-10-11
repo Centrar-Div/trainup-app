@@ -68,7 +68,7 @@ class UsuarioController(
     }
 
     @PutMapping()
-    fun actualizarUsuario(@RequestBody usuarioDTO: UsuarioDTO): ResponseEntity<*> {
+    fun actualizarUsuario(@RequestBody usuarioDTO: UsuarioDTO): ResponseEntity<Any> {
         return try {
             val usuario = usuarioService.actualizarUsuario(usuarioDTO.aModelo())
             ResponseEntity.ok(UsuarioDTO.desdeModelo(usuario))
@@ -117,6 +117,17 @@ class UsuarioController(
         }
     }
 
+    @PutMapping("/{userId}/completarONoEjercicio/{rutinaId}/{ejercicioId}")
+    fun completarONoEjercicio(@PathVariable userId: String, @PathVariable rutinaId: String, @PathVariable ejercicioId: String):ResponseEntity<Any>{
+        return try {
+            usuarioService.completarEjercicio(userId,rutinaId,ejercicioId)
+            ResponseEntity.ok("ejercicio completada exitosamente")
+        }catch (e: RutinaException){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
+        }catch (e: UsuarioException){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
+        }
+    }
 
     @PutMapping("/follow/{userId}/{rutinaId}")
     fun updateFollow(@PathVariable userId: String, @PathVariable rutinaId: String):ResponseEntity<*>{

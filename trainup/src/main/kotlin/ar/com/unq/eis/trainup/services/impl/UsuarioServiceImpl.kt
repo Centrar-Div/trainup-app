@@ -94,4 +94,20 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO,
         return usuario.isFollowing(rutina)
 
     }
+
+    override fun completarEjercicio(userId: String, rutinaId: String, ejercicioId: String) {
+        val usuario = this.obtenerUsuarioPorID(userId)
+        val rutina = this.getRutinaByID(rutinaId)
+        val ejercicio = rutina.ejercicios.find { it.id == ejercicioId }
+            ?: throw RutinaException("No existe ejercicio con id ${ejercicioId} en la rutina ${rutinaId}")
+
+        rutina.ejercicios.map { if (it.id == ejercicioId){
+            it.completado = true
+        } }
+
+        rutinaDAO.save(rutina)
+        usuario.completarEjercicio(rutinaId, ejercicioId)
+
+        this.actualizarUsuario(usuario)
+    }
 }

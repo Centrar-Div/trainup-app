@@ -43,8 +43,8 @@ class Usuario() {
         esAdmin: Boolean = false
     ) : this() {
         require(username.isNotBlank()) { "El username no puede estar vacío" }
-        require(password.isNotBlank()) { "La contraseña no puede estar vacía" }
-        require(nombre.isNotBlank()) { "El nombre no puede estar vacío" }
+        require(password.isNotEmpty()) { "La contraseña no puede estar vacía" }
+        require(nombre.isNotEmpty()) { "El nombre del usuario no puede estar vacío" }
 
         this.username = username
         this.password = password
@@ -90,5 +90,17 @@ class Usuario() {
 
     fun isFollowing(rutina: Rutina): Boolean {
         return rutinasSeguidas.any { it.id == rutina.id }
+    }
+
+    fun completarEjercicio(idRutina: String, idEjercicio: String) {
+        rutinasSeguidas.map { rutina ->
+            if (rutina.id == idRutina) {
+                rutina.ejercicios.map { ejercicio ->
+                    if (ejercicio.id == idEjercicio) {
+                        ejercicio.completado = true
+                    }
+                }
+            }
+        }
     }
 }

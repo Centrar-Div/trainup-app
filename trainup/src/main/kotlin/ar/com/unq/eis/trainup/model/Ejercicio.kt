@@ -35,11 +35,11 @@ class Ejercicio {
         completado: Boolean = false
     ) {
         // Validaciones
-        require(nombre.isNotBlank()) { "El nombre no puede estar vacío" }
-        require(descripcion.isNotBlank()) { "La descripción no puede estar vacía" }
+        require(nombre.isNotEmpty()) { "El nombre del ejercicio no puede estar vacío" }
+        require(descripcion.isNotEmpty()) { "La descripción del ejercicio no puede estar vacía" }
         require(repeticiones > 0) { "Las repeticiones deben ser mayores a 0" }
         require(peso >= 0) { "El peso no puede ser negativo" }
-        require(musculo.isNotBlank()) { "El nombre del músculo no puede estar vacío" }
+        require(musculo.isNotEmpty()) { "El nombre del músculo no puede estar vacío" }
         require(series > 0) { "Las series deben ser mayores a 0" }
         require(descansoSegundos >= 0) { "El tiempo de descanso no puede ser negativo" }
 

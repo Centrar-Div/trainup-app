@@ -46,22 +46,7 @@ class EjercicioServiceImpl(
         return try {
             val ejercicioExistente = ejercicioDAO.findById(id)
             if (ejercicioExistente.isPresent) {
-                val ejercicio = ejercicioExistente.get()
-
-                ejercicio.nombre = ejercicioActualizado.nombre
-                ejercicio.descripcion = ejercicioActualizado.descripcion
-                ejercicio.repeticiones = ejercicioActualizado.repeticiones
-                ejercicio.peso = ejercicioActualizado.peso
-                ejercicio.musculo = ejercicioActualizado.musculo
-                ejercicio.series = ejercicioActualizado.series
-                ejercicio.descansoSegundos = ejercicioActualizado.descansoSegundos
-                ejercicio.equipo = ejercicioActualizado.equipo
-                ejercicio.instrucciones = ejercicioActualizado.instrucciones
-                ejercicio.completado = ejercicioActualizado.completado
-
-                ejercicioDAO.save(ejercicio)
-
-                return ejercicio
+                return ejercicioDAO.save(ejercicioActualizado)
             } else {
                 throw NoSuchElementException("No se encontró el ejercicio con id: $id")
             }
