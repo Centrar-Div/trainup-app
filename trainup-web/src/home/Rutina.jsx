@@ -74,9 +74,12 @@ const Rutina = () => {
 
             </div>
             <div className='container-boxinfo'>
-                {listaDeEjercicios.map(ejercicio => (
-                    <Ejercicio key={ejercicio.id} updateEjercicio={updateEjercicio} deleteEjercicio={deleteEjercicio} ejercicio={ejercicio} rutinaID={rutinaID} />
-                ))}
+                {listaDeEjercicios.map(ejercicio => {
+                    const completado = user?.ejerciciosCompletados?.some((e) => e.id === ejercicio.id);
+                    return (
+                        <Ejercicio key={ejercicio.id} updateEjercicio={updateEjercicio} deleteEjercicio={deleteEjercicio} ejercicio={ejercicio} rutinaID={rutinaID} completado={completado} />
+                    )
+                })}
             </div>
         </>
     );

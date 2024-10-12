@@ -89,9 +89,8 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO,
 
     override fun isFollowing(usuarioID: String, rutinaID: String): Boolean {
         val usuario = this.obtenerUsuarioPorID(usuarioID)
-        val rutina = this.getRutinaByID(rutinaID)
 
-        return usuario.isFollowing(rutina)
+        return usuario.isFollowing(rutinaID)
 
     }
 
@@ -106,7 +105,7 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO,
         } }
 
         rutinaDAO.save(rutina)
-        usuario.completarEjercicio(rutinaId, ejercicioId)
+        usuario.completarONoEjercicio(rutinaId, ejercicioId)
 
         this.actualizarUsuario(usuario)
     }

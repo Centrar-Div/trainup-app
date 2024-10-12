@@ -10,6 +10,7 @@ class UsuarioDTO(
     var password: String = "",
     var rutinasSeguidas: List<RutinaDTO> = mutableListOf(),
     var rutinasCompletadas: List<RutinaDTO> = mutableListOf(),
+    var ejerciciosCompletados: List<EjercicioDTO> = mutableListOf(),
     var nombre: String = "",
     var edad: Int? = null,
     var fecNacimiento: LocalDate? = null,
@@ -26,6 +27,7 @@ class UsuarioDTO(
         usuario.id = id
         usuario.rutinasSeguidas.addAll(rutinasSeguidas.map { it.aModelo() })
         usuario.rutinasCompletadas.addAll(rutinasCompletadas.map { it.aModelo() })
+        usuario.ejerciciosCompletados.addAll(ejerciciosCompletados.map {it.aModelo()})
 
         return usuario
     }
@@ -38,6 +40,7 @@ class UsuarioDTO(
                 usuario.password,
                 usuario.rutinasSeguidas.map { RutinaDTO.desdeModelo(it) },
                 usuario.rutinasCompletadas.map { RutinaDTO.desdeModelo(it) },
+                usuario.ejerciciosCompletados.map {EjercicioDTO.desdeModelo(it)},
                 usuario.nombre,
                 usuario.edad,
                 usuario.fecNacimiento,

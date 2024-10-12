@@ -121,7 +121,7 @@ class UsuarioController(
     fun completarONoEjercicio(@PathVariable userId: String, @PathVariable rutinaId: String, @PathVariable ejercicioId: String):ResponseEntity<Any>{
         return try {
             usuarioService.completarEjercicio(userId,rutinaId,ejercicioId)
-            ResponseEntity.ok("ejercicio completada exitosamente")
+            ResponseEntity.ok("ejercicio completado exitosamente")
         }catch (e: RutinaException){
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
         }catch (e: UsuarioException){

@@ -7,15 +7,15 @@ import { crearEjercicio, actualizarEjercicio, eliminarEjercicioDeRutina, actuali
 import "../styles/ejercicio.css";
 
 
-const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) => {
-    const { user, actualizarPerfilUsuario } = useLogin();     
+const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID, completed }) => {
+    const { user, actualizarPerfilUsuario } = useLogin();
     const [isOpen, setIsOpen] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editedFields, setEditedFields] = useState(ejercicio || {});
     const [isUpdating, setIsUpdating] = useState(false);
     const [form] = Form.useForm();
     const [isCreating, setIsCreating] = useState(false);
-    const [completado, setCompletado] = useState(ejercicio.completado);
+    const [completado, setCompletado] = useState(completed);
 
 
 
@@ -118,7 +118,7 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
     };
 
     const handleCheckboxChange = async () => {
-        
+
 
         const updatedEjercicio = {
             ...ejercicio,
@@ -140,7 +140,7 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
 
     return (
         <div className='exercise-container'>
-            <div className="exercise-header">   
+            <div className="exercise-header">
                 <h3>{ejercicio ? ejercicio.nombre : "Crear Nuevo Ejercicio"}</h3>
             </div>
             <div className="exercise-body">
@@ -163,16 +163,16 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
                         <FontAwesomeIcon icon={faPenToSquare} className="icon edit-icon" onClick={showEditModal} />
                         <FontAwesomeIcon icon={faTrash} className="icon edit-icon" onClick={() => setIsOpen(true)} />
                     </>
-                ) : 
-                <label className="checkbox-container">
-                    <input
-                        type="checkbox"
-                        checked={completado}
-                        onChange={handleCheckboxChange}
-                    />
-                    <span className="checkmark"></span>
-                    {' '}Completado
-                </label>}
+                ) :
+                    <label className="checkbox-container">
+                        <input
+                            type="checkbox"
+                            checked={completado}
+                            onChange={handleCheckboxChange}
+                        />
+                        <span className="checkmark"></span>
+                        {' '}Completado
+                    </label>}
             </div>
 
             <Modal
@@ -206,16 +206,16 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
                     <Form.Item
                         label="Repeticiones"
                         name="repeticiones"
-                        rules={[{ required: true, min: 1, type:'number', message: 'Las repeticiones deben ser mayores a 0.'}]}
+                        rules={[{ required: true, min: 1, type: 'number', message: 'Las repeticiones deben ser mayores a 0.' }]}
                     >
                         <Input type="number" />
                     </Form.Item>
                     <Form.Item
                         label="Peso"
                         name="peso"
-                        rules={[{ required: true, min: 0, type:'number', message: 'El peso no puede ser negativo.'}]}
+                        rules={[{ required: true, min: 0, type: 'number', message: 'El peso no puede ser negativo.' }]}
                     >
-                        <Input type="number"/>
+                        <Input type="number" />
                     </Form.Item>
                     <Form.Item
                         label="Músculo"
