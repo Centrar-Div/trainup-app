@@ -5,10 +5,11 @@ import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useLogin } from '../context/LoginContext';
 import { crearEjercicio, actualizarEjercicio, eliminarEjercicioDeRutina, actualizarEjercicioEnRutina, actualizarUsuario, completarONoEjercicio } from '../api/Api';
 import "../styles/ejercicio.css";
+import { useNavigate } from 'react-router-dom';
 
 
 const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) => {
-    const { user, actualizarPerfilUsuario } = useLogin();     
+    const { user, actualizarPerfilUsuario } = useLogin();
     const [isOpen, setIsOpen] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editedFields, setEditedFields] = useState(ejercicio || {});
@@ -16,6 +17,7 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
     const [form] = Form.useForm();
     const [isCreating, setIsCreating] = useState(false);
     const [completado, setCompletado] = useState(ejercicio.completado);
+    const navigate = useNavigate();
 
 
 
@@ -118,7 +120,7 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
     };
 
     const handleCheckboxChange = async () => {
-        
+
 
         const updatedEjercicio = {
             ...ejercicio,
@@ -138,9 +140,11 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
         })
     };
 
+    const handleClick = () => { navigate('/es/home/ejercicio', { state: { ejercicio } }) };
+
     return (
-        <div className='exercise-container'>
-            <div className="exercise-header">   
+        <div className='exercise-container' >
+            <div className="exercise-header" onClick={handleClick}>
                 <h3>{ejercicio ? ejercicio.nombre : "Crear Nuevo Ejercicio"}</h3>
             </div>
             <div className="exercise-body">
@@ -163,16 +167,16 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
                         <FontAwesomeIcon icon={faPenToSquare} className="icon edit-icon" onClick={showEditModal} />
                         <FontAwesomeIcon icon={faTrash} className="icon edit-icon" onClick={() => setIsOpen(true)} />
                     </>
-                ) : 
-                <label className="checkbox-container">
-                    <input
-                        type="checkbox"
-                        checked={completado}
-                        onChange={handleCheckboxChange}
-                    />
-                    <span className="checkmark"></span>
-                    {' '}Completado
-                </label>}
+                ) :
+                    <label className="checkbox-container">
+                        <input
+                            type="checkbox"
+                            checked={completado}
+                            onChange={handleCheckboxChange}
+                        />
+                        <span className="checkmark"></span>
+                        {' '}Completado
+                    </label>}
             </div>
 
             <Modal
@@ -206,16 +210,16 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
                     <Form.Item
                         label="Repeticiones"
                         name="repeticiones"
-                        rules={[{ required: true, min: 1, type:'number', message: 'Las repeticiones deben ser mayores a 0.'}]}
+                        rules={[{ required: true, min: 1, type: 'number', message: 'Las repeticiones deben ser mayores a 0.' }]}
                     >
                         <Input type="number" />
                     </Form.Item>
                     <Form.Item
                         label="Peso"
                         name="peso"
-                        rules={[{ required: true, min: 0, type:'number', message: 'El peso no puede ser negativo.'}]}
+                        rules={[{ required: true, min: 0, type: 'number', message: 'El peso no puede ser negativo.' }]}
                     >
-                        <Input type="number"/>
+                        <Input type="number" />
                     </Form.Item>
                     <Form.Item
                         label="Músculo"
