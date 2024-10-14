@@ -19,5 +19,6 @@ interface RutinaService {
     fun agregarEjercicio(id: String, ejercicio: Ejercicio): Rutina
 
     fun eliminarEjercicio(id: String, idEj: String): Rutina
+    fun obtenerRutinasPorCategoria(categoria: String): List<Rutina>
 
 }
