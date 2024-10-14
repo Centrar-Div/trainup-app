@@ -32,6 +32,8 @@ const obtenerRutinas = () => axios.get(`/rutinas`)
 const actualizarRutina = (id, body) => axios.put(`/rutinas/${id}`, body)
 const eliminarRutina = (id) => axios.delete(`/rutinas/${id}`)
 const obtenerRutinaPorId = (id) => axios.get(`/rutinas/${id}`);
+const obtenerCategorias = () => axios.get(`rutinas/categorias`)
+const obtenerRutinasPorCategoria = (categoria) => axios.get(`rutinas/categoria/${categoria}`)
 
 // const actualizarRutina = async (rutinaID, rutina) => {
 //   try {
@@ -179,5 +181,7 @@ export {
   agregarEjercicioARutina,
   eliminarEjercicioDeRutina,
   actualizarEjercicioEnRutina,
-  completarONoEjercicio
+  completarONoEjercicio,
+  obtenerCategorias,
+  obtenerRutinasPorCategoria
 };

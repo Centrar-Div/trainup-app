@@ -18,6 +18,7 @@ import CrearRutina from './home/CrearRutina'
 import ExploradorPage from './home/ExploradorPage'
 import EditarRutina from './home/EditarRutina'
 import CrearEjercicio from './home/CrearEjercicio'
+import Buscar from './home/Buscar'
 
 const Layout = () => {
   const location = useLocation()
@@ -51,6 +52,7 @@ function App() {
           <Route path='home/crear/ejercicio' element={<CrearEjercicio/>}/>
           <Route path='home/explorador' element={<ExploradorPage/>}/>
           <Route path='home/rutina/editar' element={<EditarRutina/>}/>
+          <Route path='home/buscar' element={<Buscar/>}/>
         </Route>
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
