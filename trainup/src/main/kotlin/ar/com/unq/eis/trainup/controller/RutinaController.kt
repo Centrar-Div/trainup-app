@@ -93,15 +93,28 @@ class RutinaController(
         }
     }
 
-        @DeleteMapping("/{id}/ejercicios/{idEj}")
-        fun eliminarEjercicio(@PathVariable id: String ,@PathVariable idEj: String ): ResponseEntity<Any> {
-            return try {
-                val rutinaActualizada = rutinaService.eliminarEjercicio(id, idEj)
-                    ResponseEntity.ok(RutinaDTO.desdeModelo(rutinaActualizada))
-            } catch (e: NoSuchElementException) {
-                ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
-            } catch (e: Exception) {
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
-            }
+    @DeleteMapping("/{id}/ejercicios/{idEj}")
+    fun eliminarEjercicio(@PathVariable id: String ,@PathVariable idEj: String ): ResponseEntity<Any> {
+        return try {
+            val rutinaActualizada = rutinaService.eliminarEjercicio(id, idEj)
+                ResponseEntity.ok(RutinaDTO.desdeModelo(rutinaActualizada))
+        } catch (e: NoSuchElementException) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
         }
     }
+
+    @GetMapping("/categorias")
+    fun obtenerCategorias(): ResponseEntity<Any> {
+        val categorias = mutableListOf("Cardio", "Fuerza", "Hipertrofia", "Funcional", "Resistencia")
+        return ResponseEntity.ok(categorias)
+    }
+
+    @GetMapping("/categoria/{categoria}")
+    fun obtenerRutinasPorCategoria(@PathVariable categoria: String): ResponseEntity<Any> {
+        val rutinas = rutinaService.obtenerRutinasPorCategoria(categoria)
+        return ResponseEntity.ok(rutinas.map(RutinaDTO::desdeModelo))
+    }
+
+}
