@@ -46,13 +46,7 @@ class EjercicioServiceImpl(
         return try {
             val ejercicioExistente = ejercicioDAO.findById(id)
             if (ejercicioExistente.isPresent) {
-                val ejercicio = ejercicioExistente.get()
-                ejercicio.nombre = ejercicioActualizado.nombre
-                ejercicio.descripcion = ejercicioActualizado.descripcion
-                ejercicio.repeticiones = ejercicioActualizado.repeticiones
-                ejercicio.peso = ejercicioActualizado.peso
-                ejercicio.musculo = ejercicioActualizado.musculo
-                ejercicioDAO.save(ejercicio)
+                return ejercicioDAO.save(ejercicioActualizado)
             } else {
                 throw NoSuchElementException("No se encontró el ejercicio con id: $id")
             }
@@ -62,6 +56,7 @@ class EjercicioServiceImpl(
             throw RuntimeException("Error al actualizar el ejercicio: ${e.message}")
         }
     }
+
 
     override fun eliminarEjercicio(id: String) {
         try {

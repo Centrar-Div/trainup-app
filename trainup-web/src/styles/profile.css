@@ -4,124 +4,165 @@
     align-items: center;
     justify-content: flex-start;
     height: 100vh;
-    padding: 1rem;
+    padding: 2rem;
 }
 
 .profile-header {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 2.5rem;
 }
 
 .profile-header h1 {
-    font-size: 4rem;
+    font-size: 3rem;
     color: #2c3e50;
-    font-weight: bold;
+    font-weight: 700;
     text-transform: uppercase;
+    letter-spacing: 0.15rem;
+    margin: 0;
 }
 
 .profile-card {
     display: flex;
-    height: fit-content;
     flex-direction: column;
     align-items: stretch;
-    background: #ededed;
-    border-radius: 15px;
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 900px;
-    padding: 2rem;
-    position: relative;
-    /* overflow-y: scroll; */
+    max-width: 1000px;
+    padding: 2rem 3rem;
     margin-bottom: 2rem;
-    transition: box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .profile-card:hover {
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.65);
+    transform: translateY(-10px);
+    box-shadow: 0 18px 35px rgba(0, 0, 0, 0.15);
 }
 
 .profile-info {
-    position: relative;
-    z-index: 1;
     width: 100%;
 }
 
 .profile-field {
     display: flex;
     align-items: center;
-    margin-bottom: 1rem;
-    gap: 1rem;
+    justify-content: space-between;  
+    margin-bottom: 1.8rem;
+    gap: 1.2rem;
 }
 
 .profile-info strong {
-    color: #333;
-    font-weight: bold;
-    width: 150px;
+    color: #444;
+    font-weight: 600;
+    width: 200px;  
+    font-size: 1rem;
+    flex-shrink: 0;
 }
 
 .profile-info input {
     flex: 1;
-    padding: 0.5rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    box-sizing: border-box;
-    font-size: 1.25rem;
-    color: #555;
-    transition: background-color 0.3s ease, border-color 0.3s ease;
+    padding: 0.75rem 1rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    color: #333;
+    transition: all 0.3s ease;
+    background-color: #f9fafb;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+    max-width: 100%;  
+}
+
+.profile-info input:focus {
+    border-color: #0066cc;
+    background-color: #ffffff;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.2);
 }
 
 .profile-info input.disabled {
-    background-color: #dcdcdc;
-    color: #666;
+    background-color: #e8e9eb;
+    color: #888;
+    cursor: not-allowed;
 }
 
 .profile-info input:not(.disabled) {
-    background-color: #fff;
+    background-color: #ffffff;
+}
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.9rem;
+    margin-left: 200px;
+    margin-top: -10px;
 }
 
 .profile-actions {
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     gap: 1rem;
+    margin-top: 2rem;
 }
 
 .edit-btn,
 .save-btn,
 .cancel-btn {
     padding: 0.75rem 1.5rem;
-    font-size: 1rem;
+    font-size: 1.1rem;
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .edit-btn {
-    background-color: #02006a;
+    background-color: #0066cc;
     color: #fff;
 }
 
 .edit-btn:hover {
-    background-color: #2980b9;
+    background-color: #005bb5;
     transform: scale(1.05);
 }
 
 .save-btn {
-    background-color: #2ecc71;
+    background-color: #28a745;
     color: #fff;
 }
 
 .save-btn:hover {
-    background-color: #27ae60;
+    background-color: #218838;
     transform: scale(1.05);
 }
 
 .cancel-btn {
-    background-color: #e74c3c;
+    background-color: #dc3545;
     color: #fff;
 }
 
 .cancel-btn:hover {
-    background-color: #c0392b;
+    background-color: #c82333;
     transform: scale(1.05);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .profile-card {
+        padding: 1.5rem;
+    }
+    
+    .profile-header h1 {
+        font-size: 2.5rem;
+    }
+    
+    .profile-info strong {
+        width: 150px;
+        font-size: 1.1rem;
+    }
+
+    .profile-actions {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.8rem;
+    }
 }
