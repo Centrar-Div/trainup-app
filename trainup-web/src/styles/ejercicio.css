@@ -1,16 +1,16 @@
 .exercise-container {
-    background-color: #ffffff; 
-    border-radius: 12px; 
+    background-color: #ffffff;
+    border-radius: 12px;
     padding: 20px;
     margin-bottom: 20px;
     max-width: 100%;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); 
-    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .exercise-container:hover {
-    transform: scale(1.03); 
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); 
+    transform: scale(1.03);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
 .exercise-header {
@@ -18,18 +18,21 @@
     justify-content: space-between;
     align-items: center;
     margin-bottom: 15px;
-    border-bottom: 1px solid #e0e0e0; 
+    border-bottom: 1px solid #e0e0e0;
     padding-bottom: 10px;
+    cursor: pointer;
 }
 
 .exercise-header h3 {
     margin: 0;
-    font-size: 1.6em; 
-    color: #333333; 
+    font-size: 1.6em;
+    color: #333333;
     font-weight: bold;
 }
 
-.exercise-body, .exercise-details, .exercise-footer {
+.exercise-body,
+.exercise-details,
+.exercise-footer {
     margin-bottom: 15px;
     line-height: 1.6;
 }
@@ -46,10 +49,10 @@
 }
 
 .exercise-details p {
-    flex: 1 1 48%; 
+    flex: 1 1 48%;
     margin: 5px 0;
     font-size: 1rem;
-    color: #555555; 
+    color: #555555;
 }
 
 .checkbox-container {
@@ -79,7 +82,7 @@
     transition: background-color 0.3s ease;
 }
 
-.checkbox-container input:checked ~ .checkmark {
+.checkbox-container input:checked~.checkmark {
     background-color: #4CAF50;
 }
 
@@ -89,7 +92,7 @@
     display: none;
 }
 
-.checkbox-container input:checked ~ .checkmark:after {
+.checkbox-container input:checked~.checkmark:after {
     display: block;
 }
 
@@ -106,12 +109,12 @@
 .edit-icon {
     cursor: pointer;
     font-size: 1.5rem;
-    color: #4CAF50; 
+    color: #4CAF50;
     transition: color 0.3s ease;
 }
 
 .edit-icon:hover {
-    color: #388E3C; 
+    color: #388E3C;
 }
 
 .exercise-footer {
@@ -119,7 +122,7 @@
     justify-content: flex-start;
     align-items: center;
     padding-top: 10px;
-    border-top: 1px solid #e0e0e0; 
+    border-top: 1px solid #e0e0e0;
 }
 
 @media (max-width: 768px) {
@@ -128,7 +131,7 @@
     }
 
     .exercise-header h3 {
-        font-size: 1.4em; 
+        font-size: 1.4em;
     }
 
     .exercise-container {
@@ -136,10 +139,13 @@
     }
 }
 
-.exercise-header h3, .exercise-details p, .exercise-footer label {
-    transition: color 0.3s ease; 
+.exercise-header h3,
+.exercise-details p,
+.exercise-footer label {
+    transition: color 0.3s ease;
 }
 
-.exercise-header h3:hover, .exercise-footer label:hover {
-    color: #4CAF50; 
+.exercise-header h3:hover,
+.exercise-footer label:hover {
+    color: #4CAF50;
 }

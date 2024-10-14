@@ -5,19 +5,18 @@ import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
 import { useLogin } from '../context/LoginContext';
 import { crearEjercicio, actualizarEjercicio, eliminarEjercicioDeRutina, actualizarEjercicioEnRutina, actualizarUsuario, completarONoEjercicio } from '../api/Api';
 import "../styles/ejercicio.css";
-import { useNavigate } from 'react-router-dom';
 
 
 const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) => {
     const { user, actualizarPerfilUsuario } = useLogin();
     const [isOpen, setIsOpen] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isDetailsModalVisible, setIsDetailsModalVisible] = useState(false);
     const [editedFields, setEditedFields] = useState(ejercicio || {});
     const [isUpdating, setIsUpdating] = useState(false);
     const [form] = Form.useForm();
     const [isCreating, setIsCreating] = useState(false);
     const [completado, setCompletado] = useState(ejercicio.completado);
-    const navigate = useNavigate();
 
 
 
@@ -140,11 +139,13 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
         })
     };
 
-    const handleClick = () => { navigate('/es/home/ejercicio', { state: { ejercicio } }) };
+    const showDetailsModal = () => {
+        setIsDetailsModalVisible(true);
+    };
 
     return (
         <div className='exercise-container' >
-            <div className="exercise-header" onClick={handleClick}>
+            <div className="exercise-header" onClick={showDetailsModal}>
                 <h3>{ejercicio ? ejercicio.nombre : "Crear Nuevo Ejercicio"}</h3>
             </div>
             <div className="exercise-body">
@@ -254,6 +255,40 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
             >
                 <p>¿Estás seguro de que deseas eliminar el ejercicio?</p>
             </Modal>
+            <Modal
+                title={<h1>{ejercicio ? `${ejercicio.nombre}` : ''}</h1>}
+                open={isDetailsModalVisible}
+                onCancel={() => setIsDetailsModalVisible(false)}
+                footer={null}
+            >
+                <p><strong>Descripcion:</strong> {ejercicio.descripcion}</p>
+                <p><strong>Repeticiones:</strong> {ejercicio.repeticiones}</p>
+                <p><strong>Peso ideal:</strong> {ejercicio.peso} kg</p>
+                <p><strong>Músculo:</strong> {ejercicio.musculo}</p>
+                <p><strong>Series:</strong> {ejercicio.series}</p>
+                <p><strong>Segundos de descanso:</strong> {ejercicio.descansoSegundos}</p>
+                <p><strong>Equipo:</strong> {ejercicio.equipo}</p>
+                <p><strong>Instrucciones:</strong> {ejercicio.instrucciones}</p>
+
+                <div className="exercise-footer">
+                    {ejercicio && user.esAdmin ? (
+                        <>
+                            <FontAwesomeIcon icon={faPenToSquare} className="icon edit-icon" onClick={showEditModal} />
+                            <FontAwesomeIcon icon={faTrash} className="icon edit-icon" onClick={() => setIsOpen(true)} />
+                        </>
+                    ) :
+                        <label className="checkbox-container">
+                            <input
+                                type="checkbox"
+                                checked={completado}
+                                onChange={handleCheckboxChange}
+                            />
+                            <span className="checkmark"></span>
+                            {' '}Completado
+                        </label>}
+                </div>
+            </Modal>
+
         </div>
     );
 };
