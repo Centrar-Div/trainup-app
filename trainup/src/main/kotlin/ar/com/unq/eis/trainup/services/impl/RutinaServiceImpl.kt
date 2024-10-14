@@ -125,4 +125,10 @@ class RutinaServiceImpl : RutinaService {
         }
 
     }
+
+    override fun buscarRutinas(busqueda: String): List<Rutina> {
+        val rutinas = obtenerRutinas()
+
+        return rutinas.filter { rutina -> rutina.nombre.contains(busqueda,ignoreCase = true) }
+    }
 }
