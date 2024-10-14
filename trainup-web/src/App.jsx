@@ -23,14 +23,14 @@ import Buscar from './home/Buscar'
 const Layout = () => {
   const location = useLocation()
   const hideNavbarRoutes = ['/login', '/init', '/register']
-  const shouldShowSide   = !hideNavbarRoutes.includes(location.pathname)
+  const shouldShowSide = !hideNavbarRoutes.includes(location.pathname)
   const shouldShowNavbar = !location.pathname.startsWith('/es');
 
 
   return (
     <>
       {shouldShowNavbar && <Navbar />}
-      {shouldShowSide   && <Sidebar />}
+      {shouldShowSide && <Sidebar />}
     </>
   )
 }
@@ -57,8 +57,8 @@ function App() {
         <Route path='/login' element={<Login/>} />
         <Route path='/register' element={<Register/>} />
 
-        <Route path='*' element={<Navigate to='/init'/>}/>
-      </Routes>
+          <Route path='*' element={<Navigate to='/init' />} />
+        </Routes>
       </LoginProvider>
     </BrowserRouter>
   )
