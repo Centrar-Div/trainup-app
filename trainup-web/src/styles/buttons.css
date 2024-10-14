@@ -12,6 +12,14 @@
   transition: all 0.3s ease;
 }
 
+.default-btn-2 {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  font-weight: bold;
+}
+
 .none-style-btn>.icon {
   color: #2424245d;
   transition: 0.2s;

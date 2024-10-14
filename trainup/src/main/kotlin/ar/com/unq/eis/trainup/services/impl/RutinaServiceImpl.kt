@@ -115,4 +115,14 @@ class RutinaServiceImpl : RutinaService {
             throw RuntimeException("Error al eliminar ejercicio de la rutina: ${e.message}")
         }
     }
+
+    override fun obtenerRutinasPorCategoria(categoria: String): List<Rutina> {
+
+        return try {
+            this.rutinaDAO.findByCategoria(categoria)
+        } catch (e: Exception) {
+            throw RuntimeException("Error al obtener la lista de rutinas por categoría: ${e.message}")
+        }
+
+    }
 }

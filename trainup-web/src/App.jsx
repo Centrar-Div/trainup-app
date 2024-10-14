@@ -18,6 +18,7 @@ import CrearRutina from './home/CrearRutina'
 import ExploradorPage from './home/ExploradorPage'
 import EditarRutina from './home/EditarRutina'
 import CrearEjercicio from './home/CrearEjercicio'
+import Buscar from './home/Buscar'
 
 const Layout = () => {
   const location = useLocation()
@@ -38,22 +39,23 @@ function App() {
   return (
     <BrowserRouter>
       <LoginProvider>
-        <Layout />
-        <Routes>
-          <Route path='/' element={<Navigate to='/init' />} />
-          <Route path='/init' element={<LandingPage />} />
-          <Route path='/es' element={<TemplatePage />} >
-            <Route path='home' element={<HomePage />} />
-            <Route path='home/rutina' element={<Rutina />} />
-            <Route path='home/profile' element={<Profile />} />
-            <Route path='home/completadas' element={<RutinasCompletadas />} />
-            <Route path='home/crear/rutina' element={<CrearRutina />} />
-            <Route path='home/crear/ejercicio' element={<CrearEjercicio />} />
-            <Route path='home/explorador' element={<ExploradorPage />} />
-            <Route path='home/rutina/editar' element={<EditarRutina />} />
-          </Route>
-          <Route path='/login' element={<Login />} />
-          <Route path='/register' element={<Register />} />
+      <Layout/>
+      <Routes>
+        <Route path='/' element={ <Navigate to='/init'/>}/>
+        <Route path='/init' element={<LandingPage/>} />
+        <Route path='/es' element={<TemplatePage/>} >
+          <Route path='home' element={<HomePage/>} />
+          <Route path='home/rutina' element={<Rutina/>}/>
+          <Route path='home/profile' element={<Profile/>}/>
+          <Route path='home/completadas' element={<RutinasCompletadas/>}/>
+          <Route path='home/crear/rutina' element={<CrearRutina/>}/>
+          <Route path='home/crear/ejercicio' element={<CrearEjercicio/>}/>
+          <Route path='home/explorador' element={<ExploradorPage/>}/>
+          <Route path='home/rutina/editar' element={<EditarRutina/>}/>
+          <Route path='home/buscar' element={<Buscar/>}/>
+        </Route>
+        <Route path='/login' element={<Login/>} />
+        <Route path='/register' element={<Register/>} />
 
           <Route path='*' element={<Navigate to='/init' />} />
         </Routes>
