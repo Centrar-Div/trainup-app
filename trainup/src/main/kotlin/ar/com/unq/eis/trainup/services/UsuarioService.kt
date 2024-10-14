@@ -1,5 +1,6 @@
 package ar.com.unq.eis.trainup.services
 
+import ar.com.unq.eis.trainup.model.Rutina
 import ar.com.unq.eis.trainup.model.Usuario
 
 interface UsuarioService {
@@ -19,9 +20,4 @@ interface UsuarioService {
     fun logIn(username: String, password: String): Usuario
 
     fun completarRutina(usuarioID:String, rutinaID:String)
-     fun updateFollowRutina(usuarioID: String, rutinaID: String):Usuario
-
-     fun isFollowing(usuarioID: String, rutinaID: String):Boolean
-
-     fun completarEjercicio(userId: String, rutinaId: String, ejercicioId: String)
 }

@@ -4,7 +4,6 @@ import ar.com.unq.eis.trainup.controller.Exceptions.RutinaException
 import ar.com.unq.eis.trainup.controller.Exceptions.UsuarioException
 import ar.com.unq.eis.trainup.controller.dto.ErrorDTO
 import ar.com.unq.eis.trainup.controller.dto.LoginDTO
-import ar.com.unq.eis.trainup.controller.dto.UserBodyDTO
 import ar.com.unq.eis.trainup.controller.dto.UsuarioDTO
 import ar.com.unq.eis.trainup.services.UsuarioService
 import org.springframework.beans.factory.annotation.Autowired
@@ -19,7 +18,7 @@ class UsuarioController(
 ) {
 
     @PostMapping
-    fun crearUsuario(@RequestBody usuarioDTO: UserBodyDTO): ResponseEntity<*> {
+    fun crearUsuario(@RequestBody usuarioDTO: UsuarioDTO): ResponseEntity<*> {
         return try {
             val usuario = usuarioService.crearUsuario(usuarioDTO.aModelo())
             ResponseEntity.ok(UsuarioDTO.desdeModelo(usuario))
@@ -67,8 +66,8 @@ class UsuarioController(
         }
     }
 
-    @PutMapping()
-    fun actualizarUsuario(@RequestBody usuarioDTO: UsuarioDTO): ResponseEntity<Any> {
+    @PutMapping
+    fun actualizarUsuario(@RequestBody usuarioDTO: UsuarioDTO): ResponseEntity<*> {
         return try {
             val usuario = usuarioService.actualizarUsuario(usuarioDTO.aModelo())
             ResponseEntity.ok(UsuarioDTO.desdeModelo(usuario))
@@ -106,49 +105,11 @@ class UsuarioController(
     }
 
     @PostMapping("/completarRutina/{userId}/{rutinaId}")
-    fun completarRutina(@PathVariable userId: String, @PathVariable rutinaId: String):ResponseEntity<*>{
+    fun completarRutina(@PathVariable userId: String, rutinaId: String):ResponseEntity<*>{
         return try {
             usuarioService.completarRutina(userId,rutinaId)
             ResponseEntity.ok("rutina completada exitosamente")
         }catch (e: RutinaException){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
-        }catch (e: UsuarioException){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
-        }
-    }
-
-    @PutMapping("/{userId}/completarONoEjercicio/{rutinaId}/{ejercicioId}")
-    fun completarONoEjercicio(@PathVariable userId: String, @PathVariable rutinaId: String, @PathVariable ejercicioId: String):ResponseEntity<Any>{
-        return try {
-            usuarioService.completarEjercicio(userId,rutinaId,ejercicioId)
-            ResponseEntity.ok("ejercicio completada exitosamente")
-        }catch (e: RutinaException){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
-        }catch (e: UsuarioException){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
-        }
-    }
-
-    @PutMapping("/follow/{userId}/{rutinaId}")
-    fun updateFollow(@PathVariable userId: String, @PathVariable rutinaId: String):ResponseEntity<*>{
-        return try{
-            val user = usuarioService.updateFollowRutina(userId, rutinaId)
-            ResponseEntity.ok(UsuarioDTO.desdeModelo(user))
-        }catch (e: RutinaException){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
-        }catch (e: UsuarioException){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
-        }
-    }
-
-    @GetMapping("/isFollowing/{userId}/{rutinaId}")
-    fun isFollowing(@PathVariable userId: String, @PathVariable rutinaId: String):ResponseEntity<*>{
-        return try {
-            val res = usuarioService.isFollowing(userId,rutinaId)
-            ResponseEntity.ok(res)
-        }catch (e: RutinaException){
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
-        }catch (e: UsuarioException){
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
         }
     }

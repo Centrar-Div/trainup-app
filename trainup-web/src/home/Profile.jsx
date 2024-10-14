@@ -5,7 +5,9 @@ import { actualizarUsuario } from "../api/Api";
 import { useLogin } from '../context/LoginContext';
 
 const Profile = () => {
-  const { user, setUser } = useLogin();  
+  const { user } = useLogin();  
+  console.log("UserDTO", user);
+
   const [profileData, setProfileData] = useState({
     id: '',
     username: '',
@@ -17,15 +19,11 @@ const Profile = () => {
     genero: '',
     altura: '',
     peso: '',
-    objetivo: '',
-    rutinasSeguidas: [],
-    rutomasCompletadas: []
+    objetivo: ''
   });
 
   const [editField, setEditField] = useState(null);
   const [editData, setEditData] = useState(profileData);
-  const [errors, setErrors] = useState({});
-  const showButtons = true;
 
   useEffect(() => {
     if (user) {
@@ -40,9 +38,7 @@ const Profile = () => {
         genero: user.genero || '', 
         altura: user.altura || '', 
         peso: user.peso || '',  
-        objetivo: user.objetivo || '',
-        rutinasSeguidas: user.rutinasSeguidas || [],
-        rutinasCompletadas: user.rutinasCompletadas || []
+        objetivo: user.objetivo || '' 
       };
       setProfileData(newProfileData);
       setEditData(newProfileData);
@@ -54,18 +50,11 @@ const Profile = () => {
     if (editField) {
       setEditData(prevData => ({
         ...prevData,
-        [name]: value,
+        [name]: value
       }));
-      if (name === 'edad') {
-        const yearOfBirth = new Date().getFullYear() - Math.max(0, Math.min(99, value));
-        setEditData(prevData => ({
-          ...prevData,
-          fecNacimiento: `${yearOfBirth}-01-01`,
-        }));
-      }
     }
   };
-  
+
   const handleEditClick = (field) => {
     setEditField(field);
   };
@@ -75,52 +64,22 @@ const Profile = () => {
     setEditField(null);
   };
 
-  const validateFields = () => {
-    const newErrors = {};
-    
-    // Validaciones comunes
-    if (!editData.username.trim()) newErrors.username = 'El nombre de usuario no puede estar vacío';
-    if (!editData.password.trim()) newErrors.password = 'La contraseña no puede estar vacía';
-    if (!editData.nombre.trim()) newErrors.nombre = 'El nombre no puede estar vacío';
-    if (!/^\d+$/.test(editData.telefono)) newErrors.telefono = 'El teléfono solo puede contener números';
-    if (!['masculino', 'femenino'].includes(editData.genero.toLowerCase())) newErrors.genero = 'El género debe ser masculino o femenino';
-    if (editData.edad < 13 || editData.edad > 99) newErrors.edad = 'La edad debe estar entre 13 y 99 años';
-
-    const peso = parseFloat(editData.peso.replace(',', '.'));
-    if (isNaN(peso) || peso < 40 || peso > 350) {
-      newErrors.peso = 'El peso debe estar entre 40 kg y 500 kg';
-    }
-
-    let altura = parseFloat(editData.altura.replace(',', '.'));
-    if (isNaN(altura)) {
-      newErrors.altura = 'La altura debe ser un número válido';
-    } else if (altura > 50) {
-      altura = altura / 100; // Si es mayor que 50, lo tomamos como centímetros y lo convertimos a metros
-    }
-
-    if (altura < 0.5 || altura > 4) {
-      newErrors.altura = 'La altura debe estar entre 0.5 m y 4 m';
-    }
-
-    setErrors(newErrors);
-    return Object.keys(newErrors).length === 0;
+  const handleSaveProfileData = () => {
+    setProfileData(editData);
+    setEditField(null);
+    notification.success({
+      message: 'Datos Guardados',
+      description: 'Tus datos han sido guardados localmente.',
+      placement: 'topRight',
+    });
   };
 
   const handleSave = async () => {
-    if (!validateFields()) {
-      notification.error({
-        message: 'Error de Validación',
-        description: 'Por favor corrija los errores antes de continuar.',
-        placement: 'topRight',
-      });
-      return;
-    }
+    setProfileData(editData);
+    setEditField(null);
 
     try {
-      await actualizarUsuario(editData);
-      setProfileData(editData);
-      setEditField(null);
-      setUser(editData);
+      await actualizarUsuario(editData); 
       notification.success({
         message: 'Actualización Exitosa',
         description: 'Tus datos se han actualizado correctamente.',
@@ -135,30 +94,25 @@ const Profile = () => {
     }
   };
 
+
   const renderField = (fieldName, label) => (
     <div className='profile-field'>
-      <label htmlFor={fieldName}><strong>{label}:</strong></label>
+      <strong>{label}:</strong>
       <input
         type='text'
-        id={fieldName}
         name={fieldName}
         value={editData[fieldName] || ''}
         onChange={handleChange}
         disabled={editField !== fieldName && editField !== null}
         className={editField === fieldName ? 'editable' : 'disabled'}
       />
-      {errors[fieldName] && <span className="error-message">{errors[fieldName]}</span>}
-      {showButtons && (
+      {editField === fieldName ? (
         <>
-          {editField === fieldName ? (
-            <>
-              <button className='cancel-btn' onClick={handleCancel}>Cancelar</button>
-              <button className='save-btn' onClick={handleSave}>Guardar</button>
-            </>
-          ) : (
-            <button className='edit-btn' onClick={() => handleEditClick(fieldName)}>Editar</button>
-          )}
+          <button className='cancel-btn' onClick={handleCancel}>Cancelar</button>
+          <button className='save-btn' onClick={handleSaveProfileData}>Guardar</button>
         </>
+      ) : (
+        <button className='edit-btn' onClick={() => handleEditClick(fieldName)}>Editar</button>
       )}
     </div>
   );
@@ -170,16 +124,17 @@ const Profile = () => {
       </div>
       <div className='profile-card'>
         <div className='profile-info'>
-          {renderField('username', 'Usuario')}
-          {renderField('password', 'Contraseña')}
           {renderField('nombre', 'Nombre')}
           {renderField('edad', 'Edad')}
-          {renderField('fecNacimiento', 'Fecha de Nacimiento')}
+          {renderField('fecNacimiento', 'Nacimiento')}
           {renderField('telefono', 'Teléfono')}
           {renderField('genero', 'Género')}
           {renderField('altura', 'Altura')}
           {renderField('peso', 'Peso')}
           {renderField('objetivo', 'Objetivo')}
+        </div>
+        <div className='profile-actions'>
+          <button className='save-btn' onClick={handleSave}>Guardar Cambios</button>
         </div>
       </div>
     </div>

@@ -7,6 +7,7 @@ import ar.com.unq.eis.trainup.dao.UsuarioDAO
 import ar.com.unq.eis.trainup.model.Rutina
 import ar.com.unq.eis.trainup.model.Usuario
 import ar.com.unq.eis.trainup.services.UsuarioService
+import org.apache.coyote.BadRequestException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
@@ -61,53 +62,13 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO,
 
     override fun completarRutina(usuarioID:String, rutinaID: String) {
         val usuario = this.obtenerUsuarioPorID(usuarioID)
-        val rutina = getRutinaByID(rutinaID)
+        val rutina = this.rutinaDAO.findByIdOrNull(rutinaID)?: throw RutinaException("No existe rutina con id ${rutinaID}")
 
         try {
             usuario.completarRutina(rutina)
-            actualizarUsuario(usuario)
-        } catch (e: UsuarioException) {
-            throw UsuarioException("El usuario ${usuario.username} no sigue a rutina id: ${rutinaID}")
+        } catch (e: RutinaException) {
+            throw throw RutinaException("Error completando la rutina: ${e.message}")
         }
 
-    }
-
-    private fun getRutinaByID(rutinaID: String): Rutina {
-        val rutina =
-            this.rutinaDAO.findByIdOrNull(rutinaID) ?: throw RutinaException("No existe rutina con id ${rutinaID}")
-        return rutina
-    }
-
-    override fun updateFollowRutina(usuarioID: String, rutinaID: String):Usuario {
-        val usuario = this.obtenerUsuarioPorID(usuarioID)
-        val rutina = this.getRutinaByID(rutinaID)
-
-        usuario.followUnfollowRutina(rutina)
-
-        return usuarioDAO.save(usuario)
-    }
-
-    override fun isFollowing(usuarioID: String, rutinaID: String): Boolean {
-        val usuario = this.obtenerUsuarioPorID(usuarioID)
-        val rutina = this.getRutinaByID(rutinaID)
-
-        return usuario.isFollowing(rutina)
-
-    }
-
-    override fun completarEjercicio(userId: String, rutinaId: String, ejercicioId: String) {
-        val usuario = this.obtenerUsuarioPorID(userId)
-        val rutina = this.getRutinaByID(rutinaId)
-        val ejercicio = rutina.ejercicios.find { it.id == ejercicioId }
-            ?: throw RutinaException("No existe ejercicio con id ${ejercicioId} en la rutina ${rutinaId}")
-
-        rutina.ejercicios.map { if (it.id == ejercicioId){
-            it.completado = true
-        } }
-
-        rutinaDAO.save(rutina)
-        usuario.completarEjercicio(rutinaId, ejercicioId)
-
-        this.actualizarUsuario(usuario)
     }
 }

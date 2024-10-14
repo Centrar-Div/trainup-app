@@ -22,34 +22,14 @@ class EjercicioController(
                 descripcion = ejercicioDTO.descripcion,
                 repeticiones = ejercicioDTO.repeticiones,
                 peso = ejercicioDTO.peso,
-                musculo = ejercicioDTO.musculo,
-                series = ejercicioDTO.series,
-                descansoSegundos = ejercicioDTO.descansoSegundos,
-                equipo = ejercicioDTO.equipo,
-                instrucciones = ejercicioDTO.instrucciones,
-                completado = ejercicioDTO.completado
+                musculo = ejercicioDTO.musculo
             )
             val nuevoEjercicio = ejercicioService.crearEjercicio(ejercicio)
-            ResponseEntity.ok(
-                EjercicioDTO(
-                    nuevoEjercicio.id,
-                    nuevoEjercicio.nombre,
-                    nuevoEjercicio.descripcion,
-                    nuevoEjercicio.repeticiones,
-                    nuevoEjercicio.peso,
-                    nuevoEjercicio.musculo,
-                    nuevoEjercicio.series,
-                    nuevoEjercicio.descansoSegundos,
-                    nuevoEjercicio.equipo,
-                    nuevoEjercicio.instrucciones,
-                    nuevoEjercicio.completado
-                )
-            )
+            ResponseEntity.ok(EjercicioDTO(nuevoEjercicio.id, nuevoEjercicio.nombre, nuevoEjercicio.descripcion, nuevoEjercicio.repeticiones, nuevoEjercicio.peso, nuevoEjercicio.musculo))
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorDTO(e))
         }
     }
-
 
     @GetMapping
     fun obtenerEjercicios(): ResponseEntity<Any> {
@@ -80,12 +60,18 @@ class EjercicioController(
         }
     }
 
-    @PutMapping("/actualizar")
-    fun actualizarEjercicio(@RequestBody ejercicioDTO: EjercicioDTO): ResponseEntity<Any> {
+    @PutMapping("/actualizar/{id}")
+    fun actualizarEjercicio(@PathVariable id: String, @RequestBody ejercicioDTO: EjercicioDTO): ResponseEntity<Any> {
         return try {
-            val ejercicioActualizado = ejercicioDTO.aModelo()
-            val ejercicio = ejercicioService.actualizarEjercicio(ejercicioActualizado.id ?: throw IllegalArgumentException("El ID no puede ser nulo"), ejercicioActualizado)
-            ResponseEntity.ok(EjercicioDTO.desdeModelo(ejercicio))
+            val ejercicioActualizado = Ejercicio(
+                nombre = ejercicioDTO.nombre,
+                descripcion = ejercicioDTO.descripcion,
+                repeticiones = ejercicioDTO.repeticiones,
+                peso = ejercicioDTO.peso,
+                musculo = ejercicioDTO.musculo
+            )
+            val ejercicio = ejercicioService.actualizarEjercicio(id, ejercicioActualizado)
+            ResponseEntity.ok(EjercicioDTO(ejercicio.id, ejercicio.nombre, ejercicio.descripcion, ejercicio.repeticiones, ejercicio.peso, ejercicio.musculo))
         } catch (e: Exception) {
             ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorDTO(e))
         }

@@ -1,7 +1,10 @@
 package ar.com.unq.eis.trainup.controller
 
-import ar.com.unq.eis.trainup.controller.dto.*
+import ar.com.unq.eis.trainup.controller.dto.EjercicioDTO
+import ar.com.unq.eis.trainup.controller.dto.ErrorDTO
+import ar.com.unq.eis.trainup.controller.dto.RutinaDTO
 import ar.com.unq.eis.trainup.model.Ejercicio
+import ar.com.unq.eis.trainup.model.Rutina
 import ar.com.unq.eis.trainup.services.RutinaService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -15,47 +18,114 @@ class RutinaController(
 ) {
 
     @PostMapping
-    fun crearRutina(@RequestBody bodyRutinaDTO: BodyRutinaDTO): ResponseEntity<Any> {
+    fun crearRutina(@RequestBody rutinaDTO: RutinaDTO): ResponseEntity<Any> {
         return try {
-            val nuevaRutina = rutinaService.crearRutina(bodyRutinaDTO.aModelo())
-            ResponseEntity.status(HttpStatus.CREATED).body(RutinaDTO.desdeModelo(nuevaRutina))
+            val rutina = Rutina(
+                nombre = rutinaDTO.nombre,
+                descripcion = rutinaDTO.descripcion,
+                categoria = rutinaDTO.categoria,
+                ejercicios = rutinaDTO.ejercicios.map {
+                    Ejercicio(
+                        id = it.id,
+                        nombre = it.nombre,
+                        descripcion = it.descripcion,
+                        repeticiones = it.repeticiones,
+                        peso = it.peso,
+                        musculo = it.musculo
+                    )
+                }.toMutableList()
+            )
+            val nuevaRutina = rutinaService.crearRutina(rutina)
+            ResponseEntity.ok(
+                RutinaDTO(
+                    nuevaRutina.id,
+                    nuevaRutina.nombre,
+                    nuevaRutina.descripcion,
+                    nuevaRutina.categoria,
+                    nuevaRutina.fechaCreacion,
+                    nuevaRutina.ejercicios.map {
+                        EjercicioDTO(it.id, it.nombre, it.descripcion, it.repeticiones, it.peso, it.musculo)
+                    }.toMutableList()
+                )
+            )
         } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(Exception("El body de la rutina no es válido")))
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorDTO(e))
         }
     }
 
     @GetMapping
     fun obtenerRutinas(): ResponseEntity<Any> {
-        val rutinas = rutinaService.obtenerRutinas()
-        return ResponseEntity.ok(rutinas.map(RutinaDTO::desdeModelo))
+        return try {
+            val rutinas = rutinaService.obtenerRutinas()
+            ResponseEntity.ok(rutinas.map { rutina ->
+                RutinaDTO(
+                    rutina.id,
+                    rutina.nombre,
+                    rutina.descripcion,
+                    rutina.categoria,
+                    rutina.fechaCreacion ?: "",
+                    rutina.ejercicios.map {
+                        EjercicioDTO(it.id, it.nombre, it.descripcion, it.repeticiones, it.peso, it.musculo)
+                    }.toMutableList()
+                )
+            })
+        } catch (e: Exception) {
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorDTO(e))
+        }
     }
 
     @GetMapping("/{id}")
     fun obtenerRutinaPorId(@PathVariable id: String): ResponseEntity<Any> {
         return try {
-            rutinaService.obtenerRutinaPorId(id)?.let { rutina ->
-                ResponseEntity.ok(RutinaDTO.desdeModelo(rutina))
-            } ?: ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(Exception("Rutina no encontrada")))
+            val rutina = rutinaService.obtenerRutinaPorId(id)
+            if (rutina != null) {
+                ResponseEntity.ok(
+                    RutinaDTO(
+                        rutina.id,
+                        rutina.nombre,
+                        rutina.descripcion,
+                        rutina.categoria,
+                        rutina.fechaCreacion ?: "",
+                        rutina.ejercicios.map {
+                            EjercicioDTO(it.id, it.nombre, it.descripcion, it.repeticiones, it.peso, it.musculo)
+                        }.toMutableList()
+                    )
+                )
+            } else {
+                ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(Exception("Rutina no encontrada")))
+            }
         } catch (e: NoSuchElementException) {
             ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
         }
     }
 
     @PutMapping("/{id}")
-    fun actualizarRutina(@PathVariable id: String, @RequestBody bodyRutinaDTO: BodyRutinaDTO): ResponseEntity<Any> {
+    fun actualizarRutina(@PathVariable id: String, @RequestBody rutinaDTO: RutinaDTO): ResponseEntity<Any> {
         return try {
-            val rutinaAActualizar =
-                rutinaService.obtenerRutinaPorId(id) ?: return ResponseEntity.status(HttpStatus.NOT_FOUND)
-                    .body(ErrorDTO(Exception("Rutina no encontrada")))
-            rutinaAActualizar.apply {
-                nombre = bodyRutinaDTO.nombre
-                descripcion = bodyRutinaDTO.descripcion
-                categoria = bodyRutinaDTO.categoria
-            }
-            val rutinaActualizada = rutinaService.actualizarRutina(id, rutinaAActualizar)
-            ResponseEntity.ok(RutinaDTO.desdeModelo(rutinaActualizada))
+            val rutinaActualizada = Rutina(
+                id = id,
+                nombre = rutinaDTO.nombre,
+                descripcion = rutinaDTO.descripcion,
+                categoria = rutinaDTO.categoria,
+                ejercicios = rutinaDTO.ejercicios.map {
+                    Ejercicio(it.id, it.nombre, it.descripcion, it.repeticiones, it.peso, it.musculo)
+                }.toMutableList()
+            )
+            val rutina = rutinaService.actualizarRutina(id, rutinaActualizada)
+            ResponseEntity.ok(
+                RutinaDTO(
+                    rutina.id,
+                    rutina.nombre,
+                    rutina.descripcion,
+                    rutina.categoria,
+                    rutina.fechaCreacion ?: "",
+                    rutina.ejercicios.map {
+                        EjercicioDTO(it.id, it.nombre, it.descripcion, it.repeticiones, it.peso, it.musculo)
+                    }.toMutableList()
+                )
+            )
         } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
+            ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ErrorDTO(e))
         }
     }
 
@@ -63,45 +133,9 @@ class RutinaController(
     fun eliminarRutina(@PathVariable id: String): ResponseEntity<Any> {
         return try {
             rutinaService.eliminarRutina(id)
-            ResponseEntity.noContent().build()
+            ResponseEntity.status(HttpStatus.NO_CONTENT).build()
         } catch (e: NoSuchElementException) {
             ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
         }
     }
-
-    @PostMapping("/{id}/ejercicios")
-    fun agregarEjercicio(@PathVariable id: String, @RequestBody ejercicio: BodyEjercicioDTO): ResponseEntity<Any> {
-        return try {
-            val rutinaActualizada = rutinaService.agregarEjercicio(id, ejercicio.aModelo())
-            ResponseEntity.ok(RutinaDTO.desdeModelo(rutinaActualizada))
-        } catch (e: NoSuchElementException) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
-        } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
-        }
-    }
-
-    @PutMapping("/{id}/ejercicio/actualizar")
-    fun actualizarEjercicioEnRutina(@PathVariable id: String, @RequestBody ejercicio: EjercicioDTO): ResponseEntity<Any> {
-        return try {
-            val rutinaActualizada = rutinaService.agregarEjercicio(id, ejercicio.aModelo())
-            ResponseEntity.ok(RutinaDTO.desdeModelo(rutinaActualizada))
-        } catch (e: NoSuchElementException) {
-            ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
-        } catch (e: Exception) {
-            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
-        }
-    }
-
-        @DeleteMapping("/{id}/ejercicios/{idEj}")
-        fun eliminarEjercicio(@PathVariable id: String ,@PathVariable idEj: String ): ResponseEntity<Any> {
-            return try {
-                val rutinaActualizada = rutinaService.eliminarEjercicio(id, idEj)
-                    ResponseEntity.ok(RutinaDTO.desdeModelo(rutinaActualizada))
-            } catch (e: NoSuchElementException) {
-                ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
-            } catch (e: Exception) {
-                ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
-            }
-        }
-    }
+}
