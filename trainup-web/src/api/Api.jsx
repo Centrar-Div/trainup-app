@@ -34,7 +34,7 @@ const eliminarRutina = (id) => axios.delete(`/rutinas/${id}`)
 const obtenerRutinaPorId = (id) => axios.get(`/rutinas/${id}`);
 const obtenerCategorias = () => axios.get(`rutinas/categorias`)
 const obtenerRutinasPorCategoria = (categoria) => axios.get(`rutinas/categoria/${categoria}`)
-const buscarRutina = (busqueda) => axios.get(`/rutinas/buscar/${busqueda}`)
+const buscarRutina = (nombre, dificultad) => axios.get(`/rutinas/buscar`, { params: { nombre: nombre, dificultad: dificultad || undefined } })
 
 // const actualizarRutina = async (rutinaID, rutina) => {
 //   try {

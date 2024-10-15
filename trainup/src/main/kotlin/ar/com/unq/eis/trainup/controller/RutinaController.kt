@@ -117,10 +117,11 @@ class RutinaController(
         return ResponseEntity.ok(rutinas.map(RutinaDTO::desdeModelo))
     }
 
-    @GetMapping("/buscar/{busqueda}")
-    fun buscarRutinas(@PathVariable busqueda: String):ResponseEntity<Any>{
+    @GetMapping("/buscar")
+    fun buscarRutinas(@RequestParam(required = true) nombre: String,
+                      @RequestParam(required = false) dificultad: String?):ResponseEntity<Any>{
             return try {
-                val rutinas = rutinaService.buscarRutinas(busqueda);
+                val rutinas = rutinaService.buscarRutinas(nombre,dificultad);
                 ResponseEntity.ok(rutinas.map(RutinaDTO::desdeModelo))
             } catch (e: RutinaException){
                 ResponseEntity.internalServerError().body(ErrorDTO(e))

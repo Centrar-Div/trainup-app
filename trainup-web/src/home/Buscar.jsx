@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { buscarRutina, obtenerCategorias, obtenerRutinasPorCategoria } from '../api/Api'
 import CardRutinaSimple from './CardRutinaSimple'
 import NotRutins from '../utils/NotRutins'
-import { faArrowDownAZ, faArrowDownZA, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons'
+import { faArrowDownAZ, faArrowDownZA, faMagnifyingGlass, faXmark } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 const Buscar = () => {
@@ -11,6 +11,8 @@ const Buscar = () => {
   const [rutinas, setRutinas] = useState([])
   const [ordenAsc, setOrdenAsc] = useState(true)
   const [search, setSearch] = useState('')
+  const [dificultad, setDificultad] = useState('')
+  const dificultades = ['Principiante', 'Intermedio', 'Avanzado']
 
   useEffect(() => {
     obtenerCategorias().then(({ data }) => setCategorias(data))
@@ -39,7 +41,10 @@ const Buscar = () => {
 
   const handleSearch = () => {
     console.log(search);
-    buscarRutina(search).then(({ data }) => setRutinas(data))
+    if (search !== '') {
+      buscarRutina(search, dificultad).then(({ data }) => setRutinas(data))
+    }
+
   }
 
   const handleKeyDown = (e) => {
@@ -47,6 +52,16 @@ const Buscar = () => {
       handleSearch();
     }
   }
+
+  const handleDificultadChange = (e) => {
+    setDificultad(e.target.value);
+  }
+
+  const eliminarFiltro = () => {
+    setDificultad('');
+  }
+
+  console.log(dificultad)
 
 
   return (
@@ -57,12 +72,24 @@ const Buscar = () => {
           <input
             type="search"
             className='primary-textbar textbar-xxl'
+            placeholder='Buscar'
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             onKeyDown={handleKeyDown} />
           <button className='default-btn-2' onClick={handleSearch}>
             <FontAwesomeIcon icon={faMagnifyingGlass} className="icon size-m" />
           </button>
+
+          <select value={dificultad} onChange={handleDificultadChange} className='modern-btn primary-btn'>
+            <option value="" disabled>Dificultad</option>)
+            {dificultades.map((dificultad) =>
+              <option value={dificultad} id={dificultad}>{dificultad}</option>)}
+          </select>
+          {dificultad !== "" && (
+            <button className='default-btn-2' onClick={eliminarFiltro} >
+              <FontAwesomeIcon icon={faXmark} />
+            </button>
+          )}
 
           <button className='default-btn-2' onClick={handlerOrdenar}>{
             ordenAsc ?

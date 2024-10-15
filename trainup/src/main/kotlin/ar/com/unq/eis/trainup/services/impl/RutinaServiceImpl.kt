@@ -128,9 +128,14 @@ class RutinaServiceImpl : RutinaService {
 
     }
 
-    override fun buscarRutinas(busqueda: String): List<Rutina> {
+    override fun buscarRutinas(nombre: String, dificultad: String?): List<Rutina> {
         return try {
-            this.rutinaDAO.findByNombreContainingIgnoreCase(busqueda);
+            if (!dificultad.isNullOrBlank()){
+                this.rutinaDAO.findByNombreContainingIgnoreCaseAndDificultad(nombre, dificultad)
+            }else{
+                this.rutinaDAO.findByNombreContainingIgnoreCase(nombre)
+            }
+
         }catch (e: DataAccessException){
             throw RutinaException("Error al realizar la busqueda en la base de datos")
         }
