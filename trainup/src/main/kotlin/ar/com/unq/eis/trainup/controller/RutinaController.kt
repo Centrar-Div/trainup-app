@@ -1,8 +1,7 @@
 package ar.com.unq.eis.trainup.controller
 
+import ar.com.unq.eis.trainup.controller.Exceptions.RutinaException
 import ar.com.unq.eis.trainup.controller.dto.*
-import ar.com.unq.eis.trainup.model.Ejercicio
-import ar.com.unq.eis.trainup.model.Rutina
 import ar.com.unq.eis.trainup.services.RutinaService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -120,11 +119,12 @@ class RutinaController(
 
     @GetMapping("/buscar/{busqueda}")
     fun buscarRutinas(@PathVariable busqueda: String):ResponseEntity<Any>{
-
-            val rutinas = rutinaService.buscarRutinas(busqueda);
-            return ResponseEntity.ok(rutinas.map(RutinaDTO::desdeModelo))
-
-
+            return try {
+                val rutinas = rutinaService.buscarRutinas(busqueda);
+                ResponseEntity.ok(rutinas.map(RutinaDTO::desdeModelo))
+            } catch (e: RutinaException){
+                ResponseEntity.internalServerError().body(ErrorDTO(e))
+            }
     }
 
 }

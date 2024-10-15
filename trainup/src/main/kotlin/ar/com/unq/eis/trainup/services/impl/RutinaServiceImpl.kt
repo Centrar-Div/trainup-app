@@ -1,11 +1,13 @@
 package ar.com.unq.eis.trainup.services.impl
 
+import ar.com.unq.eis.trainup.controller.Exceptions.RutinaException
 import ar.com.unq.eis.trainup.dao.EjercicioDAO
 import ar.com.unq.eis.trainup.dao.RutinaDAO
 import ar.com.unq.eis.trainup.model.Ejercicio
 import ar.com.unq.eis.trainup.model.Rutina
 import ar.com.unq.eis.trainup.services.RutinaService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.dao.DataAccessException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -127,8 +129,10 @@ class RutinaServiceImpl : RutinaService {
     }
 
     override fun buscarRutinas(busqueda: String): List<Rutina> {
-        val rutinas = obtenerRutinas()
-
-        return rutinas.filter { rutina -> rutina.nombre.contains(busqueda,ignoreCase = true) }
+        return try {
+            this.rutinaDAO.findByNombreContainingIgnoreCase(busqueda);
+        }catch (e: DataAccessException){
+            throw RutinaException("Error al realizar la busqueda en la base de datos")
+        }
     }
 }

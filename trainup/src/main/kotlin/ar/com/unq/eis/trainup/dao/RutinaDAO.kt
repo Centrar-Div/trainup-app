@@ -12,4 +12,6 @@ interface RutinaDAO : MongoRepository<Rutina, String> {
         "{ 'categoria' : ?0 }"
     )
     fun findByCategoria(categoria: String): List<Rutina>
+
+    fun findByNombreContainingIgnoreCase(nombre: String): List<Rutina>
 }
