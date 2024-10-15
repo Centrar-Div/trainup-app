@@ -1,11 +1,13 @@
 package ar.com.unq.eis.trainup.services.impl
 
+import ar.com.unq.eis.trainup.controller.Exceptions.RutinaException
 import ar.com.unq.eis.trainup.dao.EjercicioDAO
 import ar.com.unq.eis.trainup.dao.RutinaDAO
 import ar.com.unq.eis.trainup.model.Ejercicio
 import ar.com.unq.eis.trainup.model.Rutina
 import ar.com.unq.eis.trainup.services.RutinaService
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.dao.DataAccessException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -124,5 +126,18 @@ class RutinaServiceImpl : RutinaService {
             throw RuntimeException("Error al obtener la lista de rutinas por categoría: ${e.message}")
         }
 
+    }
+
+    override fun buscarRutinas(nombre: String, dificultad: String?): List<Rutina> {
+        return try {
+            if (!dificultad.isNullOrBlank()){
+                this.rutinaDAO.findByNombreContainingIgnoreCaseAndDificultad(nombre, dificultad)
+            }else{
+                this.rutinaDAO.findByNombreContainingIgnoreCase(nombre)
+            }
+
+        }catch (e: DataAccessException){
+            throw RutinaException("Error al realizar la busqueda en la base de datos")
+        }
     }
 }

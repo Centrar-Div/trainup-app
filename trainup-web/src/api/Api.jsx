@@ -34,6 +34,7 @@ const eliminarRutina = (id) => axios.delete(`/rutinas/${id}`)
 const obtenerRutinaPorId = (id) => axios.get(`/rutinas/${id}`);
 const obtenerCategorias = () => axios.get(`rutinas/categorias`)
 const obtenerRutinasPorCategoria = (categoria) => axios.get(`rutinas/categoria/${categoria}`)
+const buscarRutina = (nombre, dificultad) => axios.get(`/rutinas/buscar`, { params: { nombre: nombre, dificultad: dificultad || undefined } })
 
 // const actualizarRutina = async (rutinaID, rutina) => {
 //   try {
@@ -58,8 +59,8 @@ const obtenerRutinasPorCategoria = (categoria) => axios.get(`rutinas/categoria/$
 */
 
 const crearEjercicio = (body) => axios.post(`/ejercicios`, body);
-const agregarEjercicioARutina = (rutinaID, ejercicio) => axios.post(`/rutinas/${rutinaID}/ejercicios`,ejercicio ); 
-const completarONoEjercicio = (usuarioID, rutinaID, ejercicioID) => axios.put(`/usuario/${usuarioID}/completarONoEjercicio/${rutinaID}/${ejercicioID}`); 
+const agregarEjercicioARutina = (rutinaID, ejercicio) => axios.post(`/rutinas/${rutinaID}/ejercicios`, ejercicio);
+const completarONoEjercicio = (usuarioID, rutinaID, ejercicioID) => axios.put(`/usuario/${usuarioID}/completarONoEjercicio/${rutinaID}/${ejercicioID}`);
 
 const eliminarEjercicioDeRutina = (rutinaID, ejercicioID) => axios.delete(`/rutinas/${rutinaID}/ejercicios/${ejercicioID}`);
 
@@ -87,7 +88,7 @@ const actualizarEjercicio = (ejercicio) => axios.put(`/ejercicios/actualizar`, e
 const actualizarEjercicioEnRutina = (id, ejercicio) => axios.put(`/rutinas/${id}/ejercicio/actualizar`, ejercicio)
 
 const eliminarEjercicio = (ejercicioID) => {
-  return axios.delete(`/ejercicios/${ejercicioID}`); 
+  return axios.delete(`/ejercicios/${ejercicioID}`);
 };
 
 
@@ -183,5 +184,6 @@ export {
   actualizarEjercicioEnRutina,
   completarONoEjercicio,
   obtenerCategorias,
-  obtenerRutinasPorCategoria
+  obtenerRutinasPorCategoria,
+  buscarRutina
 };
