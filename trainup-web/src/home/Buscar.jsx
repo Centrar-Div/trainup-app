@@ -12,6 +12,7 @@ const Buscar = () => {
   const [ordenAsc, setOrdenAsc] = useState(true)
   const [search, setSearch] = useState('')
   const [dificultad, setDificultad] = useState('')
+  const [isFirstVisit, setIsFirstVisit] = useState(true) 
   const dificultades = ['Principiante', 'Intermedio', 'Avanzado']
 
   useEffect(() => {
@@ -34,41 +35,41 @@ const Buscar = () => {
   }
 
   const handlerGetRutina = (catego) => {
-    // console.log(catego)
     setSearch('')
+    setIsFirstVisit(false) 
     obtenerRutinasPorCategoria(catego).then(({ data }) => setRutinas(data))
   }
 
   const handleSearch = () => {
-    console.log(search);
+    setIsFirstVisit(false) 
+    console.log(search)
     if (search !== '') {
       buscarRutina(search, dificultad).then(({ data }) => setRutinas(data))
     }
-
   }
 
   const handleKeyDown = (e) => {
     if (e.key === 'Enter') {
-      handleSearch();
+      handleSearch()
     }
   }
 
   const handleDificultadChange = (e) => {
-    setDificultad(e.target.value);
+    const selectedDificultad = e.target.value;
+    setDificultad(selectedDificultad)
+    setIsFirstVisit(false)
+    buscarRutina('', selectedDificultad).then(({ data }) => setRutinas(data))
   }
 
   const eliminarFiltro = () => {
-    setDificultad('');
+    setDificultad('')
+    buscarRutina('', '').then(({ data }) => setRutinas(data)) 
   }
-
-  console.log(dificultad)
-
 
   return (
     <div>
       <div>
         <div className='search-header'>
-
           <input
             type="search"
             className='primary-textbar textbar-xxl'
@@ -79,11 +80,10 @@ const Buscar = () => {
           <button className='default-btn-2' onClick={handleSearch}>
             <FontAwesomeIcon icon={faMagnifyingGlass} className="icon size-m" />
           </button>
-
           <select value={dificultad} onChange={handleDificultadChange} className='modern-btn primary-btn'>
-            <option value="" disabled>Dificultad</option>)
+            <option value="" disabled>Dificultad</option> 
             {dificultades.map((dificultad) =>
-              <option value={dificultad} id={dificultad}>{dificultad}</option>)}
+              <option value={dificultad} key={dificultad}>{dificultad}</option>)}
           </select>
           {dificultad !== "" && (
             <button className='default-btn-2' onClick={eliminarFiltro} >
@@ -108,15 +108,19 @@ const Buscar = () => {
         </button>)}
       </div>
       <div className='temp-content-body mt-10' >
-        {rutinas.length > 0 ?
-          rutinas.map((rutina) => <CardRutinaSimple key={rutina.id} rutina={rutina} />) :
+        {rutinas.length > 0 ? (
+          rutinas.map((rutina) => (
+            <CardRutinaSimple rutina={rutina} key={rutina.id}/>
+          ))
+        ) : (
           <NotRutins
-            titulo="¿Vacio?"
-            mensaje="Por favor, busca rutinas"
+            titulo={isFirstVisit ? "¡Bienvenido!" : "¿Vacio?"}
+            mensaje={isFirstVisit ? "Comienza buscando una rutina o selecciona una categoría." : "No encontramos ninguna rutina con ese nombre. Intenta con otro título."}
             showButton={false}
           />
-        }
+        )}
       </div>
+
     </div>
   )
 }

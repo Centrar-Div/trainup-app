@@ -23,6 +23,7 @@
     overflow: hidden;
     border-left: 5px solid #8783f1;
     position: relative;
+    animation: fadeInUp 0.5s ease-in-out;
 }
 
 .boxinfo:hover {
@@ -130,6 +131,17 @@
     width: 100%;
     justify-content: flex-end;
 }
+
+@keyframes fadeInUp {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 
 /* Responsive adjustments */
 
