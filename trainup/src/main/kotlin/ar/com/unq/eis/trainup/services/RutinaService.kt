@@ -12,7 +12,7 @@ interface RutinaService {
 
     fun obtenerRutinaPorId(id: String): Rutina?
 
-    fun actualizarRutina(id: String, rutinaActualizada: Rutina): Rutina
+    fun actualizarRutina(rutinaActualizada: Rutina): Rutina
 
     fun eliminarRutina(id: String)
 

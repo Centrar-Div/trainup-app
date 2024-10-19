@@ -56,15 +56,18 @@ class Rutina {
         nombre: String,
         descripcion: String,
         categoria: String,
-        ejercicios: MutableList<Ejercicio> = mutableListOf()
+        ejercicios: MutableList<Ejercicio> = mutableListOf(),
+        dificultad: String
     ) {
         // Validaciones
         require(nombre.isNotEmpty()) { "El nombre de la rutina no puede estar vacía" }
         require(descripcion.isNotEmpty()) { "La descripción de la rutina no puede estar vacía" }
         require(categoria.isNotEmpty()) { "La categoría no puede estar vacía" }
+        require(dificultad.isNotEmpty()) { "La dificultad no puede estar vacía" }
 
         this.nombre = nombre
         this.descripcion = descripcion
+        this.dificultad = dificultad
         this.categoria = categoria
         this.ejercicios = ejercicios
         this.fechaCreacion = LocalDateTime.now()

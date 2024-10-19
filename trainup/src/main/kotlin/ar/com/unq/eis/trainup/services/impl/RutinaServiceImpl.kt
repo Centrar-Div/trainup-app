@@ -8,8 +8,10 @@ import ar.com.unq.eis.trainup.model.Rutina
 import ar.com.unq.eis.trainup.services.RutinaService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.dao.DataAccessException
+import org.springframework.data.repository.findByIdOrNull
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
+import kotlin.jvm.optionals.getOrElse
 
 @Service
 @Transactional
@@ -17,6 +19,7 @@ class RutinaServiceImpl : RutinaService {
 
     @Autowired
     lateinit var rutinaDAO: RutinaDAO
+
     @Autowired
     lateinit var ejercicioDAO: EjercicioDAO
 
@@ -52,24 +55,18 @@ class RutinaServiceImpl : RutinaService {
         }
     }
 
-    override fun actualizarRutina(id: String, rutinaActualizada: Rutina): Rutina {
-        return try {
-            val rutinaExistente = rutinaDAO.findById(id)
-            if (rutinaExistente.isPresent) {
-                val rutina = rutinaExistente.get()
-                rutina.nombre = rutinaActualizada.nombre
-                rutina.descripcion = rutinaActualizada.descripcion
-                rutina.categoria = rutinaActualizada.categoria
-                rutina.ejercicios = rutinaActualizada.ejercicios
-                rutinaDAO.save(rutina)
-            } else {
-                throw NoSuchElementException("No se encontró la rutina con id: $id")
-            }
-        } catch (e: NoSuchElementException) {
-            throw e
-        } catch (e: Exception) {
-            throw RuntimeException("Error al actualizar la rutina: ${e.message}")
-        }
+    override fun actualizarRutina(rutinaActualizada: Rutina): Rutina {
+
+        val id = rutinaActualizada.id ?: throw RutinaException("el id no puede ser null")
+        val rutinaExistente = rutinaDAO.findById(id)
+            .getOrElse { throw NoSuchElementException("No se encontró la rutina con id: $id") }
+
+        rutinaExistente.nombre = rutinaActualizada.nombre
+        rutinaExistente.descripcion = rutinaActualizada.descripcion
+        rutinaExistente.categoria = rutinaActualizada.categoria
+        rutinaExistente.dificultad = rutinaActualizada.dificultad
+
+        return rutinaDAO.save(rutinaExistente);
     }
 
     override fun eliminarRutina(id: String) {
@@ -85,6 +82,7 @@ class RutinaServiceImpl : RutinaService {
             throw RuntimeException("Error al eliminar la rutina: ${e.message}")
         }
     }
+
     override fun agregarEjercicio(id: String, ejercicio: Ejercicio): Rutina {
         return try {
             val rutinaExistente = rutinaDAO.findById(id)
@@ -101,6 +99,7 @@ class RutinaServiceImpl : RutinaService {
             throw RuntimeException("Error al agregar ejercicio a la rutina: ${e.message}")
         }
     }
+
     override fun eliminarEjercicio(id: String, idEj: String): Rutina {
         return try {
             val rutinaExistente = rutinaDAO.findById(id)
@@ -130,13 +129,13 @@ class RutinaServiceImpl : RutinaService {
 
     override fun buscarRutinas(nombre: String, dificultad: String?): List<Rutina> {
         return try {
-            if (!dificultad.isNullOrBlank()){
+            if (!dificultad.isNullOrBlank()) {
                 this.rutinaDAO.findByNombreContainingIgnoreCaseAndDificultad(nombre, dificultad)
-            }else{
+            } else {
                 this.rutinaDAO.findByNombreContainingIgnoreCase(nombre)
             }
 
-        }catch (e: DataAccessException){
+        } catch (e: DataAccessException) {
             throw RutinaException("Error al realizar la busqueda en la base de datos")
         }
     }
