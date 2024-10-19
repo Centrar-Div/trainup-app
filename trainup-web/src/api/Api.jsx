@@ -29,7 +29,7 @@ const handleError = (error) => {
 
 const crearRutina = (body) => axios.post(`/rutinas`, body)
 const obtenerRutinas = () => axios.get(`/rutinas`)
-const actualizarRutina = (id, body) => axios.put(`/rutinas/${id}`, body)
+const actualizarRutina = (body) => axios.put(`/rutinas`, body)
 const eliminarRutina = (id) => axios.delete(`/rutinas/${id}`)
 const obtenerRutinaPorId = (id) => axios.get(`/rutinas/${id}`);
 const obtenerCategorias = () => axios.get(`rutinas/categorias`)
