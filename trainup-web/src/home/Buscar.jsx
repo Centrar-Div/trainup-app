@@ -58,7 +58,7 @@ const Buscar = () => {
     const selectedDificultad = e.target.value;
     setDificultad(selectedDificultad)
     setIsFirstVisit(false)
-    buscarRutina('', selectedDificultad).then(({ data }) => setRutinas(data))
+    buscarRutina(search, selectedDificultad).then(({ data }) => setRutinas(data))
   }
 
   const eliminarFiltro = () => {
