@@ -15,10 +15,14 @@ const Rutina = () => {
     const [isFollowed, setIsFollowed] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [listaDeEjercicios, setListaDeEjercicios] = useState([])
+    const [dificultad, setDificultad] = useState('')
+    const [descripcion, setDescripcion] = useState('')
 
     useEffect(() => {
         obtenerRutinaPorId(rutinaID).then(({ data }) => {
             setListaDeEjercicios(data.ejercicios)
+            setDescripcion(data.descripcion)
+            setDificultad(data.dificultad)
         }).catch((error) => {
             console.log(error)
         })
@@ -61,7 +65,15 @@ const Rutina = () => {
 
     return (
         <>
-            <h1>Ejercicios de {nombre}</h1>
+            <div className="header-rutina">
+                <h1>Ejercicios de {nombre}</h1>
+                <div className="card-footer">
+                    <p className={'category ' + `${dificultad.toLowerCase()}`}>{dificultad}</p>
+                </div>
+
+            </div>
+
+
             <div className="rutina-header">
 
                 {user.esAdmin ?

@@ -5,11 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import { eliminarRutina } from '../api/Api';
 import { notification } from 'antd';
 import Modal from 'antd/es/modal/Modal';
-import { useLogin } from '../context/LoginContext'; 
+import { useLogin } from '../context/LoginContext';
 
 const CardRutinaSimple = ({ rutina }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useLogin(); 
+  const { user } = useLogin();
   const navigate = useNavigate();
 
   const handlerClick = (rutina) => {
@@ -21,6 +21,7 @@ const CardRutinaSimple = ({ rutina }) => {
     const rutinaNombre = rutinaEdit.nombre;
     const rutinaDescripcion = rutinaEdit.descripcion;
     const rutinaCategoria = rutinaEdit.categoria;
+    const rutinaDificultad = rutina.dificultad;
 
     navigate('/es/home/rutina/editar', {
       state: {
@@ -28,6 +29,7 @@ const CardRutinaSimple = ({ rutina }) => {
         rutinaNombre,
         rutinaDescripcion,
         rutinaCategoria,
+        rutinaDificultad
       },
     });
   };
@@ -51,6 +53,8 @@ const CardRutinaSimple = ({ rutina }) => {
       });
   };
 
+  // console.log(rutina.id);
+
   return (
     <div key={rutina.id} className="boxinfo">
       <div className="height-100" onClick={() => handlerClick(rutina)}>
@@ -64,6 +68,7 @@ const CardRutinaSimple = ({ rutina }) => {
       </div>
       <div className="card-footer">
         <p className="category">{rutina.categoria}</p>
+        <p className={'category ' + `${rutina.dificultad.toLowerCase()}`}>{rutina.dificultad}</p>
         <p>{rutina.fechaDeCreacion}</p>
       </div>
 
