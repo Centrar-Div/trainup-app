@@ -13,11 +13,13 @@ const CrearRutina = () => {
     const [nombre, setNombre] = useState('')
     const [descripcion, setDescripcion] = useState('')
     const [categoria, setCategoria] = useState('')
+    const [dificultad, setDificultad] = useState('')
+    const dificultades = ['Principiante', 'Intermedio', 'Avanzado']
 
 
     const handlerSubmit = (e) => {
         e.preventDefault(); // no eliminar
-        crearRutina({ nombre, descripcion, categoria }).then(({ data }) => {
+        crearRutina({ nombre, descripcion, categoria, dificultad }).then(({ data }) => {
             navigate('/es/home')
         }).catch((error) => {
             notification.error({
@@ -26,6 +28,11 @@ const CrearRutina = () => {
                 placement: 'topRight',
             });
         });
+    }
+
+    const handleDificultadChange = (e) => {
+        const selectedDificultad = e.target.value;
+        setDificultad(selectedDificultad)
     }
 
     return (
@@ -53,6 +60,11 @@ const CrearRutina = () => {
                     name='categoria'
                     setText={setCategoria}
                 />
+                <select value={dificultad} onChange={handleDificultadChange} className='modern-btn primary-btn'>
+                    <option value="" disabled>Dificultad</option>
+                    {dificultades.map((dif) =>
+                        <option value={dif} key={dif}>{dif}</option>)}
+                </select>
             </Form>
         </div>
     )

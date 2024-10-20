@@ -12,7 +12,7 @@ const Buscar = () => {
   const [ordenAsc, setOrdenAsc] = useState(true)
   const [search, setSearch] = useState('')
   const [dificultad, setDificultad] = useState('')
-  const [isFirstVisit, setIsFirstVisit] = useState(true) 
+  const [isFirstVisit, setIsFirstVisit] = useState(true)
   const dificultades = ['Principiante', 'Intermedio', 'Avanzado']
 
   useEffect(() => {
@@ -36,12 +36,12 @@ const Buscar = () => {
 
   const handlerGetRutina = (catego) => {
     setSearch('')
-    setIsFirstVisit(false) 
+    setIsFirstVisit(false)
     obtenerRutinasPorCategoria(catego).then(({ data }) => setRutinas(data))
   }
 
   const handleSearch = () => {
-    setIsFirstVisit(false) 
+    setIsFirstVisit(false)
     console.log(search)
     if (search !== '') {
       buscarRutina(search, dificultad).then(({ data }) => setRutinas(data))
@@ -63,7 +63,9 @@ const Buscar = () => {
 
   const eliminarFiltro = () => {
     setDificultad('')
-    buscarRutina('', '').then(({ data }) => setRutinas(data)) 
+    setSearch('')
+    setRutinas([])
+    setIsFirstVisit(true)
   }
 
   return (
@@ -81,11 +83,11 @@ const Buscar = () => {
             <FontAwesomeIcon icon={faMagnifyingGlass} className="icon size-m" />
           </button>
           <select value={dificultad} onChange={handleDificultadChange} className='modern-btn primary-btn'>
-            <option value="" disabled>Dificultad</option> 
+            <option value="" disabled>Dificultad</option>
             {dificultades.map((dificultad) =>
               <option value={dificultad} key={dificultad}>{dificultad}</option>)}
           </select>
-          {dificultad !== "" && (
+          {(dificultad !== "" || search !== '') && (
             <button className='default-btn-2' onClick={eliminarFiltro} >
               <FontAwesomeIcon icon={faXmark} />
             </button>
@@ -110,7 +112,7 @@ const Buscar = () => {
       <div className='temp-content-body mt-10' >
         {rutinas.length > 0 ? (
           rutinas.map((rutina) => (
-            <CardRutinaSimple rutina={rutina} key={rutina.id}/>
+            <CardRutinaSimple rutina={rutina} key={rutina.id} />
           ))
         ) : (
           <NotRutins
