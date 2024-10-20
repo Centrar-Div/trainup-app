@@ -140,14 +140,8 @@ const logearUsuario = (username, password) => {
   return axios.post('/usuario/login', { username, password });
 }
 
-const completarRutina = async (userId, rutinaId) => {
-  try {
-    const response = await axios.post(`/usuario/completarRutina/${userId}/${rutinaId}`);
-
-    return response.data;
-  } catch (error) {
-    handleError(error);
-  }
+const completarRutina = (userId, rutinaId) => {
+  axios.post(`/usuario/completarRutina/${userId}/${rutinaId}`).then((response) => response.data).catch(handleError);
 };
 
 export const isFollowing = (rutinaID) => {

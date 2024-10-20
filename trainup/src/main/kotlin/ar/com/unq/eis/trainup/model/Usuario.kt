@@ -71,12 +71,13 @@ class Usuario() {
     }
 
     fun completarRutina(rutina: Rutina) {
-        val rutinaExistente = rutinasSeguidas.find { it.id == rutina.id }
-        if (rutinaExistente == null) {
-            throw UsuarioException("El usuario no sigue a dicha rutina")
+        if (!rutinasSeguidas.contains(rutina))throw UsuarioException("El usuario ${this.username} no sigue a rutina id: ${rutina.id}")
+
+        rutinasSeguidas.removeIf { it == rutina }
+
+        if (!rutinasCompletadas.contains(rutina)) {
+            rutinasCompletadas.add(rutina)
         }
-        rutinasSeguidas.removeIf { it.id == rutina.id }
-        rutinasCompletadas.add(rutina)
     }
 
     fun followUnfollowRutina(rutina: Rutina) {

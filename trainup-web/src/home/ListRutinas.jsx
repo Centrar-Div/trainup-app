@@ -28,13 +28,8 @@ const ListRutinas = ({ rutinas, esCompletada }) => {
 
   const marcarComoCompletada = async () => {
     try {
-      await completarRutina(user.id, rutinaIdToComplete);
-      
-      const rutinasActualizadas = user.rutinasSeguidas.map(rutina =>
-        rutina.id === rutinaIdToComplete ? { ...rutina, completada: true } : rutina
-      );
-      setUser({ ...user, rutinasSeguidas: rutinasActualizadas });
-  
+      completarRutina(user.id, rutinaIdToComplete);
+
       notification.success({
         message: '¡Éxito!',
         description: 'Se ha completado la rutina correctamente.',
