@@ -30,19 +30,9 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
     };
 
     const handleFieldChange = (changedValues) => {
-        const updateValues = Object.keys(changedValues).reduce((acc, key) => {
-            // Convertimos 'repeticiones' y 'peso' a números si es necesario
-            if (key === 'repeticiones' || key === 'peso') {
-                acc[key] = parseInt(changedValues[key], 10); // convertimos a número
-            } else {
-                acc[key] = changedValues[key]; // para los demás campos, dejamos el valor tal cual
-            }
-            return acc;
-        }, {});
-
         setEditedFields(prevFields => ({
             ...prevFields,
-            ...updateValues
+            ...changedValues
         }));
     };
 
@@ -182,7 +172,7 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
 
             <Modal
                 title={ejercicio ? `Editar ejercicio: ${ejercicio.nombre}` : "Crear Nuevo Ejercicio"}
-                visible={isModalVisible}
+                open={isModalVisible}
                 onCancel={handleCancel}
                 onOk={ejercicio ? handleSaveChanges : handleCreateExercise}
                 confirmLoading={isUpdating || isCreating}
@@ -211,14 +201,36 @@ const Ejercicio = ({ updateEjercicio, deleteEjercicio, ejercicio, rutinaID }) =>
                     <Form.Item
                         label="Repeticiones"
                         name="repeticiones"
-                        rules={[{ required: true, min: 1, type: 'number', message: 'Las repeticiones deben ser mayores a 0.' }]}
+                        rules={[
+                            {
+                                validator: (_, value) => {
+                                    if (value !== undefined && value !== null) {
+                                        if (value <= 0) {
+                                            return Promise.reject(new Error('Las repeticiones deben ser mayores a 0.'));
+                                        }
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
+                        ]}
                     >
                         <Input type="number" />
                     </Form.Item>
                     <Form.Item
                         label="Peso"
                         name="peso"
-                        rules={[{ required: true, min: 0, type: 'number', message: 'El peso no puede ser negativo.' }]}
+                        rules={[
+                            {
+                                validator: (_, value) => {
+                                    if (value !== undefined && value !== null) {
+                                        if (value < 0) {
+                                            return Promise.reject(new Error('El peso no puede ser negativo.'));
+                                        }
+                                    }
+                                    return Promise.resolve();
+                                }
+                            }
+                        ]}
                     >
                         <Input type="number" />
                     </Form.Item>
