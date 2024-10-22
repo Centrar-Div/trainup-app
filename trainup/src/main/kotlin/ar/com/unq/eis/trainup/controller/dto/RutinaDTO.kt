@@ -6,6 +6,7 @@ import java.time.LocalDateTime
 data class RutinaDTO(
     var id: String? = null,
     var nombre: String = "",
+    var img: String?=null,
     var descripcion: String = "",
     var categoria: String = "",
     var dificultad: String = "",
@@ -21,6 +22,7 @@ data class RutinaDTO(
             return RutinaDTO(
                 id = rutina.id,
                 nombre = rutina.nombre,
+                img = rutina.img,
                 descripcion = rutina.descripcion,
                 categoria = rutina.categoria,
                 dificultad = rutina.dificultad,
@@ -37,6 +39,7 @@ data class RutinaDTO(
         return Rutina(
             id = this.id,
             nombre = this.nombre,
+            img= this.img,
             descripcion = this.descripcion,
             categoria = this.categoria,
             dificultad = this.dificultad,
