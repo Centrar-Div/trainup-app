@@ -7,7 +7,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
-    setIsOpen(!isOpen);
+    setIsOpen(!isOpen); 
   };
 
   return (
@@ -18,6 +18,7 @@ const Navbar = () => {
       >
         <FontAwesomeIcon icon={faBars} />
       </button>
+
       <div className={`nav-container ${isOpen ? 'open' : ''}`}>
         <ul className={`nav-links ${isOpen ? 'open' : ''}`}>
           <li><a href="/init">Home</a></li>

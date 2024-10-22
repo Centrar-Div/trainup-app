@@ -11,14 +11,46 @@
 }
 
 .in-progress h1 {
-    font-size: 10rem;
+    font-size: 10vw; 
     color: #e74c3c;
     font-weight: 900;
-    word-spacing: 2rem;
+    word-spacing: 1.5rem; 
     margin-bottom: 0.5rem;
+    transition: all 0.3s ease;
 }
 
+/* Texto secundario */
 .in-progress p {
-    font-size: 2rem;
+    font-size: 2rem; 
     color: #555; 
+}
+
+@media (max-width: 768px) {
+    .in-progress {
+        padding: 2rem; 
+    }
+
+    .in-progress h1 {
+        font-size: 8vw;
+        word-spacing: 1rem; 
+    }
+
+    .in-progress p {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .in-progress {
+        padding: 1.5rem;
+    }
+
+    .in-progress h1 {
+        font-size: 6vw; 
+        word-spacing: 0.5rem; 
+    }
+
+    .in-progress p {
+        font-size: 1.2rem; 
+    }
 }

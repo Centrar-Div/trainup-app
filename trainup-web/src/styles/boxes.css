@@ -3,13 +3,13 @@
     border-radius: 0.5rem;
     padding: 1rem;
     outline: none;
-    width: fit-content;
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
 .column-box {
     flex-direction: column;
 }
-
 
 .secondary-box {
     background-color: #e0e0e0;
@@ -18,4 +18,28 @@
 
 .category-box {
     height: 40px;
+    width: 100%; 
+}
+
+@media (max-width: 768px) {
+    .default-box {
+        flex-direction: column; 
+        width: 100%; 
+        padding: 0.5rem; 
+    }
+
+    .category-box {
+        height: 35px; 
+    }
+}
+
+@media (max-width: 480px) {
+    .default-box {
+        padding: 0.3rem; 
+        width: 100%;
+    }
+
+    .category-box {
+        height: 30px; 
+    }
 }
