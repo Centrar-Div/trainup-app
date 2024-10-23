@@ -238,6 +238,13 @@
     gap: 20%;
 }
 
+.rutina-img {
+    border-radius: 12px;
+    width: 30vw;
+    height: auto;
+    margin-top: 16px;
+}
+
 @keyframes fadeInUp {
     0% {
         opacity: 0;
