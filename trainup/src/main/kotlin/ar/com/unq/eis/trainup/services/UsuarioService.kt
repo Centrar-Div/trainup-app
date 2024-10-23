@@ -24,4 +24,6 @@ interface UsuarioService {
      fun isFollowing(usuarioID: String, rutinaID: String):Boolean
 
      fun completarEjercicio(userId: String, rutinaId: String, ejercicioId: String)
+
+     fun agregarRutinaFavorita(idUsuario: String, idRutina: String): Usuario
 }

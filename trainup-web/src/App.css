@@ -118,3 +118,12 @@ p {
     font-size: 1rem;
   }
 }
+
+.no-favorite {
+  color: #c9c9c9 !important;
+  
+}
+
+.favorite {
+  color: #1d1d1d !important;
+}

@@ -65,15 +65,26 @@ const Rutina = () => {
 
     return (
         <>
-            <div className="header-rutina">
-                <h1>Ejercicios de {nombre}</h1>
-                <div className="card-footer">
-                    <p className={'category ' + `${dificultad.toLowerCase()}`}>{dificultad}</p>
+            <div className="rutina-container">
+                <div className="rutina-info">
+                    <h1 className="rutina-title">Ejercicios de {nombre}</h1>
+                    <div className="card-footer">
+                        <p className={'category ' + `${dificultad.toLowerCase()}`}>{dificultad}</p>
+                    </div>
+    
+                    {user.esAdmin ? (
+                        <Button onClick={handleCreateExercise} type="primary" className="create-btn">
+                            Crear Ejercicio
+                        </Button>
+                    ) : (
+                        <FollowBtn initFollow={isFollowed} rutinaID={rutinaID} />
+                    )}
                 </div>
-
+    
+                {imgSrc && (
+                    <img src={imgSrc} className="rutina-img" alt={`imagen de rutina ${nombre}`} />
+                )}
             </div>
-
-
             <div className="rutina-header">
 
                 {user.esAdmin ?
@@ -92,6 +103,7 @@ const Rutina = () => {
             </div>
         </>
     );
+    
 };
 
 export default Rutina;

@@ -35,24 +35,8 @@ const obtenerRutinaPorId = (id) => axios.get(`/rutinas/${id}`);
 const obtenerCategorias = () => axios.get(`rutinas/categorias`)
 const obtenerRutinasPorCategoria = (categoria) => axios.get(`rutinas/categoria/${categoria}`)
 const buscarRutina = (nombre, dificultad) => axios.get(`/rutinas/buscar`, { params: { nombre: nombre, dificultad: dificultad || undefined } })
+const agregarRutinaFavorita = (usuarioID, rutinaID) => axios.put(`/usuario/${usuarioID}/favorita/${rutinaID}`)
 
-// const actualizarRutina = async (rutinaID, rutina) => {
-//   try {
-//     const response = await axios.put(`/rutinas/${rutinaID}`, rutina);
-//     return response.data;
-//   } catch (error) {
-//     handleError(error);
-//   }
-// };
-
-// const eliminarRutina = async (id) => {
-//   try {
-//     const response = await axios.delete(`/rutinas/${id}`);
-//     return response.data;
-//   } catch (error) {
-//     handleError(error);
-//   }
-// };
 
 /* 
 * Funciones relacionadas con "Ejercicios"
@@ -179,5 +163,6 @@ export {
   completarONoEjercicio,
   obtenerCategorias,
   obtenerRutinasPorCategoria,
-  buscarRutina
+  buscarRutina,
+  agregarRutinaFavorita
 };
