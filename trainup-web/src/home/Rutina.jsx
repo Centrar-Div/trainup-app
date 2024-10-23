@@ -17,14 +17,12 @@ const Rutina = () => {
     const [listaDeEjercicios, setListaDeEjercicios] = useState([])
     const [dificultad, setDificultad] = useState('')
     const [descripcion, setDescripcion] = useState('')
-    const [imgSrc, setImgSrc] = useState('')
 
     useEffect(() => {
         obtenerRutinaPorId(rutinaID).then(({ data }) => {
             setListaDeEjercicios(data.ejercicios)
             setDescripcion(data.descripcion)
             setDificultad(data.dificultad)
-            setImgSrc(data.img)
         }).catch((error) => {
             console.log(error)
         })
@@ -87,9 +85,6 @@ const Rutina = () => {
                 }
 
             </div>
-            {imgSrc &&
-                <img src={imgSrc} className='rutina-img' alt={`imagen de rutina ${nombre}`} />}
-
             <div className='container-boxinfo'>
                 {listaDeEjercicios.map(ejercicio => (
                     <Ejercicio key={ejercicio.id} updateEjercicio={updateEjercicio} deleteEjercicio={deleteEjercicio} ejercicio={ejercicio} rutinaID={rutinaID} />
