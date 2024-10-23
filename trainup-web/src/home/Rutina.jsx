@@ -67,36 +67,35 @@ const Rutina = () => {
 
     return (
         <>
-            <div className="header-rutina">
-                <h1>Ejercicios de {nombre}</h1>
-                <div className="card-footer">
-                    <p className={'category ' + `${dificultad.toLowerCase()}`}>{dificultad}</p>
+            <div className="rutina-container">
+                <div className="rutina-info">
+                    <h1 className="rutina-title">Ejercicios de {nombre}</h1>
+                    <div className="card-footer">
+                        <p className={'category ' + `${dificultad.toLowerCase()}`}>{dificultad}</p>
+                    </div>
+    
+                    {user.esAdmin ? (
+                        <Button onClick={handleCreateExercise} type="primary" className="create-btn">
+                            Crear Ejercicio
+                        </Button>
+                    ) : (
+                        <FollowBtn initFollow={isFollowed} rutinaID={rutinaID} />
+                    )}
                 </div>
-
+    
+                {imgSrc && (
+                    <img src={imgSrc} className="rutina-img" alt={`imagen de rutina ${nombre}`} />
+                )}
             </div>
-
-
-            <div className="rutina-header">
-
-                {user.esAdmin ?
-                    <Button onClick={handleCreateExercise} type="primary" style={{ marginLeft: '10px' }}>
-                        Crear Ejercicio
-                    </Button>
-                    :
-                    <FollowBtn initFollow={isFollowed} rutinaID={rutinaID} />
-                }
-
-            </div>
-            {imgSrc &&
-                <img src={imgSrc} className='rutina-img' alt={`imagen de rutina ${nombre}`} />}
-
-            <div className='container-boxinfo'>
+    
+            <div className="container-boxinfo">
                 {listaDeEjercicios.map(ejercicio => (
                     <Ejercicio key={ejercicio.id} updateEjercicio={updateEjercicio} deleteEjercicio={deleteEjercicio} ejercicio={ejercicio} rutinaID={rutinaID} />
                 ))}
             </div>
         </>
     );
+    
 };
 
 export default Rutina;
