@@ -15,7 +15,6 @@ class Usuario() {
 
     @Indexed(unique = true)
     var username: String = ""
-
     var password: String = ""
     var rutinasSeguidas: MutableList<Rutina> = mutableListOf()
     var rutinasCompletadas: MutableList<Rutina> = mutableListOf()
@@ -28,6 +27,7 @@ class Usuario() {
     var peso: String = ""
     var objetivo: String = ""
     var esAdmin: Boolean = false
+    var rutinasFavoritas: MutableList<Rutina> = mutableListOf()
 
     constructor(
         username: String,
@@ -58,7 +58,6 @@ class Usuario() {
         this.objetivo = objetivo
         this.esAdmin = esAdmin
     }
-
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
         if (other == null || javaClass != other.javaClass) return false
@@ -103,5 +102,15 @@ class Usuario() {
                 }
             }
         }
+    }
+
+    fun agregarRutinaFavorita(rutina: Rutina) {
+        val rutinaExistente = rutinasFavoritas.find { it.id == rutina.id }
+        if (rutinaExistente == null) {
+            rutinasFavoritas.add(rutina)
+        } else {
+            rutinasFavoritas.removeIf { it.id == rutina.id }
+        }
+
     }
 }

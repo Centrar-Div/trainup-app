@@ -152,4 +152,16 @@ class UsuarioController(
             ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
         }
     }
+
+    @PutMapping("/{idUsuario}/favorita/{idRutina}")
+    fun agregarRutinaFavorita(@PathVariable idUsuario: String, @PathVariable idRutina: String): ResponseEntity<Any> {
+        return try {
+            val usuario = usuarioService.agregarRutinaFavorita(idUsuario, idRutina)
+            ResponseEntity.ok(UsuarioDTO.desdeModelo(usuario))
+        } catch (e: UsuarioException) {
+            ResponseEntity.status(HttpStatus.NOT_FOUND).body(ErrorDTO(e))
+        } catch (e: RutinaException) {
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ErrorDTO(e))
+        }
+    }
 }

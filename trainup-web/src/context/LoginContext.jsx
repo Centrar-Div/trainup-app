@@ -62,6 +62,10 @@ export const LoginProvider = ({ children }) => {
     });
   };
 
+  const actualizarPerfilUsuarioTemp = (datos) => {
+    setUser(datos);
+  }
+
   const actualizarPerfilUsuario = (datos) => {
     actualizarUsuario(datos).then(({datos}) => {
       setUser(datos)
@@ -75,7 +79,7 @@ export const LoginProvider = ({ children }) => {
   };
 
   return (
-    <LoginContext.Provider value={{ user, setUser, restartLogin, validateLogin, actualizarPerfilUsuario, authChecked }}>
+    <LoginContext.Provider value={{ user, setUser, restartLogin, validateLogin, actualizarPerfilUsuario, actualizarPerfilUsuarioTemp, authChecked }}>
       {children}
     </LoginContext.Provider>
   );

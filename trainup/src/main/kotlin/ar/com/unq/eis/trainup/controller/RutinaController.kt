@@ -128,5 +128,4 @@ class RutinaController(
             ResponseEntity.internalServerError().body(ErrorDTO(e))
         }
     }
-
 }

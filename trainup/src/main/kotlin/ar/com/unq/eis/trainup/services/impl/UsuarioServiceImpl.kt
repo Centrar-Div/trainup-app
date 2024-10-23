@@ -110,4 +110,13 @@ class UsuarioServiceImpl(@Autowired private val usuarioDAO: UsuarioDAO,
 
         this.actualizarUsuario(usuario)
     }
+
+    override fun agregarRutinaFavorita(idUsuario: String, idRutina: String): Usuario {
+        val usuario = this.obtenerUsuarioPorID(idUsuario)
+        val rutina = this.getRutinaByID(idRutina)
+
+        usuario.agregarRutinaFavorita(rutina)
+
+        return usuarioDAO.save(usuario)
+    }
 }

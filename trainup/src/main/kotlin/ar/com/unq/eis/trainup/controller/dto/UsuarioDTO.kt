@@ -18,7 +18,8 @@ class UsuarioDTO(
     var altura: String = "",
     var peso: String = "",
     var objetivo: String = "",
-    var esAdmin: Boolean = false
+    var esAdmin: Boolean = false,
+    var rutinasFavoritas: List<RutinaDTO> = mutableListOf()
 ) {
 
     fun aModelo(): Usuario {
@@ -26,13 +27,14 @@ class UsuarioDTO(
         usuario.id = id
         usuario.rutinasSeguidas.addAll(rutinasSeguidas.map { it.aModelo() })
         usuario.rutinasCompletadas.addAll(rutinasCompletadas.map { it.aModelo() })
+        usuario.rutinasFavoritas.addAll(rutinasFavoritas.map { it.aModelo() })
 
         return usuario
     }
 
     companion object {
         fun desdeModelo(usuario: Usuario): UsuarioDTO {
-            return UsuarioDTO(
+            val usuarioDto = UsuarioDTO(
                 usuario.id,
                 usuario.username,
                 usuario.password,
@@ -48,6 +50,9 @@ class UsuarioDTO(
                 usuario.objetivo,
                 usuario.esAdmin // Mapear esAdmin
             )
+
+            usuarioDto.rutinasFavoritas = usuario.rutinasFavoritas.map { RutinaDTO.desdeModelo(it) }
+            return usuarioDto
         }
     }
 }
