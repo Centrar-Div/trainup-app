@@ -7,34 +7,36 @@
     margin: 1rem 0;
     outline: none;
     transition: border-color 0.3s, box-shadow 0.3s;
+    width: 100%; 
+    box-sizing: border-box; 
 }
 
 .primary-textbar:focus {
     outline: none;
     border-color: #007bff;
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    box-shadow: 0 0 0.5rem rgba(0, 123, 255, 0.5);
 }
 
 .required-icon {
     color: red;
-    margin-left: 5px;
-    font-size: 0.9em;
+    margin-left: 0.5rem;
+    font-size: 0.9rem; 
 }
 
 .error-input {
     border-color: #e74c3c;
-    box-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
+    box-shadow: 0 0 0.5rem rgba(231, 76, 60, 0.5);
 }
 
 .error-input:focus {
     border-color: #e74c3c;
-    box-shadow: 0 0 5px rgba(231, 76, 60, 0.5);
+    box-shadow: 0 0 0.5rem rgba(231, 76, 60, 0.5);
 }
 
 .error-message {
     color: #e74c3c;
     font-size: 0.875rem;
-    margin-left: 10px;
+    margin-left: 0.625rem;
 }
 
 .label-container {
@@ -42,7 +44,7 @@
     justify-content: space-between;
     align-items: center;
     width: 100%;
-    margin-bottom: 5px;
+    margin-bottom: 0.5rem;
 }
 
 .bold {
@@ -55,24 +57,93 @@
 }
 
 .textbar-m {
-    width: 8rem;
+    width: 8rem; 
 }
 
 .textbar-l {
-    width: 12rem;
+    width: 12rem; 
 }
 
 .textbar-xl {
-    width: 16rem;
+    width: 16rem; 
 }
 
 .textbar-xxl {
-    width: 20rem;
+    width: 30rem; 
 }
 
 .search-header {
     display: flex;
     justify-content: center;
     align-items: center;
-    gap: 20px;
+    gap: 1.25rem; 
+    flex-wrap: wrap; 
+}
+
+
+@media (min-width: 1920px) {
+    .primary-textbar {
+        padding: 1rem;
+        font-size: 1.25rem;
+    }
+
+    .required-icon {
+        font-size: 1rem;
+    }
+
+    .error-message {
+        font-size: 1rem;
+    }
+}
+
+@media (min-width: 1366px) and (max-width: 1919px) {
+    .primary-textbar {
+        padding: 0.9rem;
+        font-size: 1.1rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .primary-textbar {
+        padding: 0.75rem;
+        font-size: 1rem;
+    }
+
+    .textbar-l, .textbar-xl, .textbar-xxl {
+        width: 20rem; 
+    }
+}
+
+@media (max-width: 667px) {
+    .primary-textbar {
+        padding: 0.6rem;
+        font-size: 0.9rem;
+    }
+
+    .search-header {
+        gap: 1rem; 
+    }
+}
+
+@media (max-width: 568px) {
+    .primary-textbar {
+        padding: 0.7rem;
+        font-size: 1rem;
+    }
+
+    .required-icon {
+        font-size: 0.8rem;
+    }
+
+    .error-message {
+        font-size: 0.75rem;
+    }
+
+    .search-header {
+        gap: 0.75rem;
+    }
+
+    .textbar-s, .textbar-m {
+        width: 100%; 
+    }
 }

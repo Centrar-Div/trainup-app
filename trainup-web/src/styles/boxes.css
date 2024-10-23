@@ -3,13 +3,12 @@
     border-radius: 0.5rem;
     padding: 1rem;
     outline: none;
-    width: fit-content;
+    box-sizing: border-box; 
 }
 
 .column-box {
     flex-direction: column;
 }
-
 
 .secondary-box {
     background-color: #e0e0e0;
@@ -17,5 +16,39 @@
 }
 
 .category-box {
-    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    width: 100%;
+    height: auto; 
+    margin-bottom: 2rem;
 }
+
+@media (max-width: 768px) {
+    .default-box {
+        flex-direction: column;
+        width: 100%;
+        padding: 0.5rem;
+    }
+
+    .category-box {
+        height: auto; 
+        margin-bottom: 1.5rem; 
+    }
+}
+
+@media (max-width: 480px) {
+    .default-box {
+        padding: 0.3rem;
+        width: 100%;
+    }
+
+    .category-box {
+        height: auto; 
+        margin-bottom: 0.4rem; 
+        margin-top: 1rem;
+    }
+}
+

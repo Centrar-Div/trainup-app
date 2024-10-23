@@ -17,14 +17,12 @@ const Rutina = () => {
     const [listaDeEjercicios, setListaDeEjercicios] = useState([])
     const [dificultad, setDificultad] = useState('')
     const [descripcion, setDescripcion] = useState('')
-    const [imgSrc, setImgSrc] = useState('')
 
     useEffect(() => {
         obtenerRutinaPorId(rutinaID).then(({ data }) => {
             setListaDeEjercicios(data.ejercicios)
             setDescripcion(data.descripcion)
             setDificultad(data.dificultad)
-            setImgSrc(data.img)
         }).catch((error) => {
             console.log(error)
         })
@@ -87,8 +85,18 @@ const Rutina = () => {
                     <img src={imgSrc} className="rutina-img" alt={`imagen de rutina ${nombre}`} />
                 )}
             </div>
-    
-            <div className="container-boxinfo">
+            <div className="rutina-header">
+
+                {user.esAdmin ?
+                    <Button onClick={handleCreateExercise} type="primary" style={{ marginLeft: '10px' }}>
+                        Crear Ejercicio
+                    </Button>
+                    :
+                    <FollowBtn initFollow={isFollowed} rutinaID={rutinaID} />
+                }
+
+            </div>
+            <div className='container-boxinfo'>
                 {listaDeEjercicios.map(ejercicio => (
                     <Ejercicio key={ejercicio.id} updateEjercicio={updateEjercicio} deleteEjercicio={deleteEjercicio} ejercicio={ejercicio} rutinaID={rutinaID} />
                 ))}

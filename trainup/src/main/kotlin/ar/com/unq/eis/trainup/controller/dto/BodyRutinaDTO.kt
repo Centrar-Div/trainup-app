@@ -5,7 +5,6 @@ import ar.com.unq.eis.trainup.model.Rutina
 class BodyRutinaDTO(
     var id: String? = null,
     var nombre: String = "",
-    var img: String = "",
     var descripcion: String = "",
     var categoria: String = "",
     var dificultad: String = ""
@@ -14,7 +13,6 @@ class BodyRutinaDTO(
 
         val rutina = Rutina(
             nombre = this.nombre,
-            img = this.img,
             descripcion = this.descripcion,
             categoria = this.categoria,
             ejercicios = mutableListOf(),

@@ -11,7 +11,6 @@ class Rutina {
     @Id
     var id: String? = null
     var nombre: String = ""
-    var img: String?=null
     var descripcion: String = ""
     var categoria: String = ""
     var dificultad: String = ""
@@ -26,7 +25,6 @@ class Rutina {
     constructor(
         id: String?,
         nombre: String,
-        img: String?,
         descripcion: String,
         categoria: String,
         dificultad: String,
@@ -45,7 +43,6 @@ class Rutina {
 
         this.id = id
         this.nombre = nombre
-        this.img = img
         this.descripcion = descripcion
         this.categoria = categoria
         this.dificultad = dificultad
@@ -58,7 +55,6 @@ class Rutina {
 
     constructor(
         nombre: String,
-        img: String?,
         descripcion: String,
         categoria: String,
         ejercicios: MutableList<Ejercicio> = mutableListOf(),
@@ -71,7 +67,6 @@ class Rutina {
         require(dificultad.isNotEmpty()) { "La dificultad no puede estar vacía" }
 
         this.nombre = nombre
-        this.img = img
         this.descripcion = descripcion
         this.dificultad = dificultad
         this.categoria = categoria

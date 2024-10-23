@@ -5,6 +5,7 @@
     justify-content: center;
     min-height: 100vh;
     padding: 2rem;
+    text-align: center; 
 }
 
 .home-title {
@@ -13,10 +14,11 @@
     color: #2c3e50;
     margin-bottom: 1.5rem;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    line-height: 1.2; 
 }
 
 .home-subtitle {
-    font-size: 1.2rem;
+    font-size: 1.2rem; 
     color: #7f8c8d;
     margin-bottom: 2rem;
 }
@@ -30,10 +32,45 @@
 
 @media (max-width: 768px) {
     .home-title {
-        font-size: 2rem;
+        font-size: 6vh; 
     }
 
     .home-subtitle {
         font-size: 1rem;
+    }
+
+    .list-rutinas-container {
+        padding: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .home-title {
+        font-size: 4.5vh;
+        margin-bottom: 1rem;
+    }
+
+    .home-subtitle {
+        font-size: 0.9rem; 
+        margin-bottom: 1.5rem;
+    }
+
+    .list-rutinas-container {
+        padding: 0.5rem; 
+    }
+}
+
+@media (min-width: 1200px) {
+    .home-title {
+        font-size: 12vh; 
+    }
+
+    .home-subtitle {
+        font-size: 1.5rem; 
+    }
+
+    .list-rutinas-container {
+        max-width: 1400px; 
+        padding: 2rem;
     }
 }

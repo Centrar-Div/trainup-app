@@ -1,15 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap');
 
-.default-btn {
-  border: none;
-  background-color: transparent;
-  padding: 12px 24px;
-  border-radius: 2rem;
-  cursor: pointer;
+.default-btn, .modern-btn, .primary-btn, .secondary-btn {
   font-family: 'Poppins', sans-serif;
   font-weight: bold;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: none;
+  cursor: pointer;
+  text-align: center;
   transition: all 0.3s ease;
+}
+
+.default-btn {
+  background-color: transparent;
+  padding: 1rem 2rem; 
+  border-radius: 2rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
 }
 
 .default-btn-2 {
@@ -17,7 +21,123 @@
   background-color: transparent;
   cursor: pointer;
   font-family: 'Poppins', sans-serif;
-  font-weight: bold;
+  font-weight: 500;
+}
+
+.modern-btn {
+  padding: 0.5rem 2.5rem;
+  border-radius: 12px;
+  border: 2px solid #2c2c2c;
+  background-color: #1a1a1a;
+  color: #ffffff;
+  font-size: 1rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.modern-btn:hover::after {
+  transform: scale(4);
+}
+
+.primary-btn {
+  background-color: #27256a;
+  color: #ffffff;
+  box-shadow: 0 0.375rem 0.625rem rgba(47, 45, 106, 0.3);
+}
+
+.primary-btn:hover {
+  background-color: #272555;
+  transform: translateY(-0.125rem);
+}
+
+.secondary-btn {
+  background-color: #e2e2e2;
+  font-size: 1rem;
+  padding: 0.5rem;
+  color: #2f2d6a;
+}
+
+.rounded-login-btn {
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 100%;
+}
+
+@media (min-width: 1920px) {
+  .default-btn {
+    font-size: 1.5rem;
+  }
+
+  .modern-btn {
+    font-size: 1.25rem;
+    padding: 0.75rem 3rem;
+  }
+
+  .primary-btn {
+    font-size: 1.5rem;
+  }
+
+  .secondary-btn {
+    font-size: 1.25rem;
+  }
+}
+
+@media (min-width: 1366px) and (max-width: 1919px) {
+  .default-btn, .modern-btn, .primary-btn, .secondary-btn {
+    font-size: 1.125rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .default-btn, .modern-btn, .primary-btn, .secondary-btn {
+    font-size: 1rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .rounded-login-btn {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+}
+
+@media (max-width: 667px) {
+  .default-btn, .modern-btn, .primary-btn, .secondary-btn {
+    font-size: 0.875rem;
+    padding: 0.5rem 1.25rem;
+  }
+
+  .rounded-login-btn {
+    width: 2.25rem;
+    height: 2.25rem;
+  }
+}
+
+@media (max-width: 568px) {
+  .default-btn, .modern-btn, .primary-btn, .secondary-btn {
+    font-size: 0.75rem;
+    padding: 0.5rem 1rem;
+  }
+
+  .rounded-login-btn {
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+.modern-btn:hover {
+  background: #292929;
+  border-color: #666666;
+}
+
+.primary-btn:hover {
+  transform: translateY(-0.125rem);
+  box-shadow: 0 0.5rem 0.875rem rgba(39, 37, 85, 0.4);
+}
+
+.secondary-btn:hover {
+  background-color: #d1d1d1;
+  transform: scale(1.1);
+  box-shadow: 0 0.5rem 0.75rem rgba(0, 0, 0, 0.5);
 }
 
 .none-style-btn>.icon {
@@ -37,101 +157,8 @@
   cursor: pointer;
 }
 
-.modern-btn {
-  padding: 8px 35px;
-  border: 2px solid #2c2c2c;
-  background-color: #1a1a1a;
-  color: #ffffff;
-  font-size: 1rem;
-  cursor: pointer;
-  border-radius: 12px;
-  transition: all 0.4s ease;
-  outline: none;
-  position: relative;
-  overflow: hidden;
-  font-weight: bold;
-}
-
-.modern-btn::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle,
-      rgba(255, 255, 255, 0.25) 0%,
-      rgba(255, 255, 255, 0) 70%);
-  transform: scale(0);
-  transition: transform 0.5s ease;
-}
-
-.modern-btn:hover::after {
-  transform: scale(4);
-}
-
-.modern-btn:hover {
-  border-color: #666666;
-  background: #292929;
-}
-
-
-.primary-btn {
-  background-color: #27256a;
-  color: #ffffff;
-  box-shadow: 0 6px 10px rgba(47, 45, 106, 0.3);
-}
-
-.primary-btn:hover {
-  background-color: #272555;
-  color: #ffffff;
-  box-shadow: 0 8px 14px rgba(39, 37, 85, 0.4);
-  transform: translateY(-2px);
-}
-
-.primary-btn:active {
-  background-color: #1d1b49;
-  box-shadow: 0 4px 6px rgba(29, 27, 73, 0.4);
-  transform: translateY(0);
-}
-
-/* Diseño del boton register*/
-.modern-btn.button-reg::after {
-  background: radial-gradient(circle,
-      rgba(255, 0, 0, 0.25) 0%,
-      rgba(255, 255, 255, 0) 70%);
-}
-
-.button-reg:hover {
-  cursor: not-allowed;
-}
-
-.button-reg:active {
-  cursor: not-allowed;
-}
-
-.secondary-btn {
-  background-color: #e2e2e2;
-  font-size: 16px;
-  padding: 5px;
-  color: #2f2d6a;
-  box-shadow: 0 6px 10px rgba(47, 45, 106, 0.3);
-  transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.secondary-btn:hover {
-  background-color: #d1d1d1;
-  transform: scale(1.1);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
-}
-
-.rounded-login-btn {
-  width: 50px !important;
-  height: 50px !important;
-  border-radius: 50%;
-}
-
 .unf {
   background-color: red;
 }
+
 

@@ -3,7 +3,7 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     width: 100%;
-    gap: 20px;
+    gap: 1.25rem; 
     padding: 0;
     margin-top: 2rem;
     color: black;
@@ -15,9 +15,9 @@
     justify-content: space-between;
     width: 30%;
     background-color: #e7e7e7;
-    padding: 20px;
+    padding: 1.25rem; 
     border-radius: 15px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     cursor: pointer;
     overflow: hidden;
@@ -27,30 +27,30 @@
 }
 
 .boxinfo:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transform: translateY(-0.625rem); 
+    box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.2);
     background-color: #f7f7ff;
 }
 
 .card-header h2 {
     font-size: 1.8rem;
     color: #2c3e50;
-    margin-bottom: 12px;
+    margin-bottom: 0.75rem; 
     font-weight: 600;
     text-transform: capitalize;
     border-bottom: 2px solid #8783f1;
-    padding-bottom: 8px;
+    padding-bottom: 0.5rem;
     letter-spacing: 0.5px;
 }
 
 .card-body {
     flex-grow: 1;
-    margin-bottom: 15px;
+    margin-bottom: 1rem; 
 }
 
 .card-body p {
     color: #555;
-    margin-bottom: 15px;
+    margin-bottom: 1rem;
     font-size: 1rem;
     line-height: 1.6;
 }
@@ -58,7 +58,7 @@
 .dificulty {
     font-size: 1rem;
     color: #333;
-    padding: 5px 10px;
+    padding: 0.3rem 0.625rem; 
     border-radius: 5px;
     text-transform: uppercase;
     font-weight: bold;
@@ -90,7 +90,7 @@
     font-size: 1rem;
     background-color: #d1d1ff;
     color: #333;
-    padding: 5px 10px;
+    padding: 0.3rem 0.625rem; 
     border-radius: 5px;
     text-transform: uppercase;
     font-weight: bold;
@@ -104,7 +104,7 @@
 .card-footer .status {
     font-size: 1rem;
     color: #333;
-    padding: 5px 10px;
+    padding: 0.3rem 0.625rem;
     border-radius: 5px;
     text-transform: uppercase;
     font-weight: bold;
@@ -129,8 +129,8 @@
     color: white;
     border: none;
     border-radius: 50%;
-    width: 40px;
-    height: 40px;
+    width: 2.5rem; 
+    height: 2.5rem;
     font-size: 1.5rem;
     display: flex;
     align-items: center;
@@ -151,10 +151,91 @@
 
 .card-btns {
     display: flex;
-    gap: 10px;
+    gap: 0.625rem; 
     width: 100%;
     justify-content: flex-end;
 }
+
+.card-btns button {
+    background-color: #8783f1; 
+    color: #ffffff; 
+    padding: 0.75rem 1.5rem; 
+    border: none; 
+    border-radius: 0.5rem; 
+    font-size: 1rem; 
+    font-weight: bold; 
+    cursor: pointer; 
+    transition: all 0.3s ease; 
+    box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1); 
+}
+
+.card-btns button:hover, .card-btns button:focus {
+    background-color: #5a56b7;
+    box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.2); 
+    transform: translateY(-0.125rem); 
+}
+
+.complete-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #8783f1;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 2.5rem; 
+    height: 2.5rem;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); 
+}
+
+.complete-btn:hover {
+    background-color: #5a56b7;
+    transform: scale(1.1); 
+    box-shadow: 0 0.5rem 1.25rem rgba(0, 0, 0, 0.2); 
+}
+
+.complete-btn.completed {
+    background-color: #4caf50; 
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .card-btns button {
+        padding: 0.5rem 1rem; 
+        font-size: 0.9rem; 
+    }
+
+    .complete-btn {
+        width: 2.2rem;
+        height: 2.2rem;
+        font-size: 1.2rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-btns button {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+
+    .complete-btn {
+        width: 2rem;
+        height: 2rem;
+        font-size: 1rem;
+    }
+}
+
+
+.header-rutina {
+    display: flex;
+    align-items: center;
+    gap: 20%;
 
 .rutina-container {
     display: flex;
@@ -241,16 +322,12 @@
     }
 }
 
-/* Responsive adjustments */
-
-/* Tablets - Pantallas medianas */
 @media (max-width: 1024px) {
     .boxinfo {
         width: 45%;
     }
 }
 
-/* Móviles - Pantallas pequeñas */
 @media (max-width: 768px) {
     .boxinfo {
         width: 100%;
@@ -265,16 +342,15 @@
     }
 
     .complete-btn {
-        width: 35px;
-        height: 35px;
+        width: 2.2rem;
+        height: 2.2rem;
         font-size: 1.2rem;
     }
 }
 
-/* Smartphones muy pequeños */
 @media (max-width: 480px) {
     .boxinfo {
-        padding: 15px;
+        padding: 1rem;
     }
 
     .card-header h2 {
@@ -286,8 +362,8 @@
     }
 
     .complete-btn {
-        width: 30px;
-        height: 30px;
+        width: 2rem;
+        height: 2rem;
         font-size: 1rem;
     }
 }
