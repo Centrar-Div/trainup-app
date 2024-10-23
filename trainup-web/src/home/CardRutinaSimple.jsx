@@ -1,16 +1,26 @@
-import { faPenToSquare, faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faPenToSquare, faStairs, faStar, faStarAndCrescent, faStarHalfAlt, faStarOfDavid, faStarOfLife, faTrash } from '@fortawesome/free-solid-svg-icons';
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { eliminarRutina } from '../api/Api';
+import { agregarRutinaFavorita, eliminarRutina } from '../api/Api';
 import { notification } from 'antd';
 import Modal from 'antd/es/modal/Modal';
 import { useLogin } from '../context/LoginContext';
 
 const CardRutinaSimple = ({ rutina }) => {
+  const { user, actualizarPerfilUsuarioTemp } = useLogin();
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useLogin();
+  const [isFavorite, setIsFavorite] = useState(user?.rutinasFavoritas?.some(rut => rut.id === rutina.id));
   const navigate = useNavigate();
+
+
+  const actualizacionInstantaneaFavoritos = (rutina) => {
+    const listaActualizada = user.rutinasFavoritas.find( rut => rut.id === rutina.id) ? user.rutinasFavoritas.filter( rut => rut.id !== rutina.id) : [...user.rutinasFavoritas, rutina];
+    const usuarioActualizado = { ...user, rutinasFavoritas: listaActualizada };
+    actualizarPerfilUsuarioTemp(usuarioActualizado);
+  }
 
   const handlerClick = (rutina) => {
     navigate('/es/home/rutina', { state: { rutinaID: rutina.id, ejercicios: rutina.ejercicios, nombre: rutina.nombre } });
@@ -53,6 +63,28 @@ const CardRutinaSimple = ({ rutina }) => {
       });
   };
 
+  const handlerFavorite = (rutina) => {
+    setIsFavorite(!isFavorite);
+    actualizacionInstantaneaFavoritos(rutina)
+
+    agregarRutinaFavorita(user.id, rutina.id).then(() => {
+      if (isFavorite) {
+        notification.success({
+          message: 'Rutina eliminada de favoritos',
+          description: 'La rutina ha sido eliminada de favoritos.',
+          placement: 'topRight',
+        });
+        return;
+      } else {
+        notification.success({
+          message: 'Rutina agregada a favoritos',
+          description: 'La rutina ha sido agregada a favoritos.',
+          placement: 'topRight',
+        });
+      }
+    })
+  }
+
   // console.log(rutina.id);
 
   return (
@@ -72,16 +104,22 @@ const CardRutinaSimple = ({ rutina }) => {
         <p>{rutina.fechaDeCreacion}</p>
       </div>
 
+
+      <div className='card-btns'>
+          <button className='none-style-btn' onClick={() => handlerFavorite(rutina)}>
+            <FontAwesomeIcon icon={faStar} className={`icon ${isFavorite ? `favorite` : ``}`}/>
+          </button>
       {user?.esAdmin && (
-        <div className='card-btns'>
+        <>
           <button className='none-style-btn' onClick={() => handlerEdit(rutina)}>
             <FontAwesomeIcon icon={faPenToSquare} className="icon" />
           </button>
           <button className='none-style-btn' onClick={() => setIsOpen(true)}>
             <FontAwesomeIcon icon={faTrash} className="icon" />
           </button>
-        </div>
+        </>
       )}
+      </div>
 
       <Modal
         title="Confirmar acción"

@@ -30,3 +30,12 @@ p {
   line-height: 1.6;
   margin: 0 0 1rem 0;
 }
+
+.no-favorite {
+  color: #c9c9c9 !important;
+  
+}
+
+.favorite {
+  color: #1d1d1d !important;
+}
