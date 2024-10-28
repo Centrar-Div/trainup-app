@@ -17,12 +17,15 @@ const Rutina = () => {
     const [listaDeEjercicios, setListaDeEjercicios] = useState([])
     const [dificultad, setDificultad] = useState('')
     const [descripcion, setDescripcion] = useState('')
+    const [imgSrc, setImgSrc] = useState('')
 
     useEffect(() => {
         obtenerRutinaPorId(rutinaID).then(({ data }) => {
             setListaDeEjercicios(data.ejercicios)
             setDescripcion(data.descripcion)
             setDificultad(data.dificultad)
+            console.log(data.img)
+            setImgSrc(data.img)
         }).catch((error) => {
             console.log(error)
         })
@@ -63,6 +66,8 @@ const Rutina = () => {
         setListaDeEjercicios(ejercicios);
     }
 
+    console.log(imgSrc)
+
     return (
         <>
             <div className="rutina-container">
@@ -71,7 +76,7 @@ const Rutina = () => {
                     <div className="card-footer">
                         <p className={'category ' + `${dificultad.toLowerCase()}`}>{dificultad}</p>
                     </div>
-    
+
                     {user.esAdmin ? (
                         <Button onClick={handleCreateExercise} type="primary" className="create-btn">
                             Crear Ejercicio
@@ -80,22 +85,12 @@ const Rutina = () => {
                         <FollowBtn initFollow={isFollowed} rutinaID={rutinaID} />
                     )}
                 </div>
-    
+
                 {imgSrc && (
                     <img src={imgSrc} className="rutina-img" alt={`imagen de rutina ${nombre}`} />
                 )}
             </div>
-            <div className="rutina-header">
 
-                {user.esAdmin ?
-                    <Button onClick={handleCreateExercise} type="primary" style={{ marginLeft: '10px' }}>
-                        Crear Ejercicio
-                    </Button>
-                    :
-                    <FollowBtn initFollow={isFollowed} rutinaID={rutinaID} />
-                }
-
-            </div>
             <div className='container-boxinfo'>
                 {listaDeEjercicios.map(ejercicio => (
                     <Ejercicio key={ejercicio.id} updateEjercicio={updateEjercicio} deleteEjercicio={deleteEjercicio} ejercicio={ejercicio} rutinaID={rutinaID} />
@@ -103,7 +98,7 @@ const Rutina = () => {
             </div>
         </>
     );
-    
+
 };
 
 export default Rutina;

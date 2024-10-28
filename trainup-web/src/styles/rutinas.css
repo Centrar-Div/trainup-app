@@ -236,7 +236,7 @@
     display: flex;
     align-items: center;
     gap: 20%;
-
+}
 .rutina-container {
     display: flex;
     justify-content: space-between;
