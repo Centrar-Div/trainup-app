@@ -69,7 +69,7 @@ const Buscar = () => {
   }
 
   return (
-    <div>
+    <div className='ins'>
       <div>
         <div className='search-header'>
           <input

@@ -328,8 +328,9 @@
     }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 850px) {
     .boxinfo {
+        z-index: -1;
         width: 100%;
     }
 

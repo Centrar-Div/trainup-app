@@ -127,3 +127,11 @@ p {
 .favorite {
   color: #1d1d1d !important;
 }
+
+.search-header > select {
+  z-index: 0 !important;
+}
+
+.category-box > button {
+  z-index: -1 !important;
+}

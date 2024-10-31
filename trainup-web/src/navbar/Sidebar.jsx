@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/sidebar.css';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,48 +8,65 @@ import { useLogin } from '../context/LoginContext';
 const Sidebar = () => {
     const navigate = useNavigate();
     const { user, restartLogin } = useLogin();
+    const [showSidebar, setShowSidebar] = useState(false);
 
     return (
-        <div className='sidebar'>
+
+        <div className='nes'>
+        <button className='nes1' onClick={() => setShowSidebar(!showSidebar)}>click</button>
+        <div className={`sidebar ${showSidebar ? `s-show` : `s-noshow`}`}>
+            
             <ul>
                 {user?.esAdmin && (
                     <li>
                         <button className='sidebar-btn' onClick={() => navigate('/es/home/crear/rutina')}>
-                            <FontAwesomeIcon icon={faPlus} className="icon" /> Nueva Rutina
+                            <FontAwesomeIcon icon={faPlus} className="icon" /> <span>Nueva Rutina</span>
                         </button>
                     </li>
                 )}
                 <li>
-                    <button className='sidebar-btn' onClick={() => navigate('/es/home')}>
-                        <FontAwesomeIcon icon={faHome} className="icon" /> Home
+                    <button className='sidebar-btn' onClick={() => {
+                        navigate('/es/home')
+                        setShowSidebar(!showSidebar)
+                    }}>
+                        <FontAwesomeIcon icon={faHome} className="icon" /> <span>Home</span>
                     </button>
                 </li>
                 <li>
-                    <button className='sidebar-btn' onClick={() => navigate('/es/home/explorador')}>
-                        <FontAwesomeIcon icon={faCompass} className="icon" /> Explorar
+                    <button className='sidebar-btn' onClick={() => {
+                        setShowSidebar(!showSidebar)
+                        navigate('/es/home/explorador')}}>
+                        <FontAwesomeIcon icon={faCompass} className="icon" /> <span>Explorar</span>
                     </button>
                 </li>
                 <li>
-                    <button className='sidebar-btn' onClick={() => navigate('/es/home/buscar')}>
-                        <FontAwesomeIcon icon={faSearch} className="icon" /> Buscar
+                    <button className='sidebar-btn' onClick={() => {
+                        setShowSidebar(!showSidebar)
+                        navigate('/es/home/buscar')}}>
+                        <FontAwesomeIcon icon={faSearch} className="icon" /> <span>Buscar</span>
                     </button>
                 </li>
                 <li>
-                    <button className='sidebar-btn' onClick={() => navigate('/es/home/completadas')}>
-                        <FontAwesomeIcon icon={faCheck} className="icon" /> Completadas
+                    <button className='sidebar-btn' onClick={() => {
+                        setShowSidebar(!showSidebar)
+                        navigate('/es/home/completadas')}}>
+                        <FontAwesomeIcon icon={faCheck} className="icon" /> <span>Completadas</span>
                     </button>
                 </li>
                 <li>
-                    <button className='sidebar-btn' onClick={() => navigate('/es/home/profile')}>
-                        <FontAwesomeIcon icon={faUser} className="icon" /> Perfil
+                    <button className='sidebar-btn' onClick={() => {
+                        setShowSidebar(!showSidebar)
+                        navigate('/es/home/profile')}}>
+                        <FontAwesomeIcon icon={faUser} className="icon" /> <span>Perfil</span>
                     </button>
                 </li>
                 <li className='sidebar-logout'>
                     <button className='sidebar-btn' onClick={restartLogin}>
-                        <FontAwesomeIcon icon={faSignOutAlt} className="icon" /> Cerrar Sesión
+                        <FontAwesomeIcon icon={faSignOutAlt} className="icon" /> <span>Cerrar sesion</span>
                     </button>
                 </li>
             </ul>
+        </div>
         </div>
     );
 }
