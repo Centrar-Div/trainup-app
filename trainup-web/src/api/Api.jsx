@@ -3,7 +3,6 @@ import { notification } from 'antd';
 import 'antd/dist/reset.css';
 
 // URL base de la API 
-// const BASE_URL = 'http://localhost:8080/api';
 axios.defaults.baseURL = "https://trainup-app-production.up.railway.app/api"
 
 const handleError = (error) => {

@@ -42,7 +42,8 @@ export const LoginProvider = ({ children }) => {
         setUser(data);
         navigate('/es/home');
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log(e)
         notification.error({
           message: 'Error de Autenticación',
           description: 'El nombre de usuario o la contraseña son incorrectos.',
