@@ -21,8 +21,7 @@ class AppConfiguration {
         return object : WebMvcConfigurer {
             override fun addCorsMappings(registry: CorsRegistry) {
                 registry.addMapping("/**")
-                    .allowedOrigins("http://localhost:5173")
-                    .allowedOrigins("https://trainup-app.vercel.app")
+                    .allowedOrigins("*")
                     .allowedMethods("*")
                     .allowedHeaders("*")
             }
