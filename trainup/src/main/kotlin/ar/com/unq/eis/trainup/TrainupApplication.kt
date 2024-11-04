@@ -10,9 +10,8 @@ import org.springframework.data.mongodb.repository.config.EnableMongoRepositorie
 @SpringBootApplication
 @EnableMongoRepositories
 class TrainupApplication
-
-			fun main(args: Array<String>) {
-	runApplication<TrainupApplication>(*args)
-}
+	fun main(args: Array<String>) {
+		runApplication<TrainupApplication>(*args)
+	}
 
 
