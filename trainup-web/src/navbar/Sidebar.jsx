@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import '../styles/sidebar.css';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHome, faCompass, faCheck, faUser, faSignOutAlt, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faHome, faCompass, faCheck, faUser, faSignOutAlt, faPlus, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { useLogin } from '../context/LoginContext';
 
 const Sidebar = () => {
@@ -13,7 +13,7 @@ const Sidebar = () => {
     return (
 
         <div className='nes'>
-        <button className='nes1' onClick={() => setShowSidebar(!showSidebar)}>click</button>
+        <button className='nes1' onClick={() => setShowSidebar(!showSidebar)}><FontAwesomeIcon icon={faBars} /></button>
         <div className={`sidebar ${showSidebar ? `s-show` : `s-noshow`}`}>
             
             <ul>
