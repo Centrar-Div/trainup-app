@@ -9,7 +9,8 @@ const DataLoader = ({ children, fetchData }) => {
   useEffect(() => {
     const loadData = async () => {
       try {
-        const result = await fetchData();
+        const response = await fetchData();
+        const result = response?.data || [];
         setData(result);
       } catch (err) {
         setError(err);
